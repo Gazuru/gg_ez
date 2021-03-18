@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+
 public abstract class FlyingObject implements Steppable
 {
 	protected Field location;
 	protected Game game;
+	protected ArrayList<Material> materials;
 	
 	public Field getLocation()
 	{
@@ -13,9 +16,9 @@ public abstract class FlyingObject implements Steppable
 		location = newLocation;
 	}
 	
-	public void drill()
+	public boolean drill()
 	{
-		location.onDrill();
+		return location.onDrill();
 	}
 	
 	public abstract void move();

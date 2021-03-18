@@ -12,7 +12,26 @@ public class BillOfMaterial
 	
 	public boolean newMaterial(Material m)
 	{
-		return true;
+		boolean compatible = false;
+		for(int i = 0; i < needed.size(); i++)
+		{
+			compatible = m.compatibleWith(needed.get(i));
+			if(compatible)
+			{
+				needed.remove(i);
+				found.add(m);
+				break;
+			}
+		}
+		if(needed.size() == 0)
+			return true;
+		else
+			return false;
+	}
+	
+	public ArrayList<Material> getFound()
+	{
+		return found;
 	}
 	
 	public void removeNeeded(Material removeable)

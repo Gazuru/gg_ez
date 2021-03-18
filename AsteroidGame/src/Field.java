@@ -23,6 +23,7 @@ public abstract class Field
 	public void addNeighbour(Field newNeighbour)
 	{
 		neighbours.add(newNeighbour);
+		newNeighbour.getNeighbours().add(this);	
 	}
 	
 	public void removeNeighbour(Field oldNeighbour)
@@ -30,6 +31,15 @@ public abstract class Field
 		neighbours.remove(oldNeighbour);
 	}
 	
-	public abstract void onDrill();
+	public ArrayList<FlyingObject> getOnSurface()
+	{
+		return onSurface;
+	}
+	
+	public abstract void onMine(Ship ship);
+	public abstract boolean onDrill();
 	public abstract void onSolarStorm();
+	public abstract void teleport(Ship ship);
+	public abstract void pickedUpBy(Ship ship);
+	public abstract void fillBy(Ship ship);
 }

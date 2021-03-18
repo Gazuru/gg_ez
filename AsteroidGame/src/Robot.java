@@ -1,10 +1,21 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Robot extends FlyingObject
 {
+	public Robot(Field location)
+	{
+		this.location = location;
+		location.acceptFlyingObject(this);
+		game.addGameObject(this);
+	}
+	
 	public void step()
 	{
-		
+		boolean done = false;
+		done = drill();
+		if(!done)
+			move();
 	}
 	
 	public void move()
@@ -14,8 +25,9 @@ public class Robot extends FlyingObject
 		Field newLocation;
 		if(moveable.size() != 0)
 		{
-			//amúgy random választás, ez most csak egy próba
-			newLocation = moveable.get(0);
+			Random random = new Random();
+			int newLocationInt = random.nextInt(moveable.size());
+			newLocation = moveable.get(newLocationInt);
 			location.removeFlyingObject(this);
 			newLocation.acceptFlyingObject(this);
 		}
@@ -39,9 +51,15 @@ public class Robot extends FlyingObject
 		die();
 	}
 	
-	public ArrayList<Material> craftRobotReq()
+	public static ArrayList<Material> craftRobotReq()
 	{
-		ArrayList<Material> G = new ArrayList<Material>();
-		return G;
+		ArrayList<Material> robotReq = new ArrayList<Material>();
+		Iron i = new Iron();
+		Coal c = new Coal();
+		Uranium u = new Uranium();
+		robotReq.add(i);
+		robotReq.add(c);
+		robotReq.add(u);
+		return robotReq;
 	}
 }
