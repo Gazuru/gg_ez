@@ -5,25 +5,34 @@ public class Gate extends Field
 	private boolean working;
 	private Gate pair;
 	
+	public Gate(int number, Game game)
+	{
+		super(number, game);
+		working = false;
+	}
+	
 	public boolean getWorking()
 	{
 		return working;
 	}
 	
-	public void pickedUpBy(Ship ship)
+	public boolean pickedUpBy(Ship ship)
 	{
 		ship.addGate(this);
+		return true;
 	}
 	
-	public void teleport(Ship ship)
+	public boolean teleport(Ship ship)
 	{
 		if(pair.getWorking())
 		{
 			removeFlyingObject(ship);
 			pair.acceptFlyingObject(ship);
+			System.out.println("A teleportálás sikerült!");
+			return true;
 		}
-		else
-			System.out.println("A teleportálás nem sikerült, mert a kapu párja nem mûködik!");
+		System.out.println("A teleportálás nem sikerült, mert a kapu párja nem mûködik!");
+		return false;
 	}
 	
 	public static ArrayList<Material> craftGateReq()
@@ -67,13 +76,15 @@ public class Gate extends Field
 			onSurface.get(i).onSolarStormCase();
 	}
 	
-	public void onMine(Ship ship)
+	public boolean onMine(Ship ship)
 	{
-		System.out.println("A bányászat nem sikerült, mert a telepes egy kapun van!");
+		System.out.println("A bányászat nem sikerült, mert a telepes egy kapun, nem egy aszteroidán van, kapun pedig nem lehet bányászni!");
+		return false;
 	}
 	
-	public void fillBy(Ship ship)
+	public boolean fillBy(Ship ship)
 	{
 		System.out.println("Kapuba nem lehet visszatenni nyersanyagot!");
+		return false;
 	}
 }

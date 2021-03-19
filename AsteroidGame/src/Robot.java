@@ -3,9 +3,9 @@ import java.util.Random;
 
 public class Robot extends FlyingObject
 {
-	public Robot(Field location)
+	public Robot(Field firstLocation, Game game)
 	{
-		this.location = location;
+		super(firstLocation, game);
 		location.acceptFlyingObject(this);
 		game.addGameObject(this);
 	}
@@ -18,7 +18,7 @@ public class Robot extends FlyingObject
 			move();
 	}
 	
-	public void move()
+	public boolean move()
 	{
 		ArrayList<Field> moveable = new ArrayList<Field>();
 		moveable = location.getNeighbours();
@@ -30,9 +30,11 @@ public class Robot extends FlyingObject
 			newLocation = moveable.get(newLocationInt);
 			location.removeFlyingObject(this);
 			newLocation.acceptFlyingObject(this);
+			System.out.println("A mozgás sikeres!");
+			return true;
 		}
-		else
-			System.out.println("A mozgás sikertelen, mert nincs szomszéd!");
+		System.out.println("A mozgás sikertelen, mert nincs szomszéd!");
+		return false;
 	}
 	
 	public void die()

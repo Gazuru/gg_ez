@@ -4,9 +4,16 @@ import java.util.Scanner;
 
 public class Game implements Steppable
 {
-	private ArrayList<FlyingObject> gameObjects;
+	private ArrayList<FlyingObject> gameObjects = new ArrayList<FlyingObject>();
 	private int numShips;
-	private ArrayList<Field> fields;
+	private ArrayList<Field> fields = new ArrayList<Field>();
+	private int round = 0;
+	private boolean end = false;
+	
+	public void setEnd(boolean end)
+	{
+		this.end = end;
+	}
 	
 	public void removeGameObject(FlyingObject fo)
 	{
@@ -25,19 +32,55 @@ public class Game implements Steppable
 	
 	public void step()
 	{
+		System.out.println("A(z) " + round++ + ". kör!");
+		System.out.println();
 		for(int i = 0; i < gameObjects.size(); i++)
+		{
+			System.out.println("A(z) " + i + ". játékos!");
+			System.out.println("Aszteroida: " + gameObjects.get(i).getLocation().getNumber());
+			
+			//csak saját teszthez
+			int dbic = 0;
+			int dbir = 0;
+			int dbu = 0;
+			int dbc = 0;
+			Ice ice = new Ice();
+			Iron iron = new Iron();
+			Uranium uranium = new Uranium();
+			Coal coal = new Coal();
+			for(int l = 0; l < gameObjects.get(i).getMaterials().size(); l++)
+			{
+				if(gameObjects.get(i).getMaterials().get(l).getClass() == ice.getClass())
+					dbic++;
+				if(gameObjects.get(i).getMaterials().get(l).getClass() == iron.getClass())
+					dbir++;
+				if(gameObjects.get(i).getMaterials().get(l).getClass() == uranium.getClass())
+					dbu++;
+				if(gameObjects.get(i).getMaterials().get(l).getClass() == coal.getClass())
+					dbc++;
+			}
+			System.out.println("Ice: " + dbic + "Iron: " + dbir + "Coal: " + dbc + "Uranium: " + dbu);
+				
+			
 			gameObjects.get(i).step();
+		}
 		if(solarStorm())
 		{
 			for(int i = 0; i < fields.size(); i++)
 				fields.get(i).onSolarStorm();
+			if(numShips == 0)
+			{
+				System.out.println("A játék véget ért, mert minden telepes halott!");
+				end = true;
+			}
 		}
+		System.out.println();
 	}
 	
 	public boolean solarStorm()
 	{
 		Random random = new Random();
-		int rand = random.nextInt(20);
+		int rand = random.nextInt(200000);
 		if(rand == 10)
 		{
 			return true;
@@ -50,20 +93,26 @@ public class Game implements Steppable
 	
 	public void startGame()
 	{
+		System.out.println("Asteroid Game");
+		System.out.println();
 		initGame();
-		while(true) //END
+		System.out.println();
+		while(!end) //END
+		{
 			step();
+		}
 	}
 	
 	public void initGame()
 	{
-		System.out.println("Mekkora legyen a pálya?");
+		System.out.println("Inicializálás!");
+		System.out.print("A pálya mérete: ");
 		Scanner s = new Scanner(System.in);
 		int choose = s.nextInt();
-		s.close();
-		while(fields.size() != choose)
+		int j = 0;
+		while(j != choose)
 		{
-			Asteroid newAsteroid= new Asteroid();
+			Asteroid newAsteroid= new Asteroid(j, this);
 			Random random = new Random();
 			int rand = random.nextInt(4);
 			switch(rand)
@@ -86,18 +135,22 @@ public class Game implements Steppable
 					break;
 			}
 			addField(newAsteroid);
+			newAsteroid.setGame(this);
+			j++;
+		}
+		for(int k = 2; k < fields.size(); k++)
+		{
+			fields.get(k).addNeighbour(fields.get(k-2));
+			fields.get(k).addNeighbour(fields.get(k-1));
 		}
 		System.out.print("Játékosok száma: ");
-		Scanner s2 = new Scanner(System.in);
-		choose = s2.nextInt();
-		s2.close();
+		choose = s.nextInt();
 		numShips = choose;
 		while(gameObjects.size() != numShips)
 		{
-			Ship newShip = new Ship();
 			Random r = new Random();
 			int nr = r.nextInt(fields.size());
-			newShip.setLocation(fields.get(nr));
+			Ship newShip = new Ship(fields.get(nr), this);
 			addGameObject(newShip);
 		}
 	}

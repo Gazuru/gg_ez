@@ -2,8 +2,23 @@ import java.util.ArrayList;
 
 public abstract class Field
 {
-	private ArrayList<Field> neighbours;
+	protected ArrayList<Field> neighbours;
 	protected ArrayList<FlyingObject> onSurface;
+	protected int number;
+	protected Game game; 
+	
+	public Field(int number, Game game)
+	{
+		this.number = number;
+		this.game = game;
+		neighbours = new ArrayList<Field>();
+		onSurface = new ArrayList<FlyingObject>();
+	}
+	
+	public int getNumber()
+	{
+		return number;
+	}
 	
 	public ArrayList<Field> getNeighbours()
 	{
@@ -36,10 +51,10 @@ public abstract class Field
 		return onSurface;
 	}
 	
-	public abstract void onMine(Ship ship);
+	public abstract boolean onMine(Ship ship);
 	public abstract boolean onDrill();
 	public abstract void onSolarStorm();
-	public abstract void teleport(Ship ship);
-	public abstract void pickedUpBy(Ship ship);
-	public abstract void fillBy(Ship ship);
+	public abstract boolean teleport(Ship ship);
+	public abstract boolean pickedUpBy(Ship ship);
+	public abstract boolean fillBy(Ship ship);
 }

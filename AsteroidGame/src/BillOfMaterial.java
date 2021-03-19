@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class BillOfMaterial
 {
-	private ArrayList<Material> needed;
-	private ArrayList<Material> found;
+	private ArrayList<Material> needed = new ArrayList<Material>();
+	private ArrayList<Material> found = new ArrayList<Material>();
 	
 	public BillOfMaterial(ArrayList<Material> requires)
 	{

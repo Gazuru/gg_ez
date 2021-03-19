@@ -3,8 +3,15 @@ import java.util.ArrayList;
 public abstract class FlyingObject implements Steppable
 {
 	protected Field location;
-	protected Game game;
 	protected ArrayList<Material> materials;
+	protected Game game;
+	
+	public FlyingObject(Field firstLocation, Game game)
+	{
+		location = firstLocation;
+		materials = new ArrayList<Material>();
+		this.game = game;
+	}
 	
 	public Field getLocation()
 	{
@@ -16,12 +23,32 @@ public abstract class FlyingObject implements Steppable
 		location = newLocation;
 	}
 	
+	public ArrayList<Material> getMaterials()
+	{
+		return materials;
+	}
+	
+	public void setMaterials(ArrayList<Material> newMaterials)
+	{
+		materials = newMaterials;
+	}
+	
+	public Game getGame()
+	{
+		return game;
+	}
+	
+	public void setGame(Game newGame)
+	{
+		game = newGame;
+	}
+	
 	public boolean drill()
 	{
 		return location.onDrill();
 	}
 	
-	public abstract void move();
+	public abstract boolean move();
 	public abstract void die();
 	public abstract void onExplode();
 	public abstract void onSolarStormCase();
