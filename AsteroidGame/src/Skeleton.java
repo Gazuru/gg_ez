@@ -15,6 +15,7 @@ public class Skeleton
 		//init objects & their respective attributes
 		Asteroid a=new Asteroid();
 		Ship sh=new Ship();
+		
 		sh.setLocation(a);
 		a.acceptFlyingObject(sh);
 		//call fns
@@ -28,7 +29,7 @@ public class Skeleton
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Asteroid a=new Asteroid();
 		Ice i=new Ice();
-		a.setCore(i);
+		a.acceptCore(i);
 		
 		i.onDrillSpecial(a);
 		//returns
@@ -39,9 +40,9 @@ public class Skeleton
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Asteroid a=new Asteroid();
 		Uranium u=new Uranium();
-		a.setCore(u);
-		u.onDrillSpecial(a);
+		a.acceptCore(u);
 		
+		u.onDrillSpecial(a);
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
@@ -54,6 +55,7 @@ public class Skeleton
 		sh.setLocation(a);
 		a.acceptFlyingObject(sh);
 		g.addGameObject(sh);
+		
 		a.explode();
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
@@ -63,8 +65,9 @@ public class Skeleton
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Asteroid a=new Asteroid();
 		Iron i=new Iron();
-		i.onDrillSpecial(a);
+		a.acceptCore(i);
 		
+		i.onDrillSpecial(a);
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
