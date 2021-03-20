@@ -111,7 +111,7 @@ public class Skeleton
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
-	
+	//TODO
 	public static void testPickUpGate() {
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Ship sh=new Ship();
@@ -124,6 +124,6 @@ public class Skeleton
 	
 	public static void main(String[] args)
 	{
-		testUseGate();
+		testPickUpGate();
 	}
 }
