@@ -134,13 +134,15 @@ public class Asteroid extends Field
 	
 	public boolean teleport(Ship ship)
 	{
-		System.out.println("A teleportálás nem sikerült, mert a telepes egy aszteroidán van!");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
 		return false;
 	}
 	
 	public boolean pickedUpBy(Ship ship)
 	{
-		System.out.println("Aszteroidát nem lehet felvenni! xD");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
 		return false;
 	}
 }

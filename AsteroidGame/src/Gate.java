@@ -28,7 +28,9 @@ public class Gate extends Field
 	
 	public boolean pickedUpBy(Ship ship)
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		ship.addGate(this);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" true");
 		return true;
 	}
 	

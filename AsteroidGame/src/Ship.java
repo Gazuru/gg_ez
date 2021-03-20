@@ -80,7 +80,11 @@ public class Ship extends FlyingObject
 	
 	public boolean pickUpGate()
 	{
-		if(gates.size() < 2)
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println("2>gates? y/n");
+		String ans=Skeleton.getUserInput();
+		
+		if(ans.contains("y"))
 		{
 			boolean ok = location.pickedUpBy(this);
 			if(ok)
@@ -104,12 +108,12 @@ public class Ship extends FlyingObject
 				}
 				System.out.println("A kapu felvétele sikerült!");
 				return true;
-			}
-			System.out.println("A kapu felvétele nem sikerült!");
-			return false;
+			
 		}
 		System.out.println("A kapu felvétele nem sikerült, mert már van a telepesnél 2 kapu!");
 		return false;
+	}
+		return true;
 	}
 	
 	public boolean buildRobot()

@@ -16,6 +16,7 @@ public class Skeleton
 		Asteroid a=new Asteroid();
 		Ship sh=new Ship();
 		sh.setLocation(a);
+		a.acceptFlyingObject(sh);
 		//call fns
 		sh.drill();
 		
@@ -117,6 +118,9 @@ public class Skeleton
 		Ship sh=new Ship();
 		Gate location=new Gate();
 		Asteroid neighbour=new Asteroid();
+		
+		
+		sh.pickUpGate();
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
@@ -124,6 +128,8 @@ public class Skeleton
 	
 	public static void main(String[] args)
 	{
-		testPickUpGate();
+		//TODO
+		
+		testDieFromSolarStorm();
 	}
 }
