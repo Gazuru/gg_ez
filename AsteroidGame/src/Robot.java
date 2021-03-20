@@ -3,9 +3,8 @@ import java.util.Random;
 
 public class Robot extends FlyingObject
 {
-	public Robot(Field firstLocation, Game game)
+	public Robot()
 	{
-		super(firstLocation, game);
 		location.acceptFlyingObject(this);
 		game.addGameObject(this);
 	}

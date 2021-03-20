@@ -150,7 +150,7 @@ public class Game implements Steppable
 		{
 			Random r = new Random();
 			int nr = r.nextInt(fields.size());
-			Ship newShip = new Ship(fields.get(nr), this);
+			Ship newShip = new Ship();
 			addGameObject(newShip);
 		}
 	}

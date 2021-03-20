@@ -5,9 +5,8 @@ public class Ship extends FlyingObject
 {
 	private ArrayList<Gate> gates;
 	
-	public Ship(Field firstLocation, Game game)
+	public Ship()
 	{
-		super(firstLocation, game);
 		gates = new ArrayList<Gate>();
 	}
 	
@@ -130,7 +129,7 @@ public class Ship extends FlyingObject
 		if(buildable)
 		{
 			materials.removeAll(newBOM.getFound());
-			Robot newRobot = new Robot(location, game);
+			Robot newRobot = new Robot();
 			System.out.println("A robot építése sikerült!");
 			return true;
 		}

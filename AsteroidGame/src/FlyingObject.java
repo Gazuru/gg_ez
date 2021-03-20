@@ -6,11 +6,11 @@ public abstract class FlyingObject implements Steppable
 	protected ArrayList<Material> materials;
 	protected Game game;
 	
-	public FlyingObject(Field firstLocation, Game game)
+	public FlyingObject()
 	{
-		location = firstLocation;
+		
 		materials = new ArrayList<Material>();
-		this.game = game;
+		
 	}
 	
 	public Field getLocation()
