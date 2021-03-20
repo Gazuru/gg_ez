@@ -35,8 +35,19 @@ public class Asteroid extends Field
 	public boolean onDrill()
 	{
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		this.decreaseLayer();
-		return true;
+		
+		System.out.println("layer>1? y/n");
+		String ans=Skeleton.getUserInput();
+		
+		if(ans.contains("y")) {
+			this.decreaseLayer();
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns true");
+			
+			return true;
+		} else {
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
+			return false;
+		}
 	}
 	
 	public void acceptCore(Material newCore)
@@ -52,7 +63,7 @@ public class Asteroid extends Field
 	public void decreaseLayer()
 	{
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		layer--;
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void explode()

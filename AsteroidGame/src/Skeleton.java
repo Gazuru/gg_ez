@@ -1,6 +1,13 @@
+import java.util.Scanner;
 
 public class Skeleton
 {
+	public static String getUserInput() {
+		Scanner reader = new Scanner(System.in);
+		String n = reader.next();
+		reader.close();
+		return n;
+	}
 	
 	public static void testDrill() {
 		//print fn name
@@ -12,6 +19,8 @@ public class Skeleton
 		//call fns
 		sh.drill();
 		
+		//returns
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public static void testMeltOutcome() {

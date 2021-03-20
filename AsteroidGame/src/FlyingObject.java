@@ -47,6 +47,7 @@ public abstract class FlyingObject implements Steppable
 	{
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Boolean completed=location.onDrill();
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns "+completed);
 		return completed;
 	}
 	
