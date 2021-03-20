@@ -31,6 +31,10 @@ public class Asteroid extends Field
 	{
 		return inSunProximity;
 	}
+	public void setInSunProximity(Boolean inSunProximity)
+	{
+		this.inSunProximity=inSunProximity;
+	}
 	
 	public boolean onDrill()
 	{
@@ -55,9 +59,16 @@ public class Asteroid extends Field
 		core = newCore;
 	}
 	
+	public void setCore(Material newCore)
+	{
+		core = newCore;
+	}
+	
+	
 	public void removeCore()
 	{
-		core = null;
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void decreaseLayer()
@@ -68,18 +79,26 @@ public class Asteroid extends Field
 	
 	public void explode()
 	{
-		for(int i = 0; i < onSurface.size(); i++)
-			onSurface.get(i).onExplode();
-		game.removeField(this);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		for(FlyingObject f:onSurface){
+			f.onExplode();
+		}
+		
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void onSolarStorm()
 	{
-		for(int i = 0; i < onSurface.size(); i++)
-		{
-			if(layer != 0 || core != null)
-				onSurface.get(i).onSolarStormCase();
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
+		System.out.println("el tud bujni? y/n");
+		String ans=Skeleton.getUserInput();
+		if(ans.contains("n")) {
+			for(FlyingObject f:onSurface){
+				f.onSolarStormCase();
+			}
 		}
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public boolean fillBy(Ship ship)

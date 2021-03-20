@@ -54,5 +54,9 @@ public abstract class FlyingObject implements Steppable
 	public abstract boolean move();
 	public abstract void die();
 	public abstract void onExplode();
-	public abstract void onSolarStormCase();
+	public void onSolarStormCase() {
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		die();
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
+	}
 }

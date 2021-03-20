@@ -25,7 +25,9 @@ public abstract class Field
 	
 	public void removeFlyingObject(FlyingObject fo)
 	{
-		onSurface.remove(fo);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void acceptFlyingObject(FlyingObject fo)

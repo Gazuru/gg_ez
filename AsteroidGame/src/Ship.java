@@ -206,20 +206,22 @@ public class Ship extends FlyingObject
 	
 	public void die()
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
 		location.removeFlyingObject(this);
-		game.removeGameObject(this);
-		game.decreaseNumShips();
+		Game.removeGameObject(this);
+		Game.decreaseNumShips();
+		
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void onExplode()
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		die();
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
-	public void onSolarStormCase()
-	{
-		die();
-	}
 	
 	public void addGate(Gate newGate)
 	{

@@ -38,8 +38,10 @@ public class Robot extends FlyingObject
 	
 	public void die()
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		location.removeFlyingObject(this);
-		game.removeGameObject(this);
+		Game.removeGameObject(this);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void onExplode()
@@ -47,10 +49,6 @@ public class Robot extends FlyingObject
 		move();
 	}
 	
-	public void onSolarStormCase()
-	{
-		die();
-	}
 	
 	public static ArrayList<Material> craftRobotReq()
 	{

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Game implements Steppable
+class Game implements Steppable
 {
 	private ArrayList<FlyingObject> gameObjects = new ArrayList<FlyingObject>();
 	private int numShips;
@@ -15,14 +15,16 @@ public class Game implements Steppable
 		this.end = end;
 	}
 	
-	public void removeGameObject(FlyingObject fo)
+	public static void removeGameObject(FlyingObject fo)
 	{
-		gameObjects.remove(fo);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
-	public void decreaseNumShips()
+	public static void decreaseNumShips()
 	{
-		numShips--;
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void removeField(Field f)
