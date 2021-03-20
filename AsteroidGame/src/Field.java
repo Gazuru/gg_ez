@@ -7,10 +7,8 @@ public abstract class Field
 	protected int number;
 	protected Game game; 
 	
-	public Field(int number, Game game)
+	public Field()
 	{
-		this.number = number;
-		this.game = game;
 		neighbours = new ArrayList<Field>();
 		onSurface = new ArrayList<FlyingObject>();
 	}

@@ -112,7 +112,7 @@ public class Game implements Steppable
 		int j = 0;
 		while(j != choose)
 		{
-			Asteroid newAsteroid= new Asteroid(j, this);
+			Asteroid newAsteroid= new Asteroid();
 			Random random = new Random();
 			int rand = random.nextInt(4);
 			switch(rand)

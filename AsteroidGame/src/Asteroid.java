@@ -7,16 +7,9 @@ public class Asteroid extends Field
 	private Material core;
 	private boolean inSunProximity;
 	
-	public Asteroid(int number, Game game)
+	public Asteroid()
 	{
-		super(number, game);
-		Random rand = new Random();
-		layer = rand.nextInt(5);
-		int x = rand.nextInt(20);
-		if(x == 10)
-			inSunProximity = true;
-		else
-			inSunProximity = false;
+		
 	}
 	
 	public int getNumber()

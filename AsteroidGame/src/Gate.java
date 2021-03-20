@@ -5,9 +5,8 @@ public class Gate extends Field
 	private boolean working;
 	private Gate pair;
 	
-	public Gate(int number, Game game)
+	public Gate()
 	{
-		super(number, game);
 		working = false;
 	}
 	

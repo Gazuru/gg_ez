@@ -30,8 +30,8 @@ public class Ship extends FlyingObject
 		if(buildable)
 		{
 			materials.removeAll(newBOM.getFound());
-			Gate newGate1 = new Gate(1000, game);
-			Gate newGate2 = new Gate(1000, game);
+			Gate newGate1 = new Gate();
+			Gate newGate2 = new Gate();
 			addGate(newGate1);
 			addGate(newGate2);
 			newGate1.setPair(newGate2);
