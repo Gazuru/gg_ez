@@ -12,7 +12,18 @@ public class Gate extends Field
 	
 	public boolean getWorking()
 	{
-		return working;
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println("working? y/n");
+		String ans=Skeleton.getUserInput();
+		if(ans.contains("y")) {
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" true");
+			return true;
+		} else {
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
+			return false;
+		}
+		
+		
 	}
 	
 	public boolean pickedUpBy(Ship ship)
@@ -21,16 +32,18 @@ public class Gate extends Field
 		return true;
 	}
 	
-	public boolean teleport(Ship ship)
+	public boolean teleport(FlyingObject f)
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
 		if(pair.getWorking())
 		{
-			removeFlyingObject(ship);
-			pair.acceptFlyingObject(ship);
-			System.out.println("A teleportálás sikerült!");
+			removeFlyingObject(f);
+			pair.acceptFlyingObject(f);
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" true");
 			return true;
 		}
-		System.out.println("A teleportálás nem sikerült, mert a kapu párja nem mûködik!");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
 		return false;
 	}
 	

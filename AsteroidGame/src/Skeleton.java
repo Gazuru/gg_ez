@@ -82,23 +82,36 @@ public class Skeleton
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
+	
+	//TODO
 	public static void testPlaceGate() {
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Asteroid a1=new Asteroid();
 		Asteroid a2=new Asteroid();
 		Ship sh=new Ship();
 		Gate g=new Gate();
+		
+		sh.placeGate();
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
+	
 	public static void testUseGate() {
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Ship sh=new Ship();
 		Gate location=new Gate();
 		Gate pair=new Gate();
+		sh.setLocation(location);
+		location.acceptFlyingObject(sh);
+		location.setPair(pair);
+		pair.setPair(location);
+		
+		
+		sh.useGate();
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
+	
 	public static void testPickUpGate() {
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Ship sh=new Ship();
@@ -111,6 +124,6 @@ public class Skeleton
 	
 	public static void main(String[] args)
 	{
-		testDieFromSolarStorm();
+		testUseGate();
 	}
 }

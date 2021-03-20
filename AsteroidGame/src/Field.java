@@ -32,7 +32,9 @@ public abstract class Field
 	
 	public void acceptFlyingObject(FlyingObject fo)
 	{
-		onSurface.add(fo);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void addNeighbour(Field newNeighbour)
@@ -55,7 +57,12 @@ public abstract class Field
 	public abstract boolean onMine(Ship ship);
 	public abstract boolean onDrill();
 	public abstract void onSolarStorm();
-	public abstract boolean teleport(Ship ship);
+	public boolean teleport(FlyingObject f) {
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
+		return false;
+	}
 	public abstract boolean pickedUpBy(Ship ship);
 	public abstract boolean fillBy(Ship ship);
 }

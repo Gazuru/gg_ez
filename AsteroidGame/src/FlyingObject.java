@@ -50,6 +50,12 @@ public abstract class FlyingObject implements Steppable
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns "+completed);
 		return completed;
 	}
+	public boolean useGate() {
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		Boolean completed=location.teleport(this);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns "+completed);
+		return completed;
+	}
 	
 	public abstract boolean move();
 	public abstract void die();

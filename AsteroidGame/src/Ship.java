@@ -76,10 +76,7 @@ public class Ship extends FlyingObject
 		return true;
 	}
 	
-	public boolean useGate()
-	{
-		return location.teleport(this);
-	}
+	
 	
 	public boolean pickUpGate()
 	{
