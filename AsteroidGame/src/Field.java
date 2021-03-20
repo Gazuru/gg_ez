@@ -49,6 +49,7 @@ public abstract class Field
 		return onSurface;
 	}
 	
+	
 	public abstract boolean onMine(Ship ship);
 	public abstract boolean onDrill();
 	public abstract void onSolarStorm();

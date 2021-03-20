@@ -45,7 +45,9 @@ public abstract class FlyingObject implements Steppable
 	
 	public boolean drill()
 	{
-		return location.onDrill();
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		Boolean completed=location.onDrill();
+		return completed;
 	}
 	
 	public abstract boolean move();

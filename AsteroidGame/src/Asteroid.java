@@ -34,31 +34,9 @@ public class Asteroid extends Field
 	
 	public boolean onDrill()
 	{
-		if(layer > 1)
-		{
-			decreaseLayer();
-			System.out.println("A fúrás sikeres");
-			return true;
-		}
-		if(layer == 1 && core == null)
-		{
-			decreaseLayer();
-			System.out.println("A fúrás sikeres");
-			return true;
-		}
-		if(layer == 1 && core != null)
-		{
-			decreaseLayer();
-			core.onDrillSpecial(this);
-			System.out.println("A fúrás sikeres");
-			return true;
-		}
-		if(layer == 0)
-		{
-			System.out.println("A fúrás sikertelen, mert az aszteroida kérge már teljesen át van fúrva!");
-			return false;
-		}
-		else return false;
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		this.decreaseLayer();
+		return true;
 	}
 	
 	public void acceptCore(Material newCore)
@@ -73,6 +51,7 @@ public class Asteroid extends Field
 	
 	public void decreaseLayer()
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		layer--;
 	}
 	

@@ -3,9 +3,15 @@ public class Skeleton
 {
 	
 	public static void testDrill() {
+		//print fn name
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		//init objects & their respective attributes
 		Asteroid a=new Asteroid();
 		Ship sh=new Ship();
+		sh.setLocation(a);
+		//call fns
+		sh.drill();
+		
 	}
 	
 	public static void testMeltOutcome() {
@@ -58,7 +64,5 @@ public class Skeleton
 	public static void main(String[] args)
 	{
 		testDrill();
-		testPickUpGate();
-		testDieFromSolarStorm();
 	}
 }
