@@ -41,7 +41,9 @@ public abstract class Field {
     }
 
     public void removeNeighbour(Field oldNeighbour) {
-        neighbours.remove(oldNeighbour);
+        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		neighbours.remove(oldNeighbour);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
     }
 
     public ArrayList<FlyingObject> getOnSurface() {
