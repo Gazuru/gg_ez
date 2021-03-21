@@ -270,7 +270,10 @@ public class Skeleton {
 	}
 
 	public static void main(String[] args) {
-		testBuildBase();
+		while(true) {
+			System.out.println("Ird be a teszt eset számát");
+			
+		}
 	}
 }
 
