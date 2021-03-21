@@ -1,4 +1,3 @@
-public class Coal extends NonRadioactiveMaterial
-{
+public class Coal extends NonRadioactiveMaterial {
 
 }

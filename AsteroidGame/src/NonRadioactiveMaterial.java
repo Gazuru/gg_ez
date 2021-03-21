@@ -1,4 +1,3 @@
-public abstract class NonRadioactiveMaterial extends Material
-{
+public abstract class NonRadioactiveMaterial extends Material {
 
 }
