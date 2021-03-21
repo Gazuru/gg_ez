@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Skeleton {
@@ -17,83 +18,83 @@ public class Skeleton {
 
 	public static void testDrill() {
 		// print fn name
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		// init objects & their respective attributes
 		Asteroid a = new Asteroid();
 		Ship sh = new Ship();
 		sh.setLocation(a);
 		a.acceptFlyingObject(sh);
 		// call fns
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		sh.drill();
 
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testMeltOutcome() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid a = new Asteroid();
 		Ice i = new Ice();
 		a.acceptCore(i);
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		i.onDrillSpecial(a);
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testRadOutcome() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid a = new Asteroid();
 		Uranium u = new Uranium();
 		a.acceptCore(u);
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		u.onDrillSpecial(a);
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testExplode() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid a = new Asteroid();
 		Ship sh = new Ship();
-		Game g = new Game();
+		Game g = Game.getInstance();
 		sh.setLocation(a);
 		a.acceptFlyingObject(sh);
 		g.addGameObject(sh);
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		a.explode();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testIronOutcome() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid a = new Asteroid();
 		Iron i = new Iron();
 		a.acceptCore(i);
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		i.onDrillSpecial(a);
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testDieFromSolarStorm() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid a = new Asteroid();
 		Ship sh = new Ship();
-		Game g = new Game();
+		Game g = Game.getInstance();
 		sh.setLocation(a);
 		a.acceptFlyingObject(sh);
 		g.addGameObject(sh);
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		a.onSolarStorm();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testPlaceGate() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid location = new Asteroid();
 		Asteroid a2 = new Asteroid();
 		Ship sh = new Ship();
@@ -104,14 +105,14 @@ public class Skeleton {
 		a2.addNeighbour(location);
 		sh.addGate(g);
 
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		sh.placeGate();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testUseGate() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Ship sh = new Ship();
 		Gate location = new Gate();
 		Gate pair = new Gate();
@@ -120,14 +121,14 @@ public class Skeleton {
 		location.setPair(pair);
 		pair.setPair(location);
 
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		sh.useGate();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testPickUpGate() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Ship sh = new Ship();
 		Gate location = new Gate();
 		Asteroid neighbour = new Asteroid();
@@ -135,15 +136,15 @@ public class Skeleton {
 		location.addNeighbour(neighbour);
 		neighbour.addNeighbour(location);
 		sh.setLocation(location);
-		
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+
+		printInit();
 		sh.pickUpGate();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testMine() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid location = new Asteroid();
 		Ship ship = new Ship();
 		Iron i = new Iron();
@@ -151,14 +152,14 @@ public class Skeleton {
 		location.acceptFlyingObject(ship);
 		location.acceptCore(i);
 
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		ship.mine();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testPutMaterial() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid location = new Asteroid();
 		Ship ship = new Ship();
 		Iron i = new Iron();
@@ -166,14 +167,14 @@ public class Skeleton {
 		location.acceptFlyingObject(ship);
 		ship.addMaterial(i);
 
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		ship.putMaterial(i);
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testMove() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid location = new Asteroid();
 		Ship ship = new Ship();
 		Asteroid neighbour = new Asteroid();
@@ -182,74 +183,95 @@ public class Skeleton {
 		location.addNeighbour(neighbour);
 		neighbour.addNeighbour(location);
 
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		ship.move();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
 	public static void testOnSolarStorm() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		printFunc();
 		Asteroid a = new Asteroid();
 		Ship ship = new Ship();
-		Game g = new Game();
+		Game g = Game.getInstance();
 		ship.setLocation(a);
 		a.acceptFlyingObject(ship);
 		g.addGameObject(ship);
 
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		a.onSolarStorm();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
-	// TODO
+	// questionable
 	public static void testCraftGate() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		Uranium materialsUranium = new Uranium();
+		printFunc();
 		Ship ship = new Ship();
+		Uranium materialsUranium = new Uranium();
+		ship.addMaterial(materialsUranium);
 
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+		printInit();
 		ship.craftGatePair();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
-	// TODO
+	// questionable
 	public static void testCraftRobot() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		Asteroid a = new Asteroid();
+		printFunc();
 		Ship ship = new Ship();
-		Game g = new Game();
+		Uranium materialsUranium = new Uranium();
+		Asteroid a = new Asteroid();
+		ship.addMaterial(materialsUranium);
 		ship.setLocation(a);
 		a.acceptFlyingObject(ship);
-		g.addGameObject(ship);
 
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
-		a.onSolarStorm();
+		printInit();
+		ship.buildRobot();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
 	}
 
-	// TODO
+	// questionable
 	public static void testBuildBase() {
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		Asteroid a = new Asteroid();
+		printFunc();
 		Ship ship = new Ship();
-		Game g = new Game();
+		Asteroid a = new Asteroid();
+		Uranium materialsUranium = new Uranium();
+		Game g = Game.getInstance();
+		ship.addMaterial(materialsUranium);
 		ship.setLocation(a);
 		a.acceptFlyingObject(ship);
 		g.addGameObject(ship);
+		g.addField(a);
 
-		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
-		a.onSolarStorm();
+		printInit();
+		ship.buildBase();
 		// returns
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+		printFuncRet("");
+	}
+
+	public static void printFunc() {
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+	}
+
+	public static void printFuncRet(String s) {
+		switch (s) {
+			case ("true") -> System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns true");
+			case ("false") -> System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns false");
+			case ("") -> System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns");
+			default -> System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns " + s);
+		}
+	}
+
+	private static void printInit() {
+		System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
 	}
 
 	public static void main(String[] args) {
 		// TODO
-
-		testPickUpGate();
+		testBuildBase();
 	}
 }
+

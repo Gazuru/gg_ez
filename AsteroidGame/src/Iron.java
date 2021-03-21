@@ -1,4 +1,3 @@
-public class Iron extends NonRadioactiveMaterial
-{
+public class Iron extends NonRadioactiveMaterial {
 
 }

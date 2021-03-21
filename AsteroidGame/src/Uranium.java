@@ -1,4 +1,3 @@
-public class Uranium extends RadioactiveMaterial
-{
+public class Uranium extends RadioactiveMaterial {
 
 }

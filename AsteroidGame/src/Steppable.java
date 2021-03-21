@@ -1,4 +1,3 @@
-public interface Steppable
-{
-	public void step();
+public interface Steppable {
+    public void step();
 }
