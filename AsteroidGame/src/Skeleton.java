@@ -93,13 +93,19 @@ public class Skeleton
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
-	//TODO
+	
 	public static void testPlaceGate() {
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		Asteroid a1=new Asteroid();
+		Asteroid location=new Asteroid();
 		Asteroid a2=new Asteroid();
 		Ship sh=new Ship();
 		Gate g=new Gate();
+		location.acceptFlyingObject(sh);
+		sh.setLocation(location);
+		location.addNeighbour(a2);
+		a2.addNeighbour(location);
+		sh.addGate(g);
+		
 		System.out.println("\n"+"Object initialization finished, test starts: "+"\n");
 		sh.placeGate();
 		//returns
@@ -198,15 +204,14 @@ public class Skeleton
 	//TODO
 	public static void testCraftGate() {
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		Asteroid a=new Asteroid();
+		Uranium materialsUranium=new Uranium();
 		Ship ship=new Ship();
-		Game g=new Game();
-		ship.setLocation(a);
-		a.acceptFlyingObject(ship);
-		g.addGameObject(ship);
+		
+		
+		
 		
 		System.out.println("\n"+"Object initialization finished, test starts: "+"\n");
-		a.onSolarStorm();
+		ship.craftGatePair();
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
@@ -245,6 +250,6 @@ public class Skeleton
 	{
 		//TODO
 		
-		testOnSolarStorm();
+		testPlaceGate();
 	}
 }

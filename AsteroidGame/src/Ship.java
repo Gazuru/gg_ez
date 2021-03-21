@@ -20,16 +20,14 @@ public class Ship extends FlyingObject
 	
 	public boolean craftGatePair()
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		ArrayList<Material> needed = Gate.craftGateReq();
 		BillOfMaterial newBOM = new BillOfMaterial(needed);
-		boolean buildable = false;
-		for(int i = 0; i < materials.size(); i++)
-		{
-			buildable = newBOM.newMaterial(materials.get(i));
-			if(buildable)
-				break;
-		}
-		if(buildable)
+		
+		System.out.println("buildable a rendelkezésre álló anyagokból? y/n");
+		String ans=Skeleton.getUserInput();
+		
+		if(ans.contains("y"))
 		{
 			materials.removeAll(newBOM.getFound());
 			Gate newGate1 = new Gate();
@@ -50,33 +48,26 @@ public class Ship extends FlyingObject
 	
 	public boolean placeGate()
 	{
-		if(gates.size() == 0)
-		{
-			System.out.println("A kapu lerakása nem sikerült, mert a telepesnél nincs kapu!");
-			return false;
-		}
-		ArrayList<Field> neighbours = new ArrayList<Field>();
-		neighbours = location.getNeighbours();
-		if(gates.size() == 1)
-		{
-			for(int i = 0; i < neighbours.size(); i++)
-				neighbours.get(i).addNeighbour(gates.get(0));
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println("gates.size>0? y/n");
+		String ans=Skeleton.getUserInput();
+		
+		if(ans.contains("y")) {
+			ArrayList<Field> neighbour_fields=location.getNeighbours();
+			for(Field f:neighbour_fields) {
+				f.addNeighbour(gates.get(0));
+				gates.get(0).addNeighbour(f);
+			}
 			gates.get(0).setWorking(true);
 			location.addNeighbour(gates.get(0));
-			removeGate(gates.get(0));
-			System.out.println("A kapu lerakása sikerült, a telepesnél nincs több kapu!");
+			gates.get(0).addNeighbour(location);
+			this.removeGate(gates.get(0));
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns true");
 			return true;
+		}else {
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
+			return false;
 		}
-		System.out.println("Melyik kaput szeretnéd lerakni?");
-		Scanner s = new Scanner(System.in);
-		int choose = s.nextInt();
-		for(int i = 0; i < neighbours.size(); i++)
-			neighbours.get(i).addNeighbour(gates.get(choose));
-		gates.get(choose).setWorking(true);
-		location.addNeighbour(gates.get(choose));
-		removeGate(gates.get(choose));
-		System.out.println("A kapu lerakása sikerült, a telepesnél még van egy kapu!");
-		return true;
 	}
 	
 	
@@ -246,7 +237,9 @@ public class Ship extends FlyingObject
 	
 	public void removeGate(Gate gate)
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		gates.remove(gate);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void step()

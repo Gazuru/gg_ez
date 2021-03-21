@@ -40,10 +40,11 @@ public abstract class Field
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
-	public void addNeighbour(Field newNeighbour)
+	public void addNeighbour(Field n)
 	{
-		neighbours.add(newNeighbour);
-		newNeighbour.getNeighbours().add(this);	
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		neighbours.add(n);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void removeNeighbour(Field oldNeighbour)

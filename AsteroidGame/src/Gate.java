@@ -52,21 +52,15 @@ public class Gate extends Field
 	
 	public static ArrayList<Material> craftGateReq()
 	{
-		ArrayList<Material> gateReq = new ArrayList<Material>();
-		Iron ir1 = new Iron();
-		Iron ir2 = new Iron();
-		Ice ic = new Ice();
-		Uranium u = new Uranium();
-		gateReq.add(ir1);
-		gateReq.add(ir2);
-		gateReq.add(ic);
-		gateReq.add(u);
-		return gateReq;
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" needed");
+		return new ArrayList<Material>();
 	}
 	
 	public void setWorking(boolean working)
 	{
-		this.working = working;
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public Gate getPair()

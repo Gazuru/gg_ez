@@ -7,6 +7,7 @@ public class BillOfMaterial
 	
 	public BillOfMaterial(ArrayList<Material> requires)
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" constructor");
 		needed = requires;
 	}
 	
