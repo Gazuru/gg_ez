@@ -20,7 +20,6 @@ public abstract class FlyingObject implements Steppable {
     public void setLocation(Field newLocation) {
         Skeleton.printFunc();
         location = newLocation;
-        location.acceptFlyingObject(this);
         Skeleton.printFuncRet("");
     }
 

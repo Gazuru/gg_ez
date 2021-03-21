@@ -224,6 +224,7 @@ public class Skeleton {
         Asteroid a = new Asteroid();
         ship.addMaterial(materialsUranium);
         ship.setLocation(a);
+        a.acceptFlyingObject(ship);
 
         printInit();
         ship.buildRobot();
@@ -240,6 +241,7 @@ public class Skeleton {
         Game g = Game.getInstance();
         ship.addMaterial(materialsUranium);
         ship.setLocation(a);
+        a.acceptFlyingObject(ship);
         g.addGameObject(ship);
         g.addField(a);
 
