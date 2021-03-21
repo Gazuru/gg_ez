@@ -1,29 +1,24 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Robot extends FlyingObject
-{
-	public Robot()
-	{
+public class Robot extends FlyingObject {
+	public Robot() {
 		location.acceptFlyingObject(this);
 		game.addGameObject(this);
 	}
-	
-	public void step()
-	{
+
+	public void step() {
 		boolean done = false;
 		done = drill();
-		if(!done)
+		if (!done)
 			move();
 	}
-	
-	public boolean move()
-	{
+
+	public boolean move() {
 		ArrayList<Field> moveable = new ArrayList<Field>();
 		moveable = location.getNeighbours();
 		Field newLocation;
-		if(moveable.size() != 0)
-		{
+		if (moveable.size() != 0) {
 			Random random = new Random();
 			int newLocationInt = random.nextInt(moveable.size());
 			newLocation = moveable.get(newLocationInt);
@@ -35,30 +30,25 @@ public class Robot extends FlyingObject
 		System.out.println("A mozgás sikertelen, mert nincs szomszéd!");
 		return false;
 	}
-	
-	public void die()
-	{
+
+	public void die() {
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		location.removeFlyingObject(this);
 		Game.removeGameObject(this);
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
 	}
-	
-	public void onExplode()
-	{
+
+	public void onExplode() {
 		move();
 	}
-	
-	
-	public static ArrayList<Material> craftRobotReq()
-	{
+
+	public static ArrayList<Material> craftRobotReq() {
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		ArrayList<Material> robotReq = new ArrayList<Material>();
-		Iron i = new Iron();
-		Coal c = new Coal();
-		Uranium u = new Uranium();
-		robotReq.add(i);
-		robotReq.add(c);
-		robotReq.add(u);
+		robotReq.add(new Iron());
+		robotReq.add(new Coal());
+		robotReq.add(new Uranium());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
 		return robotReq;
 	}
 }
