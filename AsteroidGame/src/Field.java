@@ -36,7 +36,7 @@ public abstract class Field
 	public void acceptFlyingObject(FlyingObject fo)
 	{
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		
+		this.onSurface.add(fo);
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	

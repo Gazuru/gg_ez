@@ -95,6 +95,7 @@ public class Asteroid extends Field
 		
 		System.out.println("el tud bujni? y/n");
 		String ans=Skeleton.getUserInput();
+		
 		if(ans.contains("n")) {
 			for(FlyingObject f:onSurface){
 				f.onSolarStormCase();
