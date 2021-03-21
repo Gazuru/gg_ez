@@ -236,7 +236,12 @@ public class Skeleton {
         printFunc();
         Ship ship = new Ship();
         Asteroid a = new Asteroid();
+        Uranium materialsUranium = new Uranium();
+        Game g = Game.getInstance();
+        ship.addMaterial(materialsUranium);
         ship.setLocation(a);
+        g.addGameObject(ship);
+        g.addField(a);
 
         printInit();
         ship.buildBase();
@@ -263,7 +268,6 @@ public class Skeleton {
 
     public static void main(String[] args) {
         // TODO
-
-        testCraftGate();
+        testBuildBase();
     }
 }
