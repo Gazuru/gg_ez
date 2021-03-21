@@ -127,12 +127,17 @@ public class Skeleton
 		//returns
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
-	//TODO
+	
+	
 	public static void testPickUpGate() {
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
 		Ship sh=new Ship();
 		Gate location=new Gate();
 		Asteroid neighbour=new Asteroid();
+		location.acceptFlyingObject(sh);
+		location.addNeighbour(neighbour);
+		neighbour.addNeighbour(location);
+		
 		
 		System.out.println("\n"+"Object initialization finished, test starts: "+"\n");
 		sh.pickUpGate();
