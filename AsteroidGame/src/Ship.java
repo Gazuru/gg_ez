@@ -51,8 +51,8 @@ public class Ship extends FlyingObject {
         String ans = Skeleton.getUserInput();
 
         if (ans.contains("y")) {
-            ArrayList<Field> neighbour_fields = location.getNeighbours();
-            for (Field f : neighbour_fields) {
+            ArrayList<Field> neighbourFields = location.getNeighbours();
+            for (Field f : neighbourFields) {
                 f.addNeighbour(gates.get(0));
                 gates.get(0).addNeighbour(f);
             }
@@ -74,29 +74,26 @@ public class Ship extends FlyingObject {
         String ans = Skeleton.getUserInput();
 
         if (ans.contains("y")) {
-            boolean ok = location.pickedUpBy(this);
-            if (ok) {
-                ArrayList<Field> neighbours = new ArrayList<Field>();
-                neighbours = location.getNeighbours();
-                for (Field neighbour : neighbours) neighbour.removeNeighbour(location);
-                move();
-                if (gates.size() == 1) {
-                    for (int i = 0; i < gates.get(0).getNeighbours().size(); i++)
-                        gates.get(0).getNeighbours().remove(i);
-                    gates.get(0).setWorking(false);
-                }
-                if (gates.size() == 2) {
-                    for (int i = 0; i < gates.get(1).getNeighbours().size(); i++)
-                        gates.get(1).getNeighbours().remove(i);
-                    gates.get(1).setWorking(false);
-                }
-                System.out.println("A kapu felvétele sikerült!");
-                return true;
+        	boolean ok = location.pickedUpBy(this);
+    		if (ok) {
+    			
+    			if(move()) {
+    			
+    			ArrayList<Field> neighbours_tmp=location.getNeighbours();
+    			for (Field f : neighbours_tmp) {
+    				f.removeNeighbour(location);
+    			}
+    			
+    			
 
-            }
-            System.out.println("A kapu felvétele nem sikerült, mert már van a telepesnél 2 kapu!");
+    			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns true");
+    			return true;
+    			}
+    		}
+    		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns false");
             return false;
         }
+        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns true");
         return true;
     }
 
@@ -201,7 +198,7 @@ public class Ship extends FlyingObject {
 
     public void addGate(Gate newGate) {
         Skeleton.printFunc();
-        // gates.add(newGate);
+        gates.add(newGate);
         Skeleton.printFuncRet("");
     }
 

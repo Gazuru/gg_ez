@@ -76,16 +76,16 @@ public class Asteroid extends Field {
         Skeleton.printFuncRet("");
     }
 
-    public void onSolarStorm() {
-        Skeleton.printFunc();
+	public void onSolarStorm() {
+		Skeleton.printFunc();
 
-        System.out.println("el tud bujni? y/n");
-        String ans = Skeleton.getUserInput();
+		System.out.println("el tud bujni? y/n");
+		String ans = Skeleton.getUserInput();
 
-        if (ans.contains("n")) {
-            for (FlyingObject f : onSurface) {
-                f.onSolarStormCase();
-            }
+		if (ans.contains("n")) {
+			for (int i = 0; i < onSurface.size(); i++) {
+				onSurface.get(i).onSolarStormCase();
+			}
         }
         Skeleton.printFuncRet("");
     }
