@@ -135,6 +135,7 @@ public class Skeleton {
 		location.acceptFlyingObject(sh);
 		location.addNeighbour(neighbour);
 		neighbour.addNeighbour(location);
+		sh.setLocation(location);
 
 		printInit();
 		sh.pickUpGate();
