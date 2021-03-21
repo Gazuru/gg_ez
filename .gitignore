@@ -12,4 +12,5 @@ AsteroidGame/bin/.idea/modules.xml
 AsteroidGame/bin/.idea/src.iml
 AsteroidGame/bin/.idea/vcs.xml
 AsteroidGame/bin/.idea/workspace.xml
-/AsteroidGame/bin/**
+*.class
+*.xml
