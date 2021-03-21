@@ -30,9 +30,17 @@ public class Gate extends Field
 	public boolean pickedUpBy(Ship ship)
 	{
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		ship.addGate(this);
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" true");
-		return true;
+		System.out.println("2>gates? y/n");
+		String ans = Skeleton.getUserInput();
+		if(ans.contains("y")) {
+			this.setWorking(false);
+			ship.addGate(this);
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" true");
+			return true;
+		}else {
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
+			return false;}
+		
 	}
 	
 	public boolean teleport(FlyingObject f)
