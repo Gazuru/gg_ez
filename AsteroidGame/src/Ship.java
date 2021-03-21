@@ -12,7 +12,10 @@ public class Ship extends FlyingObject
 	
 	public boolean mine()
 	{
-		return location.onMine(this);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		boolean completed= location.onMine(this);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns "+completed);
+		return completed;
 	}
 	
 	public boolean craftGatePair()
@@ -166,42 +169,54 @@ public class Ship extends FlyingObject
 		return false;
 	}
 	
-	public boolean putMaterial()
+	public boolean putMaterial(Material m)
 	{
-		if(materials != null)
-			location.fillBy(this);
-		System.out.println("A nyersanyag lerakása nem sikerült, mert a telepesnél nincs nyersanyag!");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		if(location.fillBy(this,m)) {
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns true");
+			return true;
+		}
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
 		return false;
 	}
 	
 	public void removeMaterial(Material material)
 	{
-		materials.remove(material);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
-	public void addMaterial(Material material)
+	public boolean addMaterial(Material material)
 	{
-		materials.add(material);
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
+		System.out.println("kevesebb mint 10 dolog van nála inventoryba? y/n");
+		String ans2=Skeleton.getUserInput();
+		
+		if(ans2.contains("n")) {
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
+			return false;
+		}
+		
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns true");
+		return true;
+		
 	}
 	
 	public boolean move()
 	{
-		ArrayList<Field> moveable = new ArrayList<Field>();
-		moveable = location.getNeighbours();
-		Field newLocation;
-		if(moveable.size() != 0)
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		Field neighbour_asteroid=location.getNeighbours().get(0);
+		System.out.println("van szomszed amire tud menni? y/n");
+		String ans3=Skeleton.getUserInput();
+		if(ans3.contains("y"))
 		{
-			System.out.println("Hova szeretnél menni? 0: " + moveable.get(0).getNumber() + " 1: " + moveable.get(1).getNumber());
-			Scanner s = new Scanner(System.in);
-			int choose = s.nextInt();
-			newLocation = moveable.get(choose);
 			location.removeFlyingObject(this);
-			newLocation.acceptFlyingObject(this);
-			location = newLocation;
-			System.out.println("A mozgás sikeres!");
+			neighbour_asteroid.acceptFlyingObject(this);
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns true");
 			return true;
 		}
-		System.out.println("A mozgás sikertelen, mert nincs szomszéd!");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
 		return false;
 	}
 	
@@ -253,7 +268,7 @@ public class Ship extends FlyingObject
 				case 6: done = buildRobot(); break;
 				case 7: done = craftGatePair(); break;
 				case 8: done = pickUpGate(); break;
-				case 9: done = putMaterial(); break;
+				//case 9: done = putMaterial(); break;
 				default: System.out.println("Érvénytelen!");
 			}
 		}

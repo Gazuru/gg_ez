@@ -20,6 +20,9 @@ public abstract class Field
 	
 	public ArrayList<Field> getNeighbours()
 	{
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns neighbours");
 		return neighbours;
 	}
 	
@@ -64,5 +67,9 @@ public abstract class Field
 		return false;
 	}
 	public abstract boolean pickedUpBy(Ship ship);
-	public abstract boolean fillBy(Ship ship);
+	public boolean fillBy(Ship ship,Material m) {
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
+		return false;
+	}
 }

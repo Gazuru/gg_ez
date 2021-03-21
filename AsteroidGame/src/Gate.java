@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Gate extends Field
@@ -80,7 +81,8 @@ public class Gate extends Field
 	
 	public boolean onDrill()
 	{
-		System.out.println("A fúrás sikertelen, mert egy kapun nem lehet fúrni!");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
 		return false;
 	}
 	
@@ -92,13 +94,15 @@ public class Gate extends Field
 	
 	public boolean onMine(Ship ship)
 	{
-		System.out.println("A bányászat nem sikerült, mert a telepes egy kapun, nem egy aszteroidán van, kapun pedig nem lehet bányászni!");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
 		return false;
 	}
 	
 	public boolean fillBy(Ship ship)
 	{
-		System.out.println("Kapuba nem lehet visszatenni nyersanyagot!");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
 		return false;
 	}
 }

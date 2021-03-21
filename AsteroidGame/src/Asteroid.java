@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Asteroid extends Field
 {
@@ -56,7 +57,8 @@ public class Asteroid extends Field
 	
 	public void acceptCore(Material newCore)
 	{
-		core = newCore;
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
 	public void setCore(Material newCore)
@@ -101,35 +103,45 @@ public class Asteroid extends Field
 		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
 	}
 	
-	public boolean fillBy(Ship ship)
+	public boolean fillBy(Ship ship,Material m)
 	{
-		if(layer == 0 && core == null)
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
+		System.out.println("layer==0 és üres jelenleg? y/n");
+		String ans=Skeleton.getUserInput();
+		
+		if(ans.contains("y"))
 		{
-			acceptCore(ship.getMaterials().get(0));
-			ship.removeMaterial(ship.getMaterials().get(0));
-			System.out.println("A nyersanyag lerakása sikerült!");
+			acceptCore(m);
+			ship.removeMaterial(m);
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns true");
 			return true;
 		}
-		System.out.println("Ebbe az aszteroidába nem helyezhetõ jelenleg nyersanyag!");
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
 		return false;
 	}
 	
 	public boolean onMine(Ship ship)
 	{
-		if(layer != 0)
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+		
+		System.out.println("át van fúrva és van benne nyersanyag? y/n");
+		String ans=Skeleton.getUserInput();
+		
+		if(ans.contains("n"))
 		{
-			System.out.println("A bányászat nem sikerült, mert az aszteroida még nincs átfúrva!");
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
 			return false;
 		}
-		if(core == null)
-		{
-			System.out.println("A bányászat nem sikerült, mert az aszteroidában nincs nyersanyag!");
+		if(!ship.addMaterial(core)) {
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns false");
 			return false;
-		}
-		ship.addMaterial(core);
+		}else {
 		removeCore();
-		System.out.println("A bányászat sikerült!");
+		
+		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns true");
 		return true;
+		}
 	}
 	
 	public boolean teleport(Ship ship)
