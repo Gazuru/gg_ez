@@ -42,6 +42,10 @@ public class Robot extends FlyingObject {
         move();
     }
 
+    public void onSolarStormCase() {
+
+    }
+
     public static ArrayList<Material> craftRobotReq() {
         Skeleton.printFunc();
         ArrayList<Material> robotReq = new ArrayList<Material>();

@@ -43,13 +43,13 @@ class Game implements Steppable {
     }
 
     public void step() {
-        System.out.println("A(z) " + round++ + ". kör!");
+        System.out.println("A(z) " + round++ + ". kï¿½r!");
         System.out.println();
         for (int i = 0; i < gameObjects.size(); i++) {
-            System.out.println("A(z) " + i + ". játékos!");
+            System.out.println("A(z) " + i + ". jï¿½tï¿½kos!");
             System.out.println("Aszteroida: " + gameObjects.get(i).getLocation().getNumber());
 
-            // csak saját teszthez
+            // csak sajï¿½t teszthez
             int dbic = 0;
             int dbir = 0;
             int dbu = 0;
@@ -75,7 +75,7 @@ class Game implements Steppable {
         if (solarStorm()) {
             for (Field field : fields) field.onSolarStorm();
             if (numShips == 0) {
-                System.out.println("A játék véget ért, mert minden telepes halott!");
+                System.out.println("A jï¿½tï¿½k vï¿½get ï¿½rt, mert minden telepes halott!");
                 end = true;
             }
         }
@@ -104,8 +104,8 @@ class Game implements Steppable {
     }
 
     public void initGame() {
-        System.out.println("Inicializálás!");
-        System.out.print("A pálya mérete: ");
+        System.out.println("Inicializï¿½lï¿½s!");
+        System.out.print("A pï¿½lya mï¿½rete: ");
         Scanner s = new Scanner(System.in);
         int choose = s.nextInt();
         int j = 0;
@@ -114,22 +114,22 @@ class Game implements Steppable {
             Random random = new Random();
             int rand = random.nextInt(4);
             switch (rand) {
-                case 0 -> {
+                case 0:
                     Coal c = new Coal();
                     newAsteroid.acceptCore(c);
-                }
-                case 1 -> {
+                    break;
+                case 1:
                     Iron ir = new Iron();
                     newAsteroid.acceptCore(ir);
-                }
-                case 2 -> {
+                    break;
+                case 2:
                     Ice i = new Ice();
                     newAsteroid.acceptCore(i);
-                }
-                case 3 -> {
+                    break;
+                case 3:
                     Uranium u = new Uranium();
                     newAsteroid.acceptCore(u);
-                }
+                    break;
             }
             addField(newAsteroid);
             newAsteroid.setGame(this);
@@ -139,7 +139,7 @@ class Game implements Steppable {
             fields.get(k).addNeighbour(fields.get(k - 2));
             fields.get(k).addNeighbour(fields.get(k - 1));
         }
-        System.out.print("Játékosok száma: ");
+        System.out.print("Jï¿½tï¿½kosok szï¿½ma: ");
         choose = s.nextInt();
         numShips = choose;
         while (gameObjects.size() != numShips) {

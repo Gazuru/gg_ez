@@ -78,25 +78,8 @@ public class Gate extends Field {
         Skeleton.printFuncRet("");
     }
 
-    public boolean onDrill() {
-        Skeleton.printFunc();
-        Skeleton.printFuncRet("false");
-        return false;
-    }
-
     public void onSolarStorm() {
         for (FlyingObject flyingObject : onSurface) flyingObject.onSolarStormCase();
     }
 
-    public boolean onMine(Ship ship) {
-        Skeleton.printFunc();
-        Skeleton.printFuncRet("false");
-        return false;
-    }
-
-    public boolean fillBy(Ship ship) {
-        Skeleton.printFunc();
-        Skeleton.printFuncRet("false");
-        return false;
-    }
 }

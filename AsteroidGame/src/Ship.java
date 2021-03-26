@@ -18,7 +18,7 @@ public class Ship extends FlyingObject {
     public boolean craftGatePair() {
         Skeleton.printFunc();
 
-        System.out.println("Kapuk száma >0? y/n");
+        System.out.println("Kapuk szï¿½ma >0? y/n");
         String ans = Skeleton.getUserInput();
 
         if (ans.contains("n")) {
@@ -74,23 +74,22 @@ public class Ship extends FlyingObject {
         String ans = Skeleton.getUserInput();
 
         if (ans.contains("y")) {
-        	boolean ok = location.pickedUpBy(this);
-    		if (ok) {
-    			
-    			if(move()) {
-    			
-    			ArrayList<Field> neighbours_tmp=location.getNeighbours();
-    			for (Field f : neighbours_tmp) {
-    				f.removeNeighbour(location);
-    			}
-    			
-    			
+            boolean ok = location.pickedUpBy(this);
+            if (ok) {
 
-    			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns true");
-    			return true;
-    			}
-    		}
-    		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns false");
+                if (move()) {
+
+                    ArrayList<Field> neighbours_tmp = location.getNeighbours();
+                    for (Field f : neighbours_tmp) {
+                        f.removeNeighbour(location);
+                    }
+
+
+                    System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns true");
+                    return true;
+                }
+            }
+            System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns false");
             return false;
         }
         System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns true");
@@ -151,7 +150,7 @@ public class Ship extends FlyingObject {
     public boolean addMaterial(Material material) {
         Skeleton.printFunc();
 
-        System.out.println("kevesebb, mint 10 dolog van nála inventoryban? y/n");
+        System.out.println("kevesebb, mint 10 dolog van nï¿½la inventoryban? y/n");
         String ans2 = Skeleton.getUserInput();
 
         if (ans2.contains("n")) {
@@ -196,6 +195,10 @@ public class Ship extends FlyingObject {
         Skeleton.printFuncRet("");
     }
 
+    public void onSolarStormCase() {
+
+    }
+
     public void addGate(Gate newGate) {
         Skeleton.printFunc();
         gates.add(newGate);
@@ -211,25 +214,48 @@ public class Ship extends FlyingObject {
     public void step() {
         boolean done = false;
         while (!done) {
-            System.out.println("Mit szeretnél csinálni?");
+            System.out.println("Mit szeretnï¿½l csinï¿½lni?");
             System.out.println(
                     "1:Move 2:Drill 3:Mine 4:Teleport 5:BuildBase 6:BuildRobot 7:BuildGate 8:PickUpGate 9:PutMaterial");
             Scanner s = new Scanner(System.in);
             int choose = s.nextInt();
-			// case 9: done = putMaterial(); break;
-			switch (choose) {
-				case 1 -> done = move();
-				case 2 -> done = drill();
-				case 3 -> done = mine();
-				case 4 -> done = useGate();
-				case 5 -> done = buildBase();
-				case 6 -> done = buildRobot();
-				case 7 -> done = craftGatePair();
-				case 8 -> done = pickUpGate();
-				default -> System.out.println("Érvénytelen!");
-			}
+            // case 9: done = putMaterial(); break;
+            switch (choose) {
+                case 1:
+                    done = move();
+                    break;
+                case 2:
+                    done = drill();
+                    break;
+                case 3:
+                    done = mine();
+                    break;
+                case 4:
+                    done = useGate();
+                    break;
+                case 5:
+                    done = buildBase();
+                    break;
+                case 6:
+                    done = buildRobot();
+                    break;
+                case 7:
+                    done = craftGatePair();
+                    break;
+                case 8:
+                    done = pickUpGate();
+                    break;
+                default:
+                    System.out.println("ï¿½rvï¿½nytelen!");
+                    break;
+            }
         }
         System.out.println();
+    }
+
+    public boolean useGate() {
+        //TODO inblebendt
+        return false;
     }
 
     public ArrayList<Material> getMaterials() {

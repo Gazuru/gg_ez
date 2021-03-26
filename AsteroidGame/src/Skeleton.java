@@ -258,10 +258,10 @@ public class Skeleton {
 
     public static void printFuncRet(String s) {
         switch (s) {
-            case ("true") -> System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns true");
-            case ("false") -> System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns false");
-            case ("") -> System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns");
-            default -> System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns " + s);
+            case ("true"): System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns true");
+            case ("false"): System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns false");
+            case (""): System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns");
+            default: System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns " + s);
         }
     }
 
