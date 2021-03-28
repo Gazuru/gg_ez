@@ -126,16 +126,4 @@ public class Asteroid extends Field {
             return true;
         }
     }
-
-    public boolean teleport(Ship ship) {
-        Skeleton.printFunc();
-        Skeleton.printFuncRet("false");
-        return false;
-    }
-
-    public boolean pickedUpBy(Ship ship) {
-        Skeleton.printFunc();
-        Skeleton.printFuncRet("false");
-        return false;
-    }
 }

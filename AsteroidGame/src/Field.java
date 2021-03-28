@@ -42,17 +42,21 @@ public abstract class Field {
 
     public void removeNeighbour(Field oldNeighbour) {
         System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
-		neighbours.remove(oldNeighbour);
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns");
+        neighbours.remove(oldNeighbour);
+        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
     }
 
     public ArrayList<FlyingObject> getOnSurface() {
         return onSurface;
     }
 
-    public abstract boolean onMine(Ship ship);
+    public boolean onMine(Ship ship){
+        return false;
+    }
 
-    public abstract boolean onDrill();
+    public boolean onDrill(){
+        return false;
+    }
 
     public abstract void onSolarStorm();
 
@@ -63,7 +67,9 @@ public abstract class Field {
         return false;
     }
 
-    public abstract boolean pickedUpBy(Ship ship);
+    public boolean pickedUpBy(Ship ship) {
+        return false;
+    }
 
     public boolean fillBy(Ship ship, Material m) {
         Skeleton.printFunc();

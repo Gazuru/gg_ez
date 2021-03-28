@@ -46,22 +46,11 @@ public abstract class FlyingObject implements Steppable {
         return completed;
     }
 
-    public boolean useGate() {
-        Skeleton.printFunc();
-        boolean completed = location.teleport(this);
-        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns " + completed);
-        return completed;
-    }
-
     public abstract boolean move();
 
     public abstract void die();
 
     public abstract void onExplode();
 
-    public void onSolarStormCase() {
-        Skeleton.printFunc();
-        die();
-        Skeleton.printFuncRet("");
-    }
+    public abstract void onSolarStormCase();
 }
