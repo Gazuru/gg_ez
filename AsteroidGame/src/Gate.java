@@ -3,14 +3,16 @@ import java.util.ArrayList;
 
 public class Gate extends Field {
     private boolean working;
+    private boolean wild;
     private Gate pair;
 
     public Gate() {
         working = false;
+        wild = false;
     }
 
     public boolean getWorking() {
-        Skeleton.printFunc();
+        /*Skeleton.printFunc();
         System.out.println("working? y/n");
         String ans = Skeleton.getUserInput();
         if (ans.contains("y")) {
@@ -19,12 +21,12 @@ public class Gate extends Field {
         } else {
             Skeleton.printFuncRet("false");
             return false;
-        }
-
+        }*/
+        return working;
     }
 
     public boolean pickedUpBy(Ship ship) {
-        Skeleton.printFunc();
+        /*Skeleton.printFunc();
         System.out.println("2>gates? y/n");
 		String ans = Skeleton.getUserInput();
 		if(ans.contains("y")) {
@@ -34,7 +36,14 @@ public class Gate extends Field {
         	return true;
 		}else {
 			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
-			return false;}
+			return false;}*/
+        ship.addGate(this);
+        for(int i = neighbours.size()-1; i >= 0; i--){
+            neighbours.get(i).removeNeighbour(this);
+        }
+        ship.move();
+        setWorking(false);
+        return true;
     }
 
     public boolean teleport(FlyingObject f) {
@@ -61,8 +70,9 @@ public class Gate extends Field {
         return needed;
     }
 
-    public void setWorking(boolean working) {
+    public void setWorking(boolean _working) {
         Skeleton.printFunc();
+        working = _working;
         Skeleton.printFuncRet("");
     }
 
@@ -79,7 +89,8 @@ public class Gate extends Field {
     }
 
     public void onSolarStorm() {
-        for (FlyingObject flyingObject : onSurface) flyingObject.onSolarStormCase();
+        for (int i = onSurface.size()-1; i >= 0; i--)
+            onSurface.get(i).onSolarStormCase();
     }
 
 }

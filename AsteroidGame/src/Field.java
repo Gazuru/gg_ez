@@ -32,12 +32,14 @@ public abstract class Field {
     public void addNeighbour(Field n) {
         Skeleton.printFunc();
         neighbours.add(n);
+        n.neighbours.add(this);
         Skeleton.printFuncRet("");
     }
 
     public void removeNeighbour(Field oldNeighbour) {
         System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
         neighbours.remove(oldNeighbour);
+        oldNeighbour.neighbours.remove(this);
         System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
     }
 
