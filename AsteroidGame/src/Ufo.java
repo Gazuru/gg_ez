@@ -1,10 +1,21 @@
+import java.util.Random;
 
 public class Ufo extends FlyingObject{
 
 	@Override
 	public void step() {
-		// TODO Auto-generated method stub
-		
+		boolean done = false;
+        done = drill();
+        if (!done) {
+        	Random random = new Random();
+        	int randomI = random.nextInt(2);
+        	if(randomI==0) {
+        		useGate();
+        	}
+        	if(randomI==1) {
+        		move();
+        	}
+        }
 	}
 
 	@Override
