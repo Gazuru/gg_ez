@@ -181,11 +181,9 @@ public class Ship extends FlyingObject {
 
     public void die() {
         Skeleton.printFunc();
-
         location.removeFlyingObject(this);
         Game.removeGameObject(this);
         Game.decreaseNumShips();
-
         Skeleton.printFuncRet("");
     }
 
@@ -254,7 +252,7 @@ public class Ship extends FlyingObject {
     }
 
     public boolean useGate() {
-        //TODO inblebendt
+        //TODO
         return false;
     }
 
