@@ -11,18 +11,6 @@ public class Asteroid extends Field {
 
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int x) {
-        number = x;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
     public boolean getInSunProximity() {
         return inSunProximity;
     }
@@ -34,7 +22,7 @@ public class Asteroid extends Field {
     public boolean onDrill() {
         Skeleton.printFunc();
 
-        System.out.println("layer>1? y/n");
+        /*System.out.println("layer>1? y/n");
         String ans = Skeleton.getUserInput();
 
         if (ans.contains("y")) {
@@ -44,33 +32,47 @@ public class Asteroid extends Field {
         } else {
             Skeleton.printFuncRet("false");
             return false;
+        }*/
+
+        if(layer>1){
+            decreaseLayer();
+            return true;
+        }else if(layer == 1){
+            core.onDrillSpecial(this);
+            return true;
+        }else{
+            return false;
         }
+
     }
 
     public void acceptCore(Material newCore) {
         Skeleton.printFunc();
+        core = newCore;
         Skeleton.printFuncRet("");
     }
 
-    public void setCore(Material newCore) {
+    /*public void setCore(Material newCore) {
         core = newCore;
-    }
+    }*/
 
 
     public void removeCore() {
         Skeleton.printFunc();
+        core = null;
         Skeleton.printFuncRet("");
     }
 
     public void decreaseLayer() {
         Skeleton.printFunc();
+        layer--;
         Skeleton.printFuncRet("");
     }
 
     public void explode() {
         Skeleton.printFunc();
-        for (FlyingObject f : onSurface) {
-            f.onExplode();
+        for(int i = 0; i < onSurface.size(); i++){
+
         }
 
         Skeleton.printFuncRet("");

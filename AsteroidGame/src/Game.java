@@ -6,7 +6,7 @@ class Game implements Steppable {
     private ArrayList<FlyingObject> gameObjects = new ArrayList<FlyingObject>();
     private int numShips;
     private ArrayList<Field> fields = new ArrayList<Field>();
-    private int round = 0;
+    //private int round = 0;
     private static boolean end = false;
     private static Game single_instance = null;
 
@@ -43,11 +43,11 @@ class Game implements Steppable {
     }
 
     public void step() {
-        System.out.println("A(z) " + round++ + ". k�r!");
+        //System.out.println("A(z) " + round++ + ". k�r!");
         System.out.println();
         for (int i = 0; i < gameObjects.size(); i++) {
             System.out.println("A(z) " + i + ". j�t�kos!");
-            System.out.println("Aszteroida: " + gameObjects.get(i).getLocation().getNumber());
+            System.out.println("Aszteroida: " + gameObjects.get(i).getLocation());
 
             // csak saj�t teszthez
             int dbic = 0;
@@ -76,7 +76,7 @@ class Game implements Steppable {
             for (Field field : fields) field.onSolarStorm();
             if (numShips == 0) {
                 System.out.println("A j�t�k v�get �rt, mert minden telepes halott!");
-                end = true;
+                //end = true;
             }
         }
         System.out.println();
@@ -85,11 +85,7 @@ class Game implements Steppable {
     public boolean solarStorm() {
         Random random = new Random();
         int rand = random.nextInt(200000);
-        if (rand == 10) {
-            return true;
-        } else {
-            return false;
-        }
+        return rand == 10;
     }
 
     public void startGame() {
@@ -132,7 +128,6 @@ class Game implements Steppable {
                     break;
             }
             addField(newAsteroid);
-            newAsteroid.setGame(this);
             j++;
         }
         for (int k = 2; k < fields.size(); k++) {

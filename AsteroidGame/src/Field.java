@@ -3,16 +3,10 @@ import java.util.ArrayList;
 public abstract class Field {
     protected ArrayList<Field> neighbours;
     protected ArrayList<FlyingObject> onSurface;
-    protected int number;
-    protected Game game;
 
     public Field() {
         neighbours = new ArrayList<Field>();
         onSurface = new ArrayList<FlyingObject>();
-    }
-
-    public int getNumber() {
-        return number;
     }
 
     public ArrayList<Field> getNeighbours() {
@@ -24,13 +18,15 @@ public abstract class Field {
 
     public void removeFlyingObject(FlyingObject fo) {
         Skeleton.printFunc();
-        this.onSurface.remove(fo);
+        onSurface.remove(fo);
+        fo.setLocation(null);
         Skeleton.printFuncRet("");
     }
 
     public void acceptFlyingObject(FlyingObject fo) {
         Skeleton.printFunc();
-        this.onSurface.add(fo);
+        onSurface.add(fo);
+        fo.setLocation(this);
         Skeleton.printFuncRet("");
     }
 
