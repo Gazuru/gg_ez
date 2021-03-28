@@ -11,17 +11,6 @@ public class Asteroid extends Field {
 
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int x) {
-        number = x;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
 
     public boolean getInSunProximity() {
         return inSunProximity;

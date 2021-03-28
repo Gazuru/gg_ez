@@ -3,21 +3,14 @@ import java.util.ArrayList;
 public abstract class Field {
     protected ArrayList<Field> neighbours;
     protected ArrayList<FlyingObject> onSurface;
-    protected int number;
-    protected Game game;
 
     public Field() {
         neighbours = new ArrayList<Field>();
         onSurface = new ArrayList<FlyingObject>();
     }
 
-    public int getNumber() {
-        return number;
-    }
-
     public ArrayList<Field> getNeighbours() {
         Skeleton.printFunc();
-
         Skeleton.printFuncRet("neighbours");
         return neighbours;
     }
@@ -51,10 +44,14 @@ public abstract class Field {
     }
 
     public boolean onMine(Ship ship){
+    	Skeleton.printFunc();
+        Skeleton.printFuncRet("false");
         return false;
     }
 
     public boolean onDrill(){
+    	Skeleton.printFunc();
+        Skeleton.printFuncRet("false");
         return false;
     }
 
@@ -62,12 +59,13 @@ public abstract class Field {
 
     public boolean teleport(FlyingObject f) {
         Skeleton.printFunc();
-
         Skeleton.printFuncRet("false");
         return false;
     }
 
     public boolean pickedUpBy(Ship ship) {
+    	 Skeleton.printFunc();
+         Skeleton.printFuncRet("false");
         return false;
     }
 

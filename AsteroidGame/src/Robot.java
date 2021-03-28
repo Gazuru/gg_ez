@@ -4,7 +4,6 @@ import java.util.Random;
 public class Robot extends FlyingObject {
     public Robot() {
         location.acceptFlyingObject(this);
-        game.addGameObject(this);
     }
 
     public void step() {
@@ -15,19 +14,17 @@ public class Robot extends FlyingObject {
     }
 
     public boolean move() {
-        ArrayList<Field> moveable = new ArrayList<Field>();
-        moveable = location.getNeighbours();
-        Field newLocation;
-        if (moveable.size() != 0) {
+        ArrayList<Field> current_neighbours = location.getNeighbours();
+        if (current_neighbours.size() != 0) {
             Random random = new Random();
-            int newLocationInt = random.nextInt(moveable.size());
-            newLocation = moveable.get(newLocationInt);
+            int newLocationInt = random.nextInt(current_neighbours.size());
+            Field newLocation = current_neighbours.get(newLocationInt);
+            
+            
             location.removeFlyingObject(this);
             newLocation.acceptFlyingObject(this);
-            System.out.println("A mozgás sikeres!");
             return true;
         }
-        System.out.println("A mozgás sikertelen, mert nincs szomszéd!");
         return false;
     }
 
@@ -43,7 +40,9 @@ public class Robot extends FlyingObject {
     }
 
     public void onSolarStormCase() {
-
+    	Skeleton.printFunc();
+    	die();
+        Skeleton.printFuncRet("");
     }
 
     public static ArrayList<Material> craftRobotReq() {

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public abstract class FlyingObject implements Steppable {
     protected Field location;
     protected ArrayList<Material> materials;
-    protected Game game;
 
     public FlyingObject() {
 
@@ -31,18 +30,11 @@ public abstract class FlyingObject implements Steppable {
         materials = newMaterials;
     }
 
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game newGame) {
-        game = newGame;
-    }
 
     public boolean drill() {
         Skeleton.printFunc();
         boolean completed = location.onDrill();
-        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns " + completed);
+        Skeleton.printFuncRet(Boolean.toString(completed));
         return completed;
     }
 
