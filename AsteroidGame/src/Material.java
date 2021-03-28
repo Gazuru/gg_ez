@@ -15,4 +15,9 @@ public abstract class Material {
         return false;
 
     }
+    
+    public void onFill(Asteroid a) {
+    	 Skeleton.printFunc();
+         Skeleton.printFuncRet("");
+    }
 }

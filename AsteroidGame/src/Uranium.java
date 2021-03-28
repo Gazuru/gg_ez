@@ -6,4 +6,14 @@ public class Uranium extends RadioactiveMaterial {
         exposedN++;
         Skeleton.printFuncRet("");
     }
+    public void onFill(Asteroid a) {
+    	 Skeleton.printFunc();
+    	 if(a.getInSunProximity()) {
+    		 this.increaseExposedN();
+    	 }
+    	 if(this.exposedN==3) {
+    		 a.explode();
+    	 }
+         Skeleton.printFuncRet("");
+    }
 }
