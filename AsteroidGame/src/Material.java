@@ -1,8 +1,23 @@
-public abstract class Material
-{
-	public void onDrillSpecial(Asteroid a){}
-	public boolean compatibleWith(Material other)
-	{
-		return this.getClass() == other.getClass();
-	}
+public abstract class Material {
+    public void onDrillSpecial(Asteroid a) {
+        Skeleton.printFunc();
+        Skeleton.printFuncRet("");
+    }
+
+    public boolean compatibleWith(Material other) {
+        Skeleton.printFunc();
+
+        if (this.getClass() == other.getClass()) {
+            Skeleton.printFuncRet("true");
+            return true;
+        }
+        Skeleton.printFuncRet("false");
+        return false;
+
+    }
+    
+    public void onFill(Asteroid a) {
+    	 Skeleton.printFunc();
+         Skeleton.printFuncRet("");
+    }
 }

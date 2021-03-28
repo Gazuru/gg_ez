@@ -1,60 +1,81 @@
 import java.util.ArrayList;
 
-public abstract class Field
-{
-	protected ArrayList<Field> neighbours;
-	protected ArrayList<FlyingObject> onSurface;
-	protected int number;
-	protected Game game; 
-	
-	public Field(int number, Game game)
-	{
-		this.number = number;
-		this.game = game;
-		neighbours = new ArrayList<Field>();
-		onSurface = new ArrayList<FlyingObject>();
-	}
-	
-	public int getNumber()
-	{
-		return number;
-	}
-	
-	public ArrayList<Field> getNeighbours()
-	{
-		return neighbours;
-	}
-	
-	public void removeFlyingObject(FlyingObject fo)
-	{
-		onSurface.remove(fo);
-	}
-	
-	public void acceptFlyingObject(FlyingObject fo)
-	{
-		onSurface.add(fo);
-	}
-	
-	public void addNeighbour(Field newNeighbour)
-	{
-		neighbours.add(newNeighbour);
-		newNeighbour.getNeighbours().add(this);	
-	}
-	
-	public void removeNeighbour(Field oldNeighbour)
-	{
-		neighbours.remove(oldNeighbour);
-	}
-	
-	public ArrayList<FlyingObject> getOnSurface()
-	{
-		return onSurface;
-	}
-	
-	public abstract boolean onMine(Ship ship);
-	public abstract boolean onDrill();
-	public abstract void onSolarStorm();
-	public abstract boolean teleport(Ship ship);
-	public abstract boolean pickedUpBy(Ship ship);
-	public abstract boolean fillBy(Ship ship);
+public abstract class Field {
+    protected ArrayList<Field> neighbours;
+    protected ArrayList<FlyingObject> onSurface;
+
+    public Field() {
+        neighbours = new ArrayList<Field>();
+        onSurface = new ArrayList<FlyingObject>();
+    }
+
+    public ArrayList<Field> getNeighbours() {
+        Skeleton.printFunc();
+        Skeleton.printFuncRet("neighbours");
+        return neighbours;
+    }
+
+    public void removeFlyingObject(FlyingObject fo) {
+        Skeleton.printFunc();
+        onSurface.remove(fo);
+        fo.setLocation(null);
+        Skeleton.printFuncRet("");
+    }
+
+    public void acceptFlyingObject(FlyingObject fo) {
+        Skeleton.printFunc();
+        onSurface.add(fo);
+        fo.setLocation(this);
+        Skeleton.printFuncRet("");
+    }
+
+    public void addNeighbour(Field n) {
+        Skeleton.printFunc();
+        neighbours.add(n);
+        n.neighbours.add(this);
+        Skeleton.printFuncRet("");
+    }
+
+    public void removeNeighbour(Field oldNeighbour) {
+        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+        neighbours.remove(oldNeighbour);
+        oldNeighbour.neighbours.remove(this);
+        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+    }
+
+    public ArrayList<FlyingObject> getOnSurface() {
+        return onSurface;
+    }
+
+    public boolean onMine(Ship ship){
+    	Skeleton.printFunc();
+        Skeleton.printFuncRet("false");
+        return false;
+    }
+
+    public boolean onDrill(){
+    	Skeleton.printFunc();
+        Skeleton.printFuncRet("false");
+        return false;
+    }
+
+    public abstract void onSolarStorm();
+
+    public boolean teleport(FlyingObject f) {
+        Skeleton.printFunc();
+        Skeleton.printFuncRet("false");
+        return false;
+    }
+
+    public boolean pickedUpBy(Ship ship) {
+    	 Skeleton.printFunc();
+         Skeleton.printFuncRet("false");
+        return false;
+    }
+
+    public boolean fillBy(Ship ship, Material m) {
+        Skeleton.printFunc();
+        Skeleton.printFuncRet("false");
+        return false;
+    }
 }

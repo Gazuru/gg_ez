@@ -1,144 +1,169 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
-public class Asteroid extends Field
-{
-	private int layer;
-	private Material core;
-	private boolean inSunProximity;
-	
-	public Asteroid(int number, Game game)
-	{
-		super(number, game);
-		Random rand = new Random();
-		layer = rand.nextInt(5);
-		int x = rand.nextInt(20);
-		if(x == 10)
-			inSunProximity = true;
-		else
-			inSunProximity = false;
-	}
-	
-	public int getNumber()
-	{
-		return number;
-	}
-	
-	public void setNumber(int x)
-	{
-		number = x;
-	}
-	
-	public void setGame(Game game)
-	{
-		this.game = game;
-	}
-	
-	public boolean getInSunProximity()
-	{
-		return inSunProximity;
-	}
-	
-	public boolean onDrill()
-	{
-		if(layer > 1)
-		{
-			decreaseLayer();
-			System.out.println("A fúrás sikeres");
-			return true;
-		}
-		if(layer == 1 && core == null)
-		{
-			decreaseLayer();
-			System.out.println("A fúrás sikeres");
-			return true;
-		}
-		if(layer == 1 && core != null)
-		{
-			decreaseLayer();
-			core.onDrillSpecial(this);
-			System.out.println("A fúrás sikeres");
-			return true;
-		}
-		if(layer == 0)
-		{
-			System.out.println("A fúrás sikertelen, mert az aszteroida kérge már teljesen át van fúrva!");
-			return false;
-		}
-		else return false;
-	}
-	
-	public void acceptCore(Material newCore)
-	{
-		core = newCore;
-	}
-	
-	public void removeCore()
-	{
-		core = null;
-	}
-	
-	public void decreaseLayer()
-	{
-		layer--;
-	}
-	
-	public void explode()
-	{
-		for(int i = 0; i < onSurface.size(); i++)
-			onSurface.get(i).onExplode();
-		game.removeField(this);
-	}
-	
-	public void onSolarStorm()
-	{
-		for(int i = 0; i < onSurface.size(); i++)
-		{
-			if(layer != 0 || core != null)
+public class Asteroid extends Field {
+    private int layer;
+    private Material core;
+    private boolean inSunProximity;
+
+    public Asteroid() {
+        switch(new Random().nextInt(5)){
+            case 0:
+                acceptCore(new Coal());
+                break;
+            case 1:
+                acceptCore(new Iron());
+                break;
+            case 2:
+                acceptCore(new Ice());
+                break;
+            case 3:
+                acceptCore(new Uranium());
+                break;
+            case 4:
+                core = null;
+                break;
+        }
+        layer = new Random().nextInt(10) + 1;
+        inSunProximity = new Random().nextBoolean();
+    }
+
+    public boolean getInSunProximity() {
+        return inSunProximity;
+    }
+
+    public void setInSunProximity(Boolean inSunProximity) {
+        this.inSunProximity = inSunProximity;
+    }
+
+    public boolean onDrill() {
+        Skeleton.printFunc();
+
+        /*System.out.println("layer>1? y/n");
+        String ans = Skeleton.getUserInput();
+
+        if (ans.contains("y")) {
+            this.decreaseLayer();
+            Skeleton.printFuncRet("true");
+            return true;
+        } else {
+            Skeleton.printFuncRet("false");
+            return false;
+        }*/
+
+        if(layer>1){
+            decreaseLayer();
+            return true;
+        }else if(layer == 1){
+            core.onDrillSpecial(this);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    public void acceptCore(Material newCore) {
+        Skeleton.printFunc();
+        core = newCore;
+        Skeleton.printFuncRet("");
+    }
+
+    /*public void setCore(Material newCore) {
+        core = newCore;
+    }*/
+
+
+    public void removeCore() {
+        Skeleton.printFunc();
+        core = null;
+        Skeleton.printFuncRet("");
+    }
+
+    public void decreaseLayer() {
+        Skeleton.printFunc();
+        layer--;
+        Skeleton.printFuncRet("");
+    }
+
+    public void explode() {
+        Skeleton.printFunc();
+        for(int i = onSurface.size()-1; i>=0; i--){
+            onSurface.get(i).onExplode();
+        }
+
+        Skeleton.printFuncRet("");
+    }
+
+	public void onSolarStorm() {
+		Skeleton.printFunc();
+        if(layer != 0 || core != null){
+		    for(int i = onSurface.size()-1; i >=0; i--){
+		        onSurface.get(i).onSolarStormCase();
+            }
+        }
+
+		/*System.out.println("el tud bujni? y/n");
+		String ans = Skeleton.getUserInput();
+
+		if (ans.contains("n")) {
+			for (int i = 0; i < onSurface.size(); i++) {
 				onSurface.get(i).onSolarStormCase();
-		}
-	}
-	
-	public boolean fillBy(Ship ship)
-	{
-		if(layer == 0 && core == null)
-		{
-			acceptCore(ship.getMaterials().get(0));
-			ship.removeMaterial(ship.getMaterials().get(0));
-			System.out.println("A nyersanyag lerakása sikerült!");
-			return true;
-		}
-		System.out.println("Ebbe az aszteroidába nem helyezhetõ jelenleg nyersanyag!");
-		return false;
-	}
-	
-	public boolean onMine(Ship ship)
-	{
-		if(layer != 0)
-		{
-			System.out.println("A bányászat nem sikerült, mert az aszteroida még nincs átfúrva!");
-			return false;
-		}
-		if(core == null)
-		{
-			System.out.println("A bányászat nem sikerült, mert az aszteroidában nincs nyersanyag!");
-			return false;
-		}
-		ship.addMaterial(core);
-		removeCore();
-		System.out.println("A bányászat sikerült!");
-		return true;
-	}
-	
-	public boolean teleport(Ship ship)
-	{
-		System.out.println("A teleportálás nem sikerült, mert a telepes egy aszteroidán van!");
-		return false;
-	}
-	
-	public boolean pickedUpBy(Ship ship)
-	{
-		System.out.println("Aszteroidát nem lehet felvenni! xD");
-		return false;
-	}
+			}
+        }*/
+        Skeleton.printFuncRet("");
+    }
+
+    public boolean fillBy(Ship ship, Material m) {
+        Skeleton.printFunc();
+
+        /*System.out.println("layer==0 Ã©s Ã¼res jelenleg? y/n");
+        String ans = Skeleton.getUserInput();
+
+        if (ans.contains("y")) {
+            acceptCore(m);
+            ship.removeMaterial(m);
+            Skeleton.printFuncRet("true");
+            return true;
+        }
+        Skeleton.printFuncRet("false");
+        return false;*/
+
+        if(layer == 0 && core == null){
+            acceptCore(m);
+            ship.removeMaterial(m);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean onMine(Ship ship) {
+        Skeleton.printFunc();
+
+        if(layer == 0 && core != null){
+            if(ship.addMaterial(core)){
+                removeCore();
+                return true;
+            }
+        }
+        return false;
+
+        /*System.out.println("Ã¡t van fÃºrva Ã©s van benne nyersanyag? y/n");
+        String ans = Skeleton.getUserInput();
+
+        if (ans.contains("n")) {
+            Skeleton.printFuncRet("false");
+            return false;
+        }
+        if (!ship.addMaterial(core)) {
+            Skeleton.printFuncRet("false");
+            return false;
+        } else {
+            removeCore();
+
+            Skeleton.printFuncRet("true");
+            return true;
+        }*/
+    }
 }

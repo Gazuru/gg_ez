@@ -1,90 +1,96 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class Gate extends Field
-{
-	private boolean working;
-	private Gate pair;
-	
-	public Gate(int number, Game game)
-	{
-		super(number, game);
-		working = false;
-	}
-	
-	public boolean getWorking()
-	{
-		return working;
-	}
-	
-	public boolean pickedUpBy(Ship ship)
-	{
-		ship.addGate(this);
-		return true;
-	}
-	
-	public boolean teleport(Ship ship)
-	{
-		if(pair.getWorking())
-		{
-			removeFlyingObject(ship);
-			pair.acceptFlyingObject(ship);
-			System.out.println("A teleportálás sikerült!");
-			return true;
-		}
-		System.out.println("A teleportálás nem sikerült, mert a kapu párja nem mûködik!");
-		return false;
-	}
-	
-	public static ArrayList<Material> craftGateReq()
-	{
-		ArrayList<Material> gateReq = new ArrayList<Material>();
-		Iron ir1 = new Iron();
-		Iron ir2 = new Iron();
-		Ice ic = new Ice();
-		Uranium u = new Uranium();
-		gateReq.add(ir1);
-		gateReq.add(ir2);
-		gateReq.add(ic);
-		gateReq.add(u);
-		return gateReq;
-	}
-	
-	public void setWorking(boolean working)
-	{
-		this.working = working;
-	}
-	
-	public Gate getPair()
-	{
-		return pair;
-	}
-	
-	public void setPair(Gate pair)
-	{
-		this.pair = pair;
-	}
-	
-	public boolean onDrill()
-	{
-		System.out.println("A fúrás sikertelen, mert egy kapun nem lehet fúrni!");
-		return false;
-	}
-	
-	public void onSolarStorm()
-	{
-		for(int i = 0; i < onSurface.size(); i++)
-			onSurface.get(i).onSolarStormCase();
-	}
-	
-	public boolean onMine(Ship ship)
-	{
-		System.out.println("A bányászat nem sikerült, mert a telepes egy kapun, nem egy aszteroidán van, kapun pedig nem lehet bányászni!");
-		return false;
-	}
-	
-	public boolean fillBy(Ship ship)
-	{
-		System.out.println("Kapuba nem lehet visszatenni nyersanyagot!");
-		return false;
-	}
+public class Gate extends Field {
+    private boolean working;
+    private boolean wild;
+    private Gate pair;
+
+    public Gate() {
+        working = false;
+        wild = false;
+    }
+
+    public boolean getWorking() {
+        /*Skeleton.printFunc();
+        System.out.println("working? y/n");
+        String ans = Skeleton.getUserInput();
+        if (ans.contains("y")) {
+            Skeleton.printFuncRet("true");
+            return true;
+        } else {
+            Skeleton.printFuncRet("false");
+            return false;
+        }*/
+        return working;
+    }
+
+    public boolean pickedUpBy(Ship ship) {
+        /*Skeleton.printFunc();
+        System.out.println("2>gates? y/n");
+		String ans = Skeleton.getUserInput();
+		if(ans.contains("y")) {
+			this.setWorking(false);
+			ship.addGate(this);
+        	Skeleton.printFuncRet("true");
+        	return true;
+		}else {
+			System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName()+" returns"+" false");
+			return false;}*/
+        ship.addGate(this);
+        for(int i = neighbours.size()-1; i >= 0; i--){
+            neighbours.get(i).removeNeighbour(this);
+        }
+        ship.move();
+        setWorking(false);
+        return true;
+    }
+
+    public boolean teleport(FlyingObject f) {
+        Skeleton.printFunc();
+
+        if (pair.getWorking()) {
+            removeFlyingObject(f);
+            pair.acceptFlyingObject(f);
+            Skeleton.printFuncRet("true");
+            return true;
+        }
+        Skeleton.printFuncRet("false");
+        return false;
+    }
+
+    public static ArrayList<Material> craftGateReq() {
+        Skeleton.printFunc();
+        ArrayList<Material> needed = new ArrayList<>();
+        needed.add(new Iron());
+        needed.add(new Iron());
+        needed.add(new Ice());
+        needed.add(new Uranium());
+        Skeleton.printFuncRet("needed");
+        return needed;
+    }
+
+    public void setWorking(boolean _working) {
+        Skeleton.printFunc();
+        working = _working;
+        Skeleton.printFuncRet("");
+    }
+
+    public Gate getPair() {
+        Skeleton.printFunc();
+        Skeleton.printFuncRet("");
+        return pair;
+    }
+
+    public void setPair(Gate pair) {
+        Skeleton.printFunc();
+        this.pair = pair;
+        Skeleton.printFuncRet("");
+    }
+
+    public void onSolarStorm() {
+        for (int i = onSurface.size()-1; i >= 0; i--)
+            onSurface.get(i).onSolarStormCase();
+    }
+
 }
