@@ -38,15 +38,15 @@ public class BillOfMaterial {
         return found;
     }
 
-    public void removeNeeded(Material removable) {
+    public void removeNeeded(Material r) {
         Skeleton.printFunc();
-
+        needed.remove(r);
         Skeleton.printFuncRet("");
     }
 
     public void addFound(Material f) {
         Skeleton.printFunc();
-
+        found.add(f);
         Skeleton.printFuncRet("");
     }
 }

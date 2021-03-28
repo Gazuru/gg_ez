@@ -252,8 +252,10 @@ public class Ship extends FlyingObject {
     }
 
     public boolean useGate() {
-        //TODO
-        return false;
+    	if(location.teleport(this)) {
+    		return true;
+    	}else{
+    	return false;}
     }
 
     public ArrayList<Material> getMaterials() {

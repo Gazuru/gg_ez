@@ -95,7 +95,7 @@ public class Asteroid extends Field {
     public boolean fillBy(Ship ship, Material m) {
         Skeleton.printFunc();
 
-        System.out.println("layer==0 és üres jelenleg? y/n");
+        System.out.println("layer==0 Ã©s Ã¼res jelenleg? y/n");
         String ans = Skeleton.getUserInput();
 
         if (ans.contains("y")) {
@@ -111,7 +111,7 @@ public class Asteroid extends Field {
     public boolean onMine(Ship ship) {
         Skeleton.printFunc();
 
-        System.out.println("át van fúrva és van benne nyersanyag? y/n");
+        System.out.println("Ã¡t van fÃºrva Ã©s van benne nyersanyag? y/n");
         String ans = Skeleton.getUserInput();
 
         if (ans.contains("n")) {

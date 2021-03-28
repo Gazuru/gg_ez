@@ -11,9 +11,7 @@ public class Ufo extends FlyingObject{
 	public boolean move() {
 		 Skeleton.printFunc();
 	        Field neighbour_asteroid = location.getNeighbours().get(0);
-	        System.out.println("van szomszed amire tud menni? y/n");
-	        String ans3 = Skeleton.getUserInput();
-	        if (ans3.contains("y")) {
+	        if (neighbour_asteroid!=null) {
 	            location.removeFlyingObject(this);
 	            neighbour_asteroid.acceptFlyingObject(this);
 	            Skeleton.printFuncRet("true");
@@ -45,8 +43,10 @@ public class Ufo extends FlyingObject{
         Skeleton.printFuncRet("");
 	}
 	public boolean useGate() {
-	        //TODO 
-	        return false;
+		if(location.teleport(this)) {
+    		return true;
+    	}else{
+    	return false;}
 	}
 	public boolean drill() {
 		Skeleton.printFunc();

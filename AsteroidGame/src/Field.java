@@ -11,7 +11,6 @@ public abstract class Field {
 
     public ArrayList<Field> getNeighbours() {
         Skeleton.printFunc();
-
         Skeleton.printFuncRet("neighbours");
         return neighbours;
     }
@@ -47,10 +46,14 @@ public abstract class Field {
     }
 
     public boolean onMine(Ship ship){
+    	Skeleton.printFunc();
+        Skeleton.printFuncRet("false");
         return false;
     }
 
     public boolean onDrill(){
+    	Skeleton.printFunc();
+        Skeleton.printFuncRet("false");
         return false;
     }
 
@@ -58,12 +61,13 @@ public abstract class Field {
 
     public boolean teleport(FlyingObject f) {
         Skeleton.printFunc();
-
         Skeleton.printFuncRet("false");
         return false;
     }
 
     public boolean pickedUpBy(Ship ship) {
+    	 Skeleton.printFunc();
+         Skeleton.printFuncRet("false");
         return false;
     }
 

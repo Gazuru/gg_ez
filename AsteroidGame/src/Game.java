@@ -47,7 +47,6 @@ class Game implements Steppable {
         System.out.println();
         for (int i = 0; i < gameObjects.size(); i++) {
             System.out.println("A(z) " + i + ". j�t�kos!");
-            System.out.println("Aszteroida: " + gameObjects.get(i).getLocation());
 
             // csak saj�t teszthez
             int dbic = 0;
