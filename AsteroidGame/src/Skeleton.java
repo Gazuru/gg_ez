@@ -287,38 +287,55 @@ public class Skeleton {
                     break ciklus;
                 case 1:
                     testDrill();
+                    break;
                 case 2:
                     testMeltOutcome();
+                    break;
                 case 3:
                     testRadOutcome();
+                    break;
                 case 4:
                     testExplode();
+                    break;
                 case 5:
                     testIronOutcome();
+                    break;
                 case 6:
                     testDieFromSolarStorm();
+                    break;
                 case 7:
                     testPlaceGate();
+                    break;
                 case 8:
                     testUseGate();
+                    break;
                 case 9:
                     testPickUpGate();
+                    break;
                 case 10:
                     testMine();
+                    break;
                 case 11:
                     testPutMaterial();
+                    break;
                 case 12:
                     testMove();
+                    break;
                 case 13:
                     testOnSolarStorm();
+                    break;
                 case 14:
                     testCraftGate();
+                    break;
                 case 15:
                     testCraftRobot();
+                    break;
                 case 16:
                     testBuildBase();
+                    break;
                 default:
                     System.out.println("Nem ervenyes bemenet!");
+                    break;
             }
         }
     }
