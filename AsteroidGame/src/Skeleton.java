@@ -253,16 +253,16 @@ public class Skeleton {
     }
 
     public static void printFunc() {
-        System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+        //System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
     }
 
     public static void printFuncRet(String s) {
-        switch (s) {
+        /*switch (s) {
             case ("true"): System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns true");
             case ("false"): System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns false");
             case (""): System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns");
             default: System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " returns " + s);
-        }
+        }*/
     }
 
     private static void printInit() {
@@ -270,7 +270,7 @@ public class Skeleton {
     }
 
     public static void main(String[] args) {
-        String[] fnc = {"testDrill", "testMeltOutcome", "testRadOutcome", "testExplode", "testIronOutcome",
+        /*String[] fnc = {"testDrill", "testMeltOutcome", "testRadOutcome", "testExplode", "testIronOutcome",
                 "testDieFromSolarStorm", "testPlaceGate", "testUseGate", "testPickUpGate", "testMine",
                 "testPutMaterial", "testMove", "testOnSolarStorm", "testCraftGate", "testCraftRobot", "testBuildBase"};
         System.out.println("Valaszd ki a tesztesetet a szama alapjan:");
@@ -337,7 +337,7 @@ public class Skeleton {
                     System.out.println("Nem ervenyes bemenet!");
                     break;
             }
-        }
+        }*/
     }
 }
 
