@@ -16,6 +16,7 @@ public class BillOfMaterial {
             if (m.compatibleWith(m2)) {
                 removeNeeded(m2);
                 addFound(m);
+                break;
             }
         }
 

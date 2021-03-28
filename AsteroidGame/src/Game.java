@@ -3,9 +3,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 class Game implements Steppable {
-    private ArrayList<FlyingObject> gameObjects = new ArrayList<FlyingObject>();
-    private int numShips;
-    private ArrayList<Field> fields = new ArrayList<Field>();
+    private static ArrayList<FlyingObject> gameObjects = new ArrayList<FlyingObject>();
+    private static int numShips;
+    private static ArrayList<Field> fields = new ArrayList<Field>();
     //private int round = 0;
     private static boolean end = false;
     private static Game single_instance = null;
@@ -30,23 +30,27 @@ class Game implements Steppable {
 
     public static void removeGameObject(FlyingObject fo) {
         Skeleton.printFunc();
+        gameObjects.remove(fo);
         Skeleton.printFuncRet("");
     }
 
     public static void decreaseNumShips() {
         Skeleton.printFunc();
+        numShips--;
         Skeleton.printFuncRet("");
     }
 
-    public void removeField(Field f) {
+    public static void removeField(Field f) {
         fields.remove(f);
     }
+
+    public ArrayList<Field> getFields(){ return fields; }
 
     public void step() {
         //System.out.println("A(z) " + round++ + ". k�r!");
         System.out.println();
         for (int i = 0; i < gameObjects.size(); i++) {
-            System.out.println("A(z) " + i + ". j�t�kos!");
+            /*System.out.println("A(z) " + i + ". j�t�kos!");
 
             // csak saj�t teszthez
             int dbic = 0;
@@ -68,17 +72,19 @@ class Game implements Steppable {
                     dbc++;
             }
             System.out.println("Ice: " + dbic + "Iron: " + dbir + "Coal: " + dbc + "Uranium: " + dbu);
-
+*/
             gameObjects.get(i).step();
         }
         if (solarStorm()) {
-            for (Field field : fields) field.onSolarStorm();
-            if (numShips == 0) {
-                System.out.println("A j�t�k v�get �rt, mert minden telepes halott!");
-                //end = true;
-            }
+            for (Field field : fields)
+                field.onSolarStorm();
+
         }
-        System.out.println();
+        if (numShips == 0) {
+            //System.out.println("A j�t�k v�get �rt, mert minden telepes halott!");
+            end = true;
+        }
+        //System.out.println();
     }
 
     public boolean solarStorm() {
@@ -103,31 +109,9 @@ class Game implements Steppable {
         System.out.print("A p�lya m�rete: ");
         Scanner s = new Scanner(System.in);
         int choose = s.nextInt();
-        int j = 0;
-        while (j != choose) {
+        for (int j = 0; j < choose; j++) {
             Asteroid newAsteroid = new Asteroid();
-            Random random = new Random();
-            int rand = random.nextInt(4);
-            switch (rand) {
-                case 0:
-                    Coal c = new Coal();
-                    newAsteroid.acceptCore(c);
-                    break;
-                case 1:
-                    Iron ir = new Iron();
-                    newAsteroid.acceptCore(ir);
-                    break;
-                case 2:
-                    Ice i = new Ice();
-                    newAsteroid.acceptCore(i);
-                    break;
-                case 3:
-                    Uranium u = new Uranium();
-                    newAsteroid.acceptCore(u);
-                    break;
-            }
             addField(newAsteroid);
-            j++;
         }
         for (int k = 2; k < fields.size(); k++) {
             fields.get(k).addNeighbour(fields.get(k - 2));
@@ -137,8 +121,6 @@ class Game implements Steppable {
         choose = s.nextInt();
         numShips = choose;
         while (gameObjects.size() != numShips) {
-            Random r = new Random();
-            int nr = r.nextInt(fields.size());
             Ship newShip = new Ship();
             addGameObject(newShip);
         }
