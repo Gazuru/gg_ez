@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Robot extends FlyingObject {
     public Robot() {
-        location.acceptFlyingObject(this);
+        
     }
 
     public void step() {
