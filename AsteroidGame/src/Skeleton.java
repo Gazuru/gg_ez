@@ -338,6 +338,13 @@ public class Skeleton {
                     break;
             }
         }*/
+
+        Asteroid a = new Asteroid();
+        Ship s1 = new Ship();
+        a.acceptFlyingObject(s1);
+        Ship s2 = new Ship();
+        a.acceptFlyingObject(s2);
+        a.explode();
     }
 }
 

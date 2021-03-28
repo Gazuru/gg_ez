@@ -17,13 +17,15 @@ public abstract class Field {
 
     public void removeFlyingObject(FlyingObject fo) {
         Skeleton.printFunc();
-        this.onSurface.remove(fo);
+        onSurface.remove(fo);
+        fo.setLocation(null);
         Skeleton.printFuncRet("");
     }
 
     public void acceptFlyingObject(FlyingObject fo) {
         Skeleton.printFunc();
-        this.onSurface.add(fo);
+        onSurface.add(fo);
+        fo.setLocation(this);
         Skeleton.printFuncRet("");
     }
 
