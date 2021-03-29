@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Ufo extends FlyingObject{
-
+	private ArrayList<Material> materials;
 	@Override
 	public void step() {
 		boolean done = false;
