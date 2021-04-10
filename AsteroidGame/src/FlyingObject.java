@@ -24,6 +24,11 @@ public abstract class FlyingObject implements Steppable {
         Skeleton.printFuncRet(Boolean.toString(to_return));
         return to_return;
     }
+    public boolean addMaterial(Material material) {
+        Skeleton.printFunc();
+        Skeleton.printFuncRet("false");
+        return false;
+    }
 
     public abstract boolean move();
 

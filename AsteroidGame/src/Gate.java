@@ -1,7 +1,8 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
-public class Gate extends Field {
+public class Gate extends Field implements Steppable{
     private boolean working;
     private boolean wild;
     private Gate pair;
@@ -10,7 +11,18 @@ public class Gate extends Field {
         working = false;
         wild = false;
     }
+    
+    public void step() {
+    	Skeleton.printFunc();
+        if(wild) {
+        	goingWild();
+        }
+        Skeleton.printFuncRet("");
+    }
 
+    public void setWild(boolean w) {
+    	this.wild=w;
+    }
     public boolean getWorking() {
     	Skeleton.printFunc();
         /*Skeleton.printFunc();
@@ -94,9 +106,30 @@ public class Gate extends Field {
 
     public void onSolarStorm() {
     	Skeleton.printFunc();
+    	
         for (int i = onSurface.size()-1; i >= 0; i--)
             onSurface.get(i).onSolarStormCase();
+        setWild(true);
         Skeleton.printFuncRet("");
     }
+    public void goingWild() {
+    	Skeleton.printFunc();
+    	Field toMoveLocation=neighbours.get(0);
+    	
+    	for (int i = neighbours.size()-1; i >= 0; i--) {
+    		neighbours.get(i).removeNeighbour(this);
+    	}
+    	ArrayList<Field> toMoveLocationNeighbours=toMoveLocation.getNeighbours();
+    	
+    	this.addNeighbour(toMoveLocation);
+    	
+    	for (int i = toMoveLocationNeighbours.size()-1; i >= 0; i--) {
+    		toMoveLocationNeighbours.get(i).addNeighbour(this);
+    	}
+    	
+    	Skeleton.printFuncRet("");
+    }
+    
+    
 
 }

@@ -49,7 +49,7 @@ public abstract class Field {
         return onSurface;
     }
 
-    public boolean onMine(Ship ship){
+    public boolean onMine(FlyingObject f){
     	Skeleton.printFunc();
         Skeleton.printFuncRet("false");
         return false;

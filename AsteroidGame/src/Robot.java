@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Robot extends FlyingObject {
+public class Robot extends FlyingObject{
     public Robot() {
         
     }

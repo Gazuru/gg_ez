@@ -108,10 +108,10 @@ public class Asteroid extends Field {
         return false;
     }
 
-    public boolean onMine(Ship ship) {
+    public boolean onMine(FlyingObject f) {
         Skeleton.printFunc();
         if(layer == 0 && core != null){
-            if(ship.addMaterial(core)){
+            if(f.addMaterial(core)){
                 removeCore();
                 return true;
             }

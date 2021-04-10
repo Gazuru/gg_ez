@@ -34,6 +34,11 @@ public class Ufo extends FlyingObject{
 	        Skeleton.printFuncRet("false");
 	        return false;
 	}
+	 public boolean mine() {
+	        Skeleton.printFunc();
+	        //System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns " + completed);
+	        return location.onMine(this);
+	    }
 
 	@Override
 	public void die() {
@@ -75,6 +80,5 @@ public class Ufo extends FlyingObject{
         Skeleton.printFuncRet("true");
         materials.add(material);
         return true;
-
     }
 }
