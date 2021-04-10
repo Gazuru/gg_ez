@@ -5,6 +5,7 @@ public class Ufo extends FlyingObject{
 	private ArrayList<Material> materials;
 	@Override
 	public void step() {
+		Skeleton.printFunc();
 		boolean done = false;
         done = drill();
         if (!done) {
@@ -17,6 +18,7 @@ public class Ufo extends FlyingObject{
         		move();
         	}
         }
+        Skeleton.printFuncRet("");
 	}
 
 	@Override
@@ -56,8 +58,10 @@ public class Ufo extends FlyingObject{
 	}
 	public boolean useGate() {
 		if(location.teleport(this)) {
+			Skeleton.printFuncRet("true");
     		return true;
     	}else{
+    		Skeleton.printFuncRet("false");
     	return false;}
 	}
 	public boolean drill() {

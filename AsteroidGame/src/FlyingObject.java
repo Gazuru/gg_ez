@@ -20,8 +20,9 @@ public abstract class FlyingObject implements Steppable {
 
     public boolean drill() {
         Skeleton.printFunc();
-        //Skeleton.printFuncRet(Boolean.toString(completed));
-        return location.onDrill();
+        boolean to_return=location.onDrill();
+        Skeleton.printFuncRet(Boolean.toString(to_return));
+        return to_return;
     }
 
     public abstract boolean move();

@@ -177,7 +177,10 @@ public class Ship extends FlyingObject {
     }
 
     public boolean putMaterial(Material m) {
-        return location.fillBy(this, m);
+    	Skeleton.printFunc();
+    	boolean to_return=location.fillBy(this, m);
+    	Skeleton.printFuncRet(Boolean.toString(to_return));
+        return to_return;
     }
 
     public void removeMaterial(Material material) {

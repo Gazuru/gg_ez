@@ -37,13 +37,15 @@ public abstract class Field {
     }
 
     public void removeNeighbour(Field oldNeighbour) {
-        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());
+    	Skeleton.printFunc();
         neighbours.remove(oldNeighbour);
         oldNeighbour.neighbours.remove(this);
-        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns");
+        Skeleton.printFuncRet("");
     }
 
     public ArrayList<FlyingObject> getOnSurface() {
+    	Skeleton.printFunc();
+    	Skeleton.printFuncRet("");
         return onSurface;
     }
 

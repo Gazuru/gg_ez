@@ -6,4 +6,12 @@ public class Ice extends NonRadioactiveMaterial {
         }
         Skeleton.printFuncRet("");
     }
+    public void onFill(Asteroid a) {
+        Skeleton.printFunc();
+        if (a.getInSunProximity()) {
+            a.removeCore();
+        }
+        Skeleton.printFuncRet("");
+    }
+    
 }

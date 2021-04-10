@@ -12,6 +12,7 @@ public class Gate extends Field {
     }
 
     public boolean getWorking() {
+    	Skeleton.printFunc();
         /*Skeleton.printFunc();
         System.out.println("working? y/n");
         String ans = Skeleton.getUserInput();
@@ -22,11 +23,13 @@ public class Gate extends Field {
             Skeleton.printFuncRet("false");
             return false;
         }*/
+    	Skeleton.printFuncRet(Boolean.toString(working));
         return working;
     }
 
     public boolean pickedUpBy(Ship ship) {
-        /*Skeleton.printFunc();
+    	Skeleton.printFunc();
+    	/*
         System.out.println("2>gates? y/n");
 		String ans = Skeleton.getUserInput();
 		if(ans.contains("y")) {
@@ -43,6 +46,7 @@ public class Gate extends Field {
         }
         ship.move();
         setWorking(false);
+        Skeleton.printFuncRet("true");
         return true;
     }
 
@@ -89,8 +93,10 @@ public class Gate extends Field {
     }
 
     public void onSolarStorm() {
+    	Skeleton.printFunc();
         for (int i = onSurface.size()-1; i >= 0; i--)
             onSurface.get(i).onSolarStormCase();
+        Skeleton.printFuncRet("");
     }
 
 }

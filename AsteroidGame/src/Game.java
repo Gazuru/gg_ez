@@ -6,7 +6,6 @@ class Game implements Steppable {
     private static ArrayList<FlyingObject> gameObjects = new ArrayList<FlyingObject>();
     private static int numShips;
     private static ArrayList<Field> fields = new ArrayList<Field>();
-    //private int round = 0;
     private static boolean end = false;
     private static Game single_instance = null;
 
@@ -41,7 +40,9 @@ class Game implements Steppable {
     }
 
     public static void removeField(Field f) {
+    	Skeleton.printFunc();
         fields.remove(f);
+        Skeleton.printFuncRet("");
     }
 
     public ArrayList<Field> getFields(){ return fields; }

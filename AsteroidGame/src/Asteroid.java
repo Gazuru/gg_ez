@@ -30,38 +30,32 @@ public class Asteroid extends Field {
     }
 
     public boolean getInSunProximity() {
+        Skeleton.printFunc();
+        Skeleton.printFuncRet(Boolean.toString(inSunProximity));
         return inSunProximity;
+        
     }
 
     public void setInSunProximity(Boolean inSunProximity) {
+    	Skeleton.printFunc();
         this.inSunProximity = inSunProximity;
+        Skeleton.printFuncRet("");
     }
 
     public boolean onDrill() {
         Skeleton.printFunc();
-
-        /*System.out.println("layer>1? y/n");
-        String ans = Skeleton.getUserInput();
-
-        if (ans.contains("y")) {
-            this.decreaseLayer();
-            Skeleton.printFuncRet("true");
-            return true;
-        } else {
-            Skeleton.printFuncRet("false");
-            return false;
-        }*/
-
         if(layer>1){
             decreaseLayer();
+            Skeleton.printFuncRet("true");
             return true;
         }else if(layer == 1){
             core.onDrillSpecial(this);
+            Skeleton.printFuncRet("true");
             return true;
         }else{
+        	Skeleton.printFuncRet("false");
             return false;
         }
-
     }
 
     public void acceptCore(Material newCore) {
@@ -69,12 +63,7 @@ public class Asteroid extends Field {
         core = newCore;
         Skeleton.printFuncRet("");
     }
-
-    /*public void setCore(Material newCore) {
-        core = newCore;
-    }*/
-
-
+    
     public void removeCore() {
         Skeleton.printFunc();
         core = null;
@@ -103,44 +92,24 @@ public class Asteroid extends Field {
 		        onSurface.get(i).onSolarStormCase();
             }
         }
-
-		/*System.out.println("el tud bujni? y/n");
-		String ans = Skeleton.getUserInput();
-
-		if (ans.contains("n")) {
-			for (int i = 0; i < onSurface.size(); i++) {
-				onSurface.get(i).onSolarStormCase();
-			}
-        }*/
         Skeleton.printFuncRet("");
     }
 
     public boolean fillBy(Ship ship, Material m) {
         Skeleton.printFunc();
-
-        /*System.out.println("layer==0 és üres jelenleg? y/n");
-        String ans = Skeleton.getUserInput();
-
-        if (ans.contains("y")) {
+        if(layer == 0 && core == null){
             acceptCore(m);
             ship.removeMaterial(m);
+            core.onFill(this);
             Skeleton.printFuncRet("true");
             return true;
         }
         Skeleton.printFuncRet("false");
-        return false;*/
-
-        if(layer == 0 && core == null){
-            acceptCore(m);
-            ship.removeMaterial(m);
-            return true;
-        }
         return false;
     }
 
     public boolean onMine(Ship ship) {
         Skeleton.printFunc();
-
         if(layer == 0 && core != null){
             if(ship.addMaterial(core)){
                 removeCore();
@@ -148,22 +117,5 @@ public class Asteroid extends Field {
             }
         }
         return false;
-
-        /*System.out.println("át van fúrva és van benne nyersanyag? y/n");
-        String ans = Skeleton.getUserInput();
-
-        if (ans.contains("n")) {
-            Skeleton.printFuncRet("false");
-            return false;
-        }
-        if (!ship.addMaterial(core)) {
-            Skeleton.printFuncRet("false");
-            return false;
-        } else {
-            removeCore();
-
-            Skeleton.printFuncRet("true");
-            return true;
-        }*/
     }
 }

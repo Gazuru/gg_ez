@@ -7,24 +7,28 @@ public class Robot extends FlyingObject {
     }
 
     public void step() {
+    	Skeleton.printFunc();
         boolean done = false;
         done = drill();
-        if (!done)
-            move();
+        if (!done) {
+            move();}
+        Skeleton.printFuncRet("");
     }
 
     public boolean move() {
+    	Skeleton.printFunc();
         ArrayList<Field> current_neighbours = location.getNeighbours();
         if (current_neighbours.size() != 0) {
             Random random = new Random();
             int newLocationInt = random.nextInt(current_neighbours.size());
             Field newLocation = current_neighbours.get(newLocationInt);
             
-            
             location.removeFlyingObject(this);
             newLocation.acceptFlyingObject(this);
+            Skeleton.printFuncRet("true");
             return true;
         }
+        Skeleton.printFuncRet("false");
         return false;
     }
 
@@ -36,7 +40,9 @@ public class Robot extends FlyingObject {
     }
 
     public void onExplode() {
+    	Skeleton.printFunc();
         move();
+        Skeleton.printFuncRet("");
     }
 
     public void onSolarStormCase() {
@@ -51,7 +57,7 @@ public class Robot extends FlyingObject {
         robotReq.add(new Iron());
         robotReq.add(new Coal());
         robotReq.add(new Uranium());
-        Skeleton.printFuncRet("");
+        Skeleton.printFuncRet("robotReq");
         return robotReq;
     }
 }
