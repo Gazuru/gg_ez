@@ -269,8 +269,8 @@ public class Skeleton {
         System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
     }
 
-    public static void main(String[] args) {
-        /*String[] fnc = {"testDrill", "testMeltOutcome", "testRadOutcome", "testExplode", "testIronOutcome",
+    /*public static void main(String[] args) {
+        String[] fnc = {"testDrill", "testMeltOutcome", "testRadOutcome", "testExplode", "testIronOutcome",
                 "testDieFromSolarStorm", "testPlaceGate", "testUseGate", "testPickUpGate", "testMine",
                 "testPutMaterial", "testMove", "testOnSolarStorm", "testCraftGate", "testCraftRobot", "testBuildBase"};
         System.out.println("Valaszd ki a tesztesetet a szama alapjan:");
@@ -337,7 +337,7 @@ public class Skeleton {
                     System.out.println("Nem ervenyes bemenet!");
                     break;
             }
-        }*/
-    }
+        }
+    }*/
 }
 

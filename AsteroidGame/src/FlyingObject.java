@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 
-public abstract class FlyingObject implements Steppable {
+public abstract class FlyingObject implements Steppable{
     protected Field location;
 
     public FlyingObject() {
     }
+
 
     public Field getLocation() {
         Skeleton.printFunc();

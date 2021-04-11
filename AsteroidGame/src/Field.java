@@ -1,12 +1,11 @@
 import java.util.ArrayList;
 
-public abstract class Field {
-    protected ArrayList<Field> neighbours;
-    protected ArrayList<FlyingObject> onSurface;
+public abstract class Field{
+    protected ArrayList<Field> neighbours = new ArrayList<>();
+    protected ArrayList<FlyingObject> onSurface = new ArrayList<>();
+
 
     public Field() {
-        neighbours = new ArrayList<Field>();
-        onSurface = new ArrayList<FlyingObject>();
     }
 
     public ArrayList<Field> getNeighbours() {

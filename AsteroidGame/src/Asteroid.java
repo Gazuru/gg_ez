@@ -8,7 +8,13 @@ public class Asteroid extends Field {
     private boolean inSunProximity;
 
     public Asteroid() {
-        switch(new Random().nextInt(5)){
+        genCore();
+        layer = new Random().nextInt(10) + 1;
+        inSunProximity = new Random().nextBoolean();
+    }
+
+    public void genCore() {
+        switch (new Random().nextInt(5)) {
             case 0:
                 acceptCore(new Coal());
                 break;
@@ -25,35 +31,33 @@ public class Asteroid extends Field {
                 core = null;
                 break;
         }
-        layer = new Random().nextInt(10) + 1;
-        inSunProximity = new Random().nextBoolean();
     }
 
     public boolean getInSunProximity() {
         Skeleton.printFunc();
         Skeleton.printFuncRet(Boolean.toString(inSunProximity));
         return inSunProximity;
-        
+
     }
 
     public void setInSunProximity(Boolean inSunProximity) {
-    	Skeleton.printFunc();
+        Skeleton.printFunc();
         this.inSunProximity = inSunProximity;
         Skeleton.printFuncRet("");
     }
 
     public boolean onDrill() {
         Skeleton.printFunc();
-        if(layer>1){
+        if (layer > 1) {
             decreaseLayer();
             Skeleton.printFuncRet("true");
             return true;
-        }else if(layer == 1){
+        } else if (layer == 1) {
             core.onDrillSpecial(this);
             Skeleton.printFuncRet("true");
             return true;
-        }else{
-        	Skeleton.printFuncRet("false");
+        } else {
+            Skeleton.printFuncRet("false");
             return false;
         }
     }
@@ -63,7 +67,7 @@ public class Asteroid extends Field {
         core = newCore;
         Skeleton.printFuncRet("");
     }
-    
+
     public void removeCore() {
         Skeleton.printFunc();
         core = null;
@@ -78,18 +82,18 @@ public class Asteroid extends Field {
 
     public void explode() {
         Skeleton.printFunc();
-        for(int i = onSurface.size()-1; i>=0; i--){
+        for (int i = onSurface.size() - 1; i >= 0; i--) {
             onSurface.get(i).onExplode();
         }
 
         Skeleton.printFuncRet("");
     }
 
-	public void onSolarStorm() {
-		Skeleton.printFunc();
-        if(layer != 0 || core != null){
-		    for(int i = onSurface.size()-1; i >=0; i--){
-		        onSurface.get(i).onSolarStormCase();
+    public void onSolarStorm() {
+        Skeleton.printFunc();
+        if (layer != 0 || core != null) {
+            for (int i = onSurface.size() - 1; i >= 0; i--) {
+                onSurface.get(i).onSolarStormCase();
             }
         }
         Skeleton.printFuncRet("");
@@ -97,7 +101,7 @@ public class Asteroid extends Field {
 
     public boolean fillBy(Ship ship, Material m) {
         Skeleton.printFunc();
-        if(layer == 0 && core == null){
+        if (layer == 0 && core == null) {
             acceptCore(m);
             ship.removeMaterial(m);
             core.onFill(this);
@@ -110,8 +114,8 @@ public class Asteroid extends Field {
 
     public boolean onMine(FlyingObject f) {
         Skeleton.printFunc();
-        if(layer == 0 && core != null){
-            if(f.addMaterial(core)){
+        if (layer == 0 && core != null) {
+            if (f.addMaterial(core)) {
                 removeCore();
                 return true;
             }
