@@ -35,7 +35,7 @@ public class Robot extends FlyingObject{
     public void die() {
         Skeleton.printFunc();
         location.removeFlyingObject(this);
-        Game.removeGameObject(this);
+        Game.getInstance().removeGameObject(this);
         Skeleton.printFuncRet("");
     }
 

@@ -1,0 +1,6 @@
+create asteroid 1
+create asteroid 2
+create asteroid 4
+add 1 4
+add 1 2
+stat 1

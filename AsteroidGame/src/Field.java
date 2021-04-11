@@ -6,6 +6,7 @@ public abstract class Field{
 
 
     public Field() {
+        Game.getInstance().addField(this);
     }
 
     public ArrayList<Field> getNeighbours() {

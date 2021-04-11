@@ -15,6 +15,7 @@ public class Ship extends FlyingObject {
         }else{
             System.out.println("Nincs aszteroida a jatekban!");
         }
+        Game.getInstance().incrNumShips();
     }
 
     public boolean mine() {
@@ -61,12 +62,12 @@ public class Ship extends FlyingObject {
                     for (Material m2: bom.getFound()){
                         removeMaterial(m2);
                     }
-                    Gate g1 = new Gate();
+                    /*Gate g1 = new Gate();
                     Gate g2 = new Gate();
                     g1.setPair(g2);
                     g2.setPair(g1);
                     addGate(g1);
-                    addGate(g2);
+                    addGate(g2);*/
                     return true;
                 }
             }
@@ -150,7 +151,8 @@ public class Ship extends FlyingObject {
                 for (Material m2 : newBOM.getFound()) {
                     removeMaterial(m2);
                 }
-                location.acceptFlyingObject(new Robot());
+                /*Robot r = new Robot();
+                location.acceptFlyingObject(r);*/
                 Skeleton.printFuncRet("true");
                 return true;
             }
@@ -160,14 +162,14 @@ public class Ship extends FlyingObject {
     }
 
     public boolean buildBase() {
-        ArrayList<Material> needed = Game.craftBaseReq();
+        ArrayList<Material> needed = Game.getInstance().craftBaseReq();
         BillOfMaterial newBOM = new BillOfMaterial(needed);
 
         for (FlyingObject s : location.getOnSurface()) {
             for (Material m : materials) {
                 if (newBOM.newMaterial(m)) {
                     Skeleton.printFuncRet("true");
-                    Game.setEnd(true);
+                    Game.getInstance().setEnd(true);
                     return true;
                 }
             }
@@ -231,8 +233,8 @@ public class Ship extends FlyingObject {
     public void die() {
         Skeleton.printFunc();
         location.removeFlyingObject(this);
-        Game.removeGameObject(this);
-        Game.decreaseNumShips();
+        Game.getInstance().removeGameObject(this);
+        Game.getInstance().decreaseNumShips();
         Skeleton.printFuncRet("");
     }
 

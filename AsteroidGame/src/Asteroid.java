@@ -33,6 +33,14 @@ public class Asteroid extends Field {
         }
     }
 
+    public Material getCore() {
+        return core;
+    }
+
+    public int getLayer() {
+        return layer;
+    }
+
     public boolean getInSunProximity() {
         Skeleton.printFunc();
         Skeleton.printFuncRet(Boolean.toString(inSunProximity));
@@ -85,6 +93,12 @@ public class Asteroid extends Field {
         for (int i = onSurface.size() - 1; i >= 0; i--) {
             onSurface.get(i).onExplode();
         }
+
+        for (int i = neighbours.size() - 1; i >= 0; i--) {
+            removeNeighbour(neighbours.get(i));
+        }
+
+        Game.getInstance().removeField(this);
 
         Skeleton.printFuncRet("");
     }

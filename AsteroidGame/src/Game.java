@@ -1,10 +1,11 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 class Game implements Steppable {
     private static ArrayList<FlyingObject> gameObjects = new ArrayList<FlyingObject>();
-    private static int numShips;
+    private static int numShips = 0;
     private static ArrayList<Field> fields = new ArrayList<Field>();
     private static boolean end = false;
     private static Game single_instance = null;
@@ -21,31 +22,41 @@ class Game implements Steppable {
         return single_instance;
     }
 
-    public static void setEnd(boolean _end) {
+    public ArrayList<FlyingObject> getGameObjects() {
+        return gameObjects;
+    }
+
+    public void setEnd(boolean _end) {
         Skeleton.printFunc();
         end = _end;
         Skeleton.printFuncRet("");
     }
 
-    public static void removeGameObject(FlyingObject fo) {
+    public void removeGameObject(FlyingObject fo) {
         Skeleton.printFunc();
         gameObjects.remove(fo);
         Skeleton.printFuncRet("");
     }
 
-    public static void decreaseNumShips() {
+    public void decreaseNumShips() {
         Skeleton.printFunc();
         numShips--;
         Skeleton.printFuncRet("");
     }
 
-    public static void removeField(Field f) {
-    	Skeleton.printFunc();
+    public void incrNumShips() {
+        numShips++;
+    }
+
+    public void removeField(Field f) {
+        Skeleton.printFunc();
         fields.remove(f);
         Skeleton.printFuncRet("");
     }
 
-    public ArrayList<Field> getFields(){ return fields; }
+    public ArrayList<Field> getFields() {
+        return fields;
+    }
 
     public void step() {
         //System.out.println("A(z) " + round++ + ". k�r!");
@@ -127,15 +138,15 @@ class Game implements Steppable {
         }
     }
 
-    public static void addGameObject(FlyingObject fo) {
+    public void addGameObject(FlyingObject fo) {
         gameObjects.add(fo);
     }
 
-    public static void addField(Field f) {
+    public void addField(Field f) {
         fields.add(f);
     }
 
-    public static ArrayList<Material> craftBaseReq() {
+    public ArrayList<Material> craftBaseReq() {
         ArrayList<Material> baseReq = new ArrayList<Material>();
         for (int i = 0; i < 3; i++) {
             baseReq.add(new Coal());

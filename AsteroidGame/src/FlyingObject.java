@@ -4,6 +4,7 @@ public abstract class FlyingObject implements Steppable{
     protected Field location;
 
     public FlyingObject() {
+        Game.getInstance().addGameObject(this);
     }
 
 
