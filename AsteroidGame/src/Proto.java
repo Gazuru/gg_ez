@@ -7,19 +7,20 @@ import java.util.Scanner;
 public class Proto {
 
     private static ArrayList<Testable> gameObjects = new ArrayList<>();
-    /*public static ArrayList<Testable<Ship, Integer>> ships = new ArrayList<>();
-    public static ArrayList<Testable<Asteroid, Integer>> asteroids = new ArrayList<>();
-    public static ArrayList<Testable<Material, Integer>> materials = new ArrayList<>();*/
-    private static ArrayList<Ship> ships = new ArrayList<>();
+    private static ArrayList<Testable<Ship, Integer>> ships = new ArrayList<>();
+    private static ArrayList<Testable<Asteroid, Integer>> asteroids = new ArrayList<>();
+    private static ArrayList<Testable<Material, Integer>> materials = new ArrayList<>();
+    private static Testable<Ship, Integer> current = null;
+    /*private static ArrayList<Ship> ships = new ArrayList<>();
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
-    private static ArrayList<Material> materials = new ArrayList<>();
+    private static ArrayList<Material> materials = new ArrayList<>();*/
 
     public static void log(String s) {
         System.out.println(s);
     }
 
     public static void insParam() {
-        log("Nem megfelelo parameter! Probalja ujra!");
+        log("Nem megfelelo parameterezes! Probalja ujra!");
     }
 
     public static void runCommand(String cmd) {
@@ -29,70 +30,148 @@ public class Proto {
             case "create":
 
                 if (params.length != 3) {
-                    log("Nem megfelelo mennyisegu parametert adott meg!");
-                    break;
+                    insParam();
+                    return;
                 }
 
                 switch (params[1]) {
                     case "asteroid":
                         asteroids.add(new Testable(new Asteroid(), Integer.parseInt(params[2])));
                         gameObjects.add(asteroids.get(asteroids.size() - 1));
-                        break;
+                        return;
                     case "ice":
                         materials.add(new Testable(new Ice(), Integer.parseInt(params[2])));
                         gameObjects.add(materials.get(materials.size() - 1));
-                        break;
+                        return;
                     case "iron":
                         materials.add(new Testable(new Iron(), Integer.parseInt(params[2])));
                         gameObjects.add(materials.get(materials.size() - 1));
-                        break;
+                        return;
                     case "uranium":
                         materials.add(new Testable(new Uranium(), Integer.parseInt(params[2])));
                         gameObjects.add(materials.get(materials.size() - 1));
-                        break;
+                        return;
                     case "ship":
                         ships.add(new Testable(new Ship(), Integer.parseInt(params[2])));
                         gameObjects.add(ships.get(ships.size() - 1));
-                        break;
+                        return;
                     default:
                         insParam();
-                        break;
+                        return;
                 }
-                break;
 
             case "add":
                 if (params.length != 3) {
                     insParam();
-                    break;
+                    return;
                 }
                 for (Testable t : ships) {
                     if (t.num.equals(Integer.parseInt(params[2]))) {
                         for (Testable m : materials) {
                             if (m.num.equals(Integer.parseInt(params[1]))) {
-                                log("bruh");
-                                t.obj.
+                                if (((Ship) t.obj).addMaterial((Material) m.obj)) {
+                                    log("Material " + m.num + " sikeresen hozzáadva a " + t.num + " telepeshez.");
+                                } else {
+                                    log("Nincs eleg hely a telepesnel!");
+                                }
+                                return;
                             }
+                        }
+                        log("Nincs ilyen ID-ju nyersanyag!");
+                        return;
+                    }
+                }
+                log("Nincs ilyen ID-ju telepes!");
+                return;
+
+            case "remove":
+                if (params.length != 3) {
+                    insParam();
+                    return;
+                }
+                for (Testable t : ships) {
+                    if (t.num.equals(Integer.parseInt(params[2]))) {
+                        for (Testable m : materials) {
+                            if (m.num.equals(Integer.parseInt(params[1]))) {
+                                for (Material ma : ((Ship) t.obj).getMaterials()) {
+                                    if (ma.equals((Material) m.obj)) {
+                                        ((Ship) t.obj).removeMaterial(ma);
+                                        log(m.num + " nyersanyag eltavolitva a " + t.num + " telepestol!");
+                                        return;
+                                    }
+                                }
+                                log("Nincs ilyen ID-ju nyersanyag a telepesnel!");
+                                return;
+                            }
+                        }
+                        log("Nincs ilyen ID-ju nyersanyag!");
+                        return;
+                    }
+                }
+                log("Nincs ilyen ID-ju telepes!");
+                return;
+
+            case "selectplayer":
+                if (params.length != 2) {
+                    insParam();
+                    return;
+                }
+                for (Testable t : ships) {
+                    if (t.num.equals(Integer.parseInt(params[1]))) {
+                        current = t;
+                        log("A kivalasztott telepes: " + current.num);
+                        return;
+                    }
+                }
+                log("Nincs ilyen ID-ju telepes!");
+                return;
+
+            case "skipturn":
+                if (current == null) {
+                    log("Nincs meg kivalasztott telepes!");
+                    return;
+                }
+                for (Testable t : ships) {
+                    if (t.num.equals(current.num)) {
+                        if (ships.indexOf(t) < ships.size() - 1) {
+                            current = ships.get(ships.indexOf(t) + 1);
+                        } else {
+                            current = ships.get(0);
+                        }
+                        log("A kovetkezo telepes: " + current.num);
+                        return;
+                    }
+                }
+                return;
+
+            case "solarstorm":
+                if (params.length != 2) {
+                    insParam();
+                    return;
+                }
+                for (Testable t : gameObjects) {
+                    if (t.num.equals(Integer.parseInt(params[1]))) {
+                        Class obj = t.getObj();
+                        if (Ship.class.equals(obj)) {
+                            ((Ship) t.obj).onSolarStormCase();
+                            return;
+                        } else if (Asteroid.class.equals(obj)) {
+                            ((Asteroid) t.obj).onSolarStorm();
+                            return;
+                        } else if (Robot.class.equals(obj)) {
+                            ((Robot) t.obj).onSolarStormCase();
+                            return;
+                        } else if (Gate.class.equals(obj)) {
+                            ((Gate) t.obj).onSolarStorm();
+                            return;
+                        } else if (Ufo.class.equals(obj)) {
+                            ((Ufo) t.obj).onSolarStormCase();
+                            return;
                         }
                     }
                 }
-
-                break;
-
-            case "remove":
-
-                break;
-
-            case "selectplayer":
-
-                break;
-
-            case "skipturn":
-
-                break;
-
-            case "solarstorm":
-
-                break;
+                log("Nincs ilyen ID-ju jatekelem!");
+                return;
 
             case "explode":
 
@@ -134,6 +213,7 @@ public class Proto {
                 log("Ez a parancs nem letezik! A parancsok listazasahoz irja be a \"help\" parancsot.");
                 break;
         }
+
     }
 
     public static String getCommand() {
