@@ -1,11 +1,25 @@
 import java.io.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Proto {
 
+    private static ArrayList<Testable> gameObjects = new ArrayList<>();
+    /*public static ArrayList<Testable<Ship, Integer>> ships = new ArrayList<>();
+    public static ArrayList<Testable<Asteroid, Integer>> asteroids = new ArrayList<>();
+    public static ArrayList<Testable<Material, Integer>> materials = new ArrayList<>();*/
+    private static ArrayList<Ship> ships = new ArrayList<>();
+    private static ArrayList<Asteroid> asteroids = new ArrayList<>();
+    private static ArrayList<Material> materials = new ArrayList<>();
+
     public static void log(String s) {
         System.out.println(s);
+    }
+
+    public static void insParam() {
+        log("Nem megfelelo parameter! Probalja ujra!");
     }
 
     public static void runCommand(String cmd) {
@@ -14,29 +28,53 @@ public class Proto {
         switch (params[0]) {
             case "create":
 
-                if (params.length < 2 || params.length > 3) {
+                if (params.length != 3) {
                     log("Nem megfelelo mennyisegu parametert adott meg!");
                     break;
                 }
 
                 switch (params[1]) {
                     case "asteroid":
+                        asteroids.add(new Testable(new Asteroid(), Integer.parseInt(params[2])));
+                        gameObjects.add(asteroids.get(asteroids.size() - 1));
                         break;
                     case "ice":
+                        materials.add(new Testable(new Ice(), Integer.parseInt(params[2])));
+                        gameObjects.add(materials.get(materials.size() - 1));
                         break;
                     case "iron":
+                        materials.add(new Testable(new Iron(), Integer.parseInt(params[2])));
+                        gameObjects.add(materials.get(materials.size() - 1));
                         break;
                     case "uranium":
+                        materials.add(new Testable(new Uranium(), Integer.parseInt(params[2])));
+                        gameObjects.add(materials.get(materials.size() - 1));
                         break;
                     case "ship":
+                        ships.add(new Testable(new Ship(), Integer.parseInt(params[2])));
+                        gameObjects.add(ships.get(ships.size() - 1));
                         break;
                     default:
-                        log("Nem megfelelo parameter! Probalja ujra!");
+                        insParam();
                         break;
                 }
                 break;
 
             case "add":
+                if (params.length != 3) {
+                    insParam();
+                    break;
+                }
+                for (Testable t : ships) {
+                    if (t.num.equals(Integer.parseInt(params[2]))) {
+                        for (Testable m : materials) {
+                            if (m.num.equals(Integer.parseInt(params[1]))) {
+                                log("bruh");
+                                t.obj.
+                            }
+                        }
+                    }
+                }
 
                 break;
 

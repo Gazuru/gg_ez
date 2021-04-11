@@ -1,4 +1,4 @@
-public abstract class Material {
+public abstract class Material{
     public void onDrillSpecial(Asteroid a) {
         Skeleton.printFunc();
         Skeleton.printFuncRet("");
