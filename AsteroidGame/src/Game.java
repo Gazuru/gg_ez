@@ -127,11 +127,11 @@ class Game implements Steppable {
         }
     }
 
-    public void addGameObject(FlyingObject fo) {
+    public static void addGameObject(FlyingObject fo) {
         gameObjects.add(fo);
     }
 
-    public void addField(Field f) {
+    public static void addField(Field f) {
         fields.add(f);
     }
 
