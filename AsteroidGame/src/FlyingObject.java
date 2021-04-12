@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class FlyingObject implements Steppable{
+public abstract class FlyingObject implements Steppable {
     protected Field location;
 
     public FlyingObject() {
@@ -22,14 +22,19 @@ public abstract class FlyingObject implements Steppable{
 
     public boolean drill() {
         Skeleton.printFunc();
-        boolean to_return=location.onDrill();
+        boolean to_return = location.onDrill();
         Skeleton.printFuncRet(Boolean.toString(to_return));
         return to_return;
     }
+
     public boolean addMaterial(Material material) {
         Skeleton.printFunc();
         Skeleton.printFuncRet("false");
         return false;
+    }
+
+    public ArrayList<Material> getMaterial() {
+        return null;
     }
 
     public abstract boolean move();

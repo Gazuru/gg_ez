@@ -2,11 +2,13 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Proto {
 
     private static boolean running = true;
+    private static boolean random = false;
     private static boolean saving = false;
     private static String save_path = null;
     private static ArrayList<Testable> gameObjects = new ArrayList<>();
@@ -97,6 +99,21 @@ public class Proto {
     }
 
     public static void checkGameObjects() {
+        for (Testable s : ships) {
+            boolean in = false;
+            for (Material m : ((Ship) s.obj).getMaterial()) {
+                if (findObject(m) == null) {
+                    Integer idx = 0;
+                    for (Testable g : gameObjects) {
+                        if ((Integer) g.num > idx) {
+                            idx = (Integer) g.num;
+                        }
+                    }
+                    gameObjects.add(new Testable(m, idx + 1));
+                }
+            }
+        }
+
         for (int i = gameObjects.size() - 1; i >= 0; i--) {
             boolean in = false;
             Testable t = gameObjects.get(i);
@@ -156,6 +173,7 @@ public class Proto {
                         case "coal":
                             materials.add(new Testable(new Coal(), Integer.parseInt(params[2])));
                             gameObjects.add(materials.get(materials.size() - 1));
+                            return;
                         case "iron":
                             materials.add(new Testable(new Iron(), Integer.parseInt(params[2])));
                             gameObjects.add(materials.get(materials.size() - 1));
@@ -259,6 +277,11 @@ public class Proto {
                         if (ships.indexOf(t) < ships.size() - 1) {
                             current = ships.get(ships.indexOf(t) + 1);
                         } else {
+                            for (Testable r : gameObjects) {
+                                if (isFlyingObject(r) && !r.getObj().equals(Ship.class)) {
+                                    ((FlyingObject) r.obj).step();
+                                }
+                            }
                             current = ships.get(0);
                         }
                         log("A kovetkezo korben a telepes: " + current.num);
@@ -345,7 +368,18 @@ public class Proto {
                         log("Core: none");
                     }
                     if (obj.equals(Asteroid.class)) {
+                        log("InSunProximity: " + ((Asteroid) gameobject.obj).getInSunProximity());
                         log("Layer thickness: " + ((Asteroid) gameobject.obj).getLayer());
+                    }
+
+                    if (!((Field) gameobject.obj).getOnSurface().isEmpty()) {
+                        log("OnSurface ID: ");
+                        for (FlyingObject flyingObject : ((Field) gameobject.obj).getOnSurface()) {
+                            ship = findObject(flyingObject);
+                            if (ship != null) {
+                                log("\t" + ship.num);
+                            }
+                        }
                     }
 
                     if (!((Field) gameobject.obj).getNeighbours().isEmpty()) {
@@ -386,43 +420,73 @@ public class Proto {
                 return;
 
             case "putback":
-                if (params.length != 2) {
-                    insParam();
-                    return;
-                }
                 if (current == null) {
                     noCurr();
                     return;
                 }
-                switch (params[1]) {
-                    case "iron":
-                        material = findObjectByClass(Iron.class);
-                        break;
-                    case "coal":
-                        material = findObjectByClass(Coal.class);
-                        break;
-                    case "ice":
-                        material = findObjectByClass(Ice.class);
-                        break;
-                    case "uranium":
-                        material = findObjectByClass(Uranium.class);
-                        break;
-                    default:
+                if (!random) {
+                    if (params.length != 2) {
                         insParam();
                         return;
-                }
-
-                if (material != null) {
-                    if (((Ship) current.obj).getLocation().fillBy((Ship) current.obj, (Material) material.obj)) {
-                        log("Mag sikeresen berakva!");
-                        next();
-                    } else {
-                        log("A mag berakasa sikertelen!");
                     }
+                    switch (params[1]) {
+                        case "iron":
+                            material = findObjectByClass(Iron.class);
+                            break;
+                        case "coal":
+                            material = findObjectByClass(Coal.class);
+                            break;
+                        case "ice":
+                            material = findObjectByClass(Ice.class);
+                            break;
+                        case "uranium":
+                            material = findObjectByClass(Uranium.class);
+                            break;
+                        default:
+                            insParam();
+                            return;
+                    }
+
+                    if (material != null) {
+                        if (((Ship) current.obj).getLocation().fillBy((Ship) current.obj, (Material) material.obj)) {
+                            log("Mag sikeresen berakva!");
+                            next();
+                        } else {
+                            log("A mag berakasa sikertelen!");
+                        }
+                        return;
+                    }
+                    log("Nincs a telepesnel az adott nyersanyagbol!");
+                    return;
+                } else {
+                    int random = new Random().nextInt(4);
+                    switch (random) {
+                        case 0:
+                            material = findObjectByClass(Iron.class);
+                            break;
+                        case 1:
+                            material = findObjectByClass(Coal.class);
+                            break;
+                        case 2:
+                            material = findObjectByClass(Ice.class);
+                            break;
+                        case 3:
+                            material = findObjectByClass(Uranium.class);
+                            break;
+                    }
+
+                    if (material != null) {
+                        if (((Ship) current.obj).getLocation().fillBy((Ship) current.obj, (Material) material.obj)) {
+                            log("Mag sikeresen berakva!");
+                            next();
+                        } else {
+                            log("A mag berakasa sikertelen!");
+                        }
+                        return;
+                    }
+                    log("Nincs a telepesnel az adott nyersanyagbol!");
                     return;
                 }
-                log("Nincs a telepesnel az adott nyersanyagbol!");
-                return;
 
             case "mine":
                 if (params.length != 1) {
@@ -436,9 +500,9 @@ public class Proto {
                 if (((Ship) current.obj).mine()) {
                     log("Sikeres banyaszat!");
                     next();
-                    return;
+                } else {
+                    log("Sikertelen banyaszat!");
                 }
-                log("Sikertelen banyaszat!");
                 return;
 
             case "drill":
@@ -459,34 +523,48 @@ public class Proto {
                 return;
 
             case "move":
-                if (params.length != 2) {
-                    insParam();
-                    return;
-                }
                 if (current == null) {
                     noCurr();
                     return;
                 }
+                if (!random) {
+                    if (params.length != 2) {
+                        insParam();
+                        return;
+                    }
 
-                field = findGameObject(Integer.parseInt(params[1]));
+                    field = findGameObject(Integer.parseInt(params[1]));
 
-                if (field == null) {
-                    log("Nem letezik ilyen ID-ju Field!");
+                    if (field == null) {
+                        log("Nem letezik ilyen ID-ju Field!");
+                        return;
+                    }
+
+                    for (Field f : ((Ship) current.obj).getLocation().getNeighbours()) {
+                        gameobject = findObject(f);
+                        if (gameobject != null && gameobject.equals(field)) {
+                            log("Telepes atmozgatva " + findObject(current.obj.getLocation()).num + " Field-rol a " + gameobject.num + " Field-re!");
+                            ((Ship) current.obj).getLocation().removeFlyingObject((Ship) current.obj);
+                            ((Field) gameobject.obj).acceptFlyingObject((Ship) current.obj);
+                            next();
+                            return;
+                        }
+                    }
+                    log("Nincs ilyen ID-ju szomszedja a helyszinnek!");
                     return;
-                }
-
-                for (Field f : ((Ship) current.obj).getLocation().getNeighbours()) {
-                    gameobject = findObject(f);
-                    if (gameobject != null && gameobject.equals(field)) {
+                }else{
+                    if (!((Ship) current.obj).getLocation().getNeighbours().isEmpty()){
+                        int random = new Random().nextInt(((Ship) current.obj).getLocation().getNeighbours().size());
+                        gameobject = findObject(((Ship) current.obj).getLocation().getNeighbours().get(random));
                         log("Telepes atmozgatva " + findObject(current.obj.getLocation()).num + " Field-rol a " + gameobject.num + " Field-re!");
                         ((Ship) current.obj).getLocation().removeFlyingObject((Ship) current.obj);
                         ((Field) gameobject.obj).acceptFlyingObject((Ship) current.obj);
                         next();
                         return;
                     }
+                    log("Nincs szomszedja a fieldnek!");
+                    return;
                 }
-                log("Nincs ilyen ID-ju szomszedja a helyszinnek!");
-                return;
 
             case "craft":
                 if (params.length != 2) {
@@ -498,7 +576,7 @@ public class Proto {
                     return;
                 }
 
-                switch (params[2]) {
+                switch (params[1]) {
                     case "base":
                         if (((Ship) current.obj).buildBase()) {
                             log("Bazis sikeresen megepitve, GG!");
@@ -620,7 +698,13 @@ public class Proto {
                 return;
 
             case "random":
-
+                if (random) {
+                    random = false;
+                    log("Random kikapcsolva.");
+                } else {
+                    random = true;
+                    log("Random bekapcsolva.");
+                }
                 return;
             case "help":
                 log("Parancsok:\n");

@@ -61,7 +61,9 @@ public class Asteroid extends Field {
             Skeleton.printFuncRet("true");
             return true;
         } else if (layer == 1) {
-            core.onDrillSpecial(this);
+            decreaseLayer();
+            if(core!=null)
+                core.onDrillSpecial(this);
             Skeleton.printFuncRet("true");
             return true;
         } else {

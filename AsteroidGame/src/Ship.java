@@ -7,12 +7,11 @@ public class Ship extends FlyingObject {
     private ArrayList<Material> materials = new ArrayList<Material>();
 
 
-
     public Ship() {
         ArrayList<Field> locations = Game.getInstance().getFields();
-        if(!locations.isEmpty()){
+        if (!locations.isEmpty()) {
             locations.get(new Random().nextInt(locations.size())).acceptFlyingObject(this);
-        }else{
+        } else {
             System.out.println("Nincs aszteroida a jatekban!");
         }
         Game.getInstance().incrNumShips();
@@ -53,13 +52,13 @@ public class Ship extends FlyingObject {
         Skeleton.printFuncRet("false");
         return false;*/
 
-        if(gates.size() < 2){
+        if (gates.size() < 2) {
             ArrayList<Material> needed = Gate.craftGateReq();
             BillOfMaterial bom = new BillOfMaterial(needed);
 
-            for(Material m: materials){
-                if(bom.newMaterial(m)){
-                    for (Material m2: bom.getFound()){
+            for (Material m : materials) {
+                if (bom.newMaterial(m)) {
+                    for (Material m2 : bom.getFound()) {
                         removeMaterial(m2);
                     }
                     /*Gate g1 = new Gate();
@@ -97,9 +96,9 @@ public class Ship extends FlyingObject {
             return false;
         }*/
 
-        if(gates.size() > 0){
+        if (gates.size() > 0) {
             ArrayList<Field> neigboursFields = location.getNeighbours();
-            for (Field f : neigboursFields){
+            for (Field f : neigboursFields) {
                 f.addNeighbour(gates.get(0));
             }
             gates.get(0).setWorking(true);
@@ -136,7 +135,7 @@ public class Ship extends FlyingObject {
         }
         System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns true");
         return true;*/
-        if(gates.size()<3){
+        if (gates.size() < 3) {
             return location.pickedUpBy(this);
         }
         return false;
@@ -166,7 +165,7 @@ public class Ship extends FlyingObject {
         BillOfMaterial newBOM = new BillOfMaterial(needed);
 
         for (FlyingObject s : location.getOnSurface()) {
-            for (Material m : materials) {
+            for (Material m : s.getMaterial()) {
                 if (newBOM.newMaterial(m)) {
                     Skeleton.printFuncRet("true");
                     Game.getInstance().setEnd(true);
@@ -179,10 +178,14 @@ public class Ship extends FlyingObject {
     }
 
     public boolean putMaterial(Material m) {
-    	Skeleton.printFunc();
-    	boolean to_return=location.fillBy(this, m);
-    	Skeleton.printFuncRet(Boolean.toString(to_return));
+        Skeleton.printFunc();
+        boolean to_return = location.fillBy(this, m);
+        Skeleton.printFuncRet(Boolean.toString(to_return));
         return to_return;
+    }
+
+    public ArrayList<Material> getMaterial() {
+        return materials;
     }
 
     public void removeMaterial(Material material) {
@@ -203,7 +206,7 @@ public class Ship extends FlyingObject {
         }*/
 
         Skeleton.printFuncRet("true");
-        if(materials.size() < 10){
+        if (materials.size() < 10) {
             materials.add(material);
             return true;
         }
@@ -303,7 +306,7 @@ public class Ship extends FlyingObject {
     }
 
     public boolean useGate() {
-    	return location.teleport(this);
+        return location.teleport(this);
     }
 
     public ArrayList<Material> getMaterials() {
