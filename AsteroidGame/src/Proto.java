@@ -416,6 +416,8 @@ public class Proto {
                             log("Not their turn");
                         }
                     }
+                } else if (gameobject.getObj().equals(Uranium.class)){
+                    log("ExposedN: " + ((Uranium)gameobject.obj).getExposedN());
                 }
                 return;
 
