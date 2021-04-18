@@ -4,7 +4,13 @@ import java.util.Random;
 public class Ufo extends FlyingObject {
     private ArrayList<Material> materials;
 
-    @Override
+    /**
+     * step fv ami minden körébe lefut
+     * done lokalis valtozo false alapbol,
+     * ha tud furni akkor fur, és done true lesz, 
+     * ha nem tud(ezért done false) akkor vagy teleportal(ha tud) vagy move-ol az ufo 
+     * 
+     */
     public void step() {
         Skeleton.printFunc();
         boolean done = false;
@@ -22,7 +28,16 @@ public class Ufo extends FlyingObject {
         Skeleton.printFuncRet("");
     }
 
-    @Override
+    /**
+     * mozgasert felelos fv, 
+     * random kivalaszt egy a location aktualis szoszedjat, 
+     * majd atallitja a locationjat arra, a megfelelo onSurface listakezelest pedig elvegzi
+     *
+     * @return boolean true ha sikerrel zajlott a mozgas
+     * 
+     * @return boolean false ha a feltetel nem teljesul
+     * 
+     */
     public boolean move() {
         Skeleton.printFunc();
         Field neighbour_asteroid = location.getNeighbours().get(0);
@@ -36,13 +51,24 @@ public class Ufo extends FlyingObject {
         return false;
     }
 
+    /**
+     * banyaszatert felelos fv, 
+     * meghivja a locationon az onMine fv-t this parameterrel
+     * 
+     * @return boolean true ha sikerrel zajlott a banyaszat
+     * 
+     * @return boolean false ha a feltetel nem teljesul
+     * 
+     */
     public boolean mine() {
         Skeleton.printFunc();
-        //System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns " + completed);
         return location.onMine(this);
     }
 
-    @Override
+    /**
+     * meghalas eseten hivodik meg a fv, eltavolitja a Game gameObjects listajarol es a location onSurface listajarol magat
+     *
+     */
     public void die() {
         Skeleton.printFunc();
         location.removeFlyingObject(this);
@@ -50,20 +76,33 @@ public class Ufo extends FlyingObject {
         Skeleton.printFuncRet("");
     }
 
-    @Override
+    /**
+     * robbanas eseten hivodik meg a fv, meghivja a die fv-t
+     *
+     */
     public void onExplode() {
         Skeleton.printFunc();
         die();
         Skeleton.printFuncRet("");
     }
 
-    @Override
+    /**
+     * napvihar eseten hivodik meg a fv, meghivja a die fv-t
+     *
+     */
     public void onSolarStormCase() {
         Skeleton.printFunc();
         die();
         Skeleton.printFuncRet("");
     }
-
+    /**
+    * hasznalja a kaput amin epp all
+    *
+    * @return boolean true ha sikeresen vegbe megy a teleport
+    * 
+    * @return boolean false ha a feltetel nem teljesul
+    * 
+    */
     public boolean useGate() {
         if (location.teleport(this)) {
             Skeleton.printFuncRet("true");
@@ -73,13 +112,24 @@ public class Ufo extends FlyingObject {
             return false;
         }
     }
-
+    /**
+     * furast vegzunk, de ez itt mivel az Ufo nem tud furni mindig false-al ter vissza 
+     *
+     * @return boolean false térünk vissza mindig
+     * 
+     */
     public boolean drill() {
         Skeleton.printFunc();
         Skeleton.printFuncRet("false");
         return false;
     }
-
+    /**
+     * anyag hozzaadas eseten ezt hivjuk meg az Ufo-n,
+     * mivel az Ufo barmennyi anyagot fel tud venni mindig true
+     * 
+     * @return boolean true jelen esetben mindig true-al ter vissza
+     * 
+     */
     public boolean addMaterial(Material material) {
         Skeleton.printFunc();
         Skeleton.printFuncRet("true");

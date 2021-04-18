@@ -6,7 +6,13 @@ public class Ship extends FlyingObject {
     private ArrayList<Gate> gates = new ArrayList<Gate>();
     private ArrayList<Material> materials = new ArrayList<Material>();
 
-
+    /**
+     * konstruktor, 
+     * ha nincs aszteroida amire mehet letrehoz egyet
+     * hozzáaddolja magát a singleton Game gameObjects listajahoz
+     * valamint az aszteroidat is
+     * 
+     */
     public Ship() {
         ArrayList<Field> locations = Game.getInstance().getFields();
         if (!locations.isEmpty()) {
@@ -17,41 +23,30 @@ public class Ship extends FlyingObject {
         Game.getInstance().incrNumShips();
     }
 
+    /**
+     * banyaszatert felelos fv, 
+     * meghivja a locationon az onMine fv-t this parameterrel
+     * 
+     * @return boolean true ha sikerrel zajlott a banyaszat
+     * 
+     * @return boolean false ha a feltetel nem teljesul
+     * 
+     */
     public boolean mine() {
         Skeleton.printFunc();
-        //System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns " + completed);
         return location.onMine(this);
     }
-
+    /**
+    * a gate kraftolasert felelos fv, ha kevesebb mint 2 gate van nála,
+    * megnezi megvannak-e a megfelelo anyagok, ha igen hozzaadja a gates listahoz
+    * 
+    * @return boolean true ha sikerrel zajlott a craft
+    * 
+    * @return boolean false ha a feltetel nem teljesul
+    * 
+    */
     public boolean craftGatePair() {
         Skeleton.printFunc();
-
-        /*System.out.println("Kapuk szï¿½ma >0? y/n");
-        String ans = Skeleton.getUserInput();
-
-        if (ans.contains("n")) {
-            ArrayList<Material> needed = Gate.craftGateReq();
-            BillOfMaterial newBOM = new BillOfMaterial(needed);
-
-            for (Material m : materials) {
-                if (newBOM.newMaterial(m)) {
-                    for (Material m2 : newBOM.getFound()) {
-                        removeMaterial(m2);
-                    }
-                    Gate g1 = new Gate();
-                    Gate g2 = new Gate();
-                    g1.setPair(g2);
-                    g2.setPair(g1);
-                    addGate(g1);
-                    addGate(g2);
-                    Skeleton.printFuncRet("true");
-                    return true;
-                }
-            }
-        }
-        Skeleton.printFuncRet("false");
-        return false;*/
-
         if (gates.size() < 2) {
             ArrayList<Material> needed = Gate.craftGateReq();
             BillOfMaterial bom = new BillOfMaterial(needed);
@@ -61,41 +56,24 @@ public class Ship extends FlyingObject {
                     for (Material m2 : bom.getFound()) {
                         removeMaterial(m2);
                     }
-                    /*Gate g1 = new Gate();
-                    Gate g2 = new Gate();
-                    g1.setPair(g2);
-                    g2.setPair(g1);
-                    addGate(g1);
-                    addGate(g2);*/
                     return true;
                 }
             }
         }
         return false;
     }
-
+    /**
+    * ez a fv felelos a gate lerakasaert, 
+    * ha több mint 0 gate-ünk van, hozzáadja a megfelelo szomszedsagi viszonyokat
+    * workingre állitja a gatet,
+    * majd kiveszi a ship gates listajabol
+    *
+    * @return boolean true ha sikerrel zajlott a place
+    * 
+    * @return boolean false ha a feltetel nem teljesul
+    * 
+    */
     public boolean placeGate() {
-        /*Skeleton.printFunc();
-        System.out.println("gates.size>0? y/n");
-        String ans = Skeleton.getUserInput();
-
-        if (ans.contains("y")) {
-            ArrayList<Field> neighbourFields = location.getNeighbours();
-            for (Field f : neighbourFields) {
-                f.addNeighbour(gates.get(0));
-                gates.get(0).addNeighbour(f);
-            }
-            gates.get(0).setWorking(true);
-            location.addNeighbour(gates.get(0));
-            gates.get(0).addNeighbour(location);
-            this.removeGate(gates.get(0));
-            Skeleton.printFuncRet("true");
-            return true;
-        } else {
-            Skeleton.printFuncRet("false");
-            return false;
-        }*/
-
         if (gates.size() > 0) {
             ArrayList<Field> neigboursFields = location.getNeighbours();
             for (Field f : neigboursFields) {
@@ -108,39 +86,31 @@ public class Ship extends FlyingObject {
         }
         return false;
     }
-
+    /**
+     * ez a fv felelos a gate felvevesert, 
+     * ha kevesebb mint 3 gate-ünk van, 
+     * meghivja a location pickedUpBy fv-jét this paraméterezéssel
+     *
+     * @return boolean true ha sikerrel zajlott a pickup
+     * 
+     * @return boolean false ha a feltetel nem teljesul
+     * 
+     */
     public boolean pickUpGate() {
-        /*Skeleton.printFunc();
-        System.out.println("2>gates? y/n");
-        String ans = Skeleton.getUserInput();
-
-        if (ans.contains("y")) {
-            boolean ok = location.pickedUpBy(this);
-            if (ok) {
-
-                if (move()) {
-
-                    ArrayList<Field> neighbours_tmp = location.getNeighbours();
-                    for (Field f : neighbours_tmp) {
-                        f.removeNeighbour(location);
-                    }
-
-
-                    System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns true");
-                    return true;
-                }
-            }
-            System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns false");
-            return false;
-        }
-        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " returns true");
-        return true;*/
         if (gates.size() < 3) {
             return location.pickedUpBy(this);
         }
         return false;
     }
-
+    /**
+     * a robot kraftolasert felelos fv, 
+     * megnezi megvannak-e a megfelelo anyagok, ha igen lerakja a robotot
+     * 
+     * @return boolean true ha sikerrel zajlott a craft
+     * 
+     * @return boolean false ha a feltetel nem teljesul
+     * 
+     */
     public boolean buildRobot() {
         ArrayList<Material> needed = Robot.craftRobotReq();
         BillOfMaterial newBOM = new BillOfMaterial(needed);
@@ -159,7 +129,15 @@ public class Ship extends FlyingObject {
         Skeleton.printFuncRet("false");
         return false;
     }
-
+    /**
+     * a base kraftolasert felelos fv, 
+     * megnezi megvannak-e a megfelelo anyagok, ha igen megnyertuk a jatekot
+     * 
+     * @return boolean true ha sikerrel zajlott a craft
+     * 
+     * @return boolean false ha a feltetel nem teljesul
+     * 
+     */
     public boolean buildBase() {
         ArrayList<Material> needed = Game.getInstance().craftBaseReq();
         BillOfMaterial newBOM = new BillOfMaterial(needed);
@@ -176,34 +154,55 @@ public class Ship extends FlyingObject {
         Skeleton.printFuncRet("false");
         return false;
     }
-
+    /**
+    * az anyag visszahelyezésért felelos fv, 
+    * meghivja a location fillBy fv-ét this és Material m paraméterrel
+    *
+    * @param Material m ezt adjuk át paraméterként
+    * 
+    * @return boolean to_return ezzel térünk vissza
+    * 
+    */
     public boolean putMaterial(Material m) {
         Skeleton.printFunc();
         boolean to_return = location.fillBy(this, m);
         Skeleton.printFuncRet(Boolean.toString(to_return));
         return to_return;
     }
-
+    /**
+     * anyag lekerdezes eseten ezt hivjuk meg a Ship-en, a materials listaval ter vissza
+     * 
+     * @return ArrayList<Material> materials ezzel terunk vissza
+     * 
+     */
     public ArrayList<Material> getMaterial() {
         return materials;
     }
-
+    /**
+     * anyag eltavolitas eseten ezt hivjuk meg a Ship-en, 
+     * a parameterkent kapott Material material objektumot eltavolitjuk a materials listabol
+     * 
+     * @param Material material ezt adjuk át paraméterként
+     * 
+     */
     public void removeMaterial(Material material) {
         Skeleton.printFunc();
         materials.remove(material);
         Skeleton.printFuncRet("");
     }
-
+    /**
+     * anyag hozzaadas eseten ezt hivjuk meg a Ship-en,
+     * a parameterkent kapott Material material objektumot hozzaadjuk a materials listahoz
+     * 
+     * @param Material material ezt adjuk át paraméterként
+     * 
+     * @return boolean true ha kevesebb mint 10 anyag van nalunk ezért elfer
+     * 
+     * @return boolean false ha a lehetsegesnel tobb anyag van nalunk
+     * 
+     */
     public boolean addMaterial(Material material) {
         Skeleton.printFunc();
-
-        /*System.out.println("kevesebb, mint 10 dolog van nï¿½la inventoryban? y/n");
-        String ans2 = Skeleton.getUserInput();
-
-        if (ans2.contains("n")) {
-            Skeleton.printFuncRet("false");
-            return false;
-        }*/
 
         Skeleton.printFuncRet("true");
         if (materials.size() < 10) {
@@ -213,26 +212,30 @@ public class Ship extends FlyingObject {
         return false;
 
     }
-
+    /**
+     * mozgasert felelos fv, 
+     * random kivalaszt egy a location aktualis szoszedjat, (kesobb ez player input lesz)
+     * majd atallitja a locationjat arra, a megfelelo onSurface listakezelest pedig elvegzi
+     *
+     * @return boolean true ha sikerrel zajlott a mozgas
+     * 
+     * @return boolean false ha a feltetel nem teljesul
+     * 
+     */
     public boolean move() {
         Skeleton.printFunc();
         Field neighbour_asteroid = location.getNeighbours().get(0);
-        /*System.out.println("van szomszed amire tud menni? y/n");
-        String ans3 = Skeleton.getUserInput();
-        if (ans3.contains("y")) {
-            location.removeFlyingObject(this);
-            neighbour_asteroid.acceptFlyingObject(this);
-            Skeleton.printFuncRet("true");
-            return true;
-        }
-        Skeleton.printFuncRet("false");
-        return false;*/
         location.removeFlyingObject(this);
         neighbour_asteroid.acceptFlyingObject(this);
         return true;
 
     }
-
+    /**
+     * meghalas eseten hivodik meg a fv, 
+     * eltavolitja a Game gameObjects listajarol es a location onSurface listajarol magat
+     * es meghivja a decreaseNumShips fv-t
+     *
+     */
     public void die() {
         Skeleton.printFunc();
         location.removeFlyingObject(this);
