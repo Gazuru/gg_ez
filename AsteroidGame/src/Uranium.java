@@ -22,7 +22,7 @@ public class Uranium extends RadioactiveMaterial {
     * mag visszarakas közben hivodik meg a magon, ha napkozelbe van a parameterkent kapott aszteroida,
  	* meghivjuk az increaseExposedN fv-t, amennyiben ez elerte a 3-at felrobbantjuk az aszteroidat
     *
-    * @param Asteroid a ezt adjuk at parameterkent
+    * @param a ezt adjuk at parameterkent
  	* 
  	*/
     public void onFill(Asteroid a) {
@@ -39,7 +39,7 @@ public class Uranium extends RadioactiveMaterial {
 	* fúrás közben hivodik meg a magon, ha napkozelbe van a parameterkent kapott aszteroida,
 	* meghivjuk az increaseExposedN fv-t, amennyiben ez elerte a 3-at felrobbantjuk az aszteroidat
 	*
-	* @param Asteroid a ezt adjuk at parameterkent
+	* @param a ezt adjuk at parameterkent
 	* 
 	*/
     public void onDrillSpecial(Asteroid a) {

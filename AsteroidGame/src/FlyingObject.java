@@ -24,7 +24,7 @@ public abstract class FlyingObject implements Steppable {
     /**
     * beállitjuk a location tagvaltozot a paraméterként kapott értékre
     *
-    * @param  Field newLocation erre állitjuk be
+    * @param newLocation erre állitjuk be
     * 
     */
     public void setLocation(Field newLocation) {

@@ -6,7 +6,7 @@ public class BillOfMaterial {
     /**
     * konstruktor, beállitjuk a kapott listara listankat
     *
-    * @param  ArrayList<Material> requires erre állitjuk be
+    * @param requires erre állitjuk be
     */
     public BillOfMaterial(ArrayList<Material> requires) {
     	Skeleton.printFunc();
@@ -16,7 +16,7 @@ public class BillOfMaterial {
     /**
     * uj anyag talalasa eseten hivodik meg es ellenorizzuk vele hogy felhasznalhato-e
     * 
-    * @param  Material m atadjuk parameterkent a talalt uj anyagot
+    * @param  m atadjuk parameterkent a talalt uj anyagot
     * 
     * @return boolean true ha a neededben levo valamelyik anyag kompatibilis(tipus egyezik) a parameterkent kapott anyaggal
     * vagy ha ures a needed lista
@@ -55,7 +55,7 @@ public class BillOfMaterial {
     /**
     * eltávolitjuk a parameterkent kapott anyagot a needed listarol
     *
-    * @param Material r ezt tavolitjuk el 
+    * @param r ezt tavolitjuk el
     * 
     */
     public void removeNeeded(Material r) {
@@ -66,7 +66,7 @@ public class BillOfMaterial {
     /**
      * hozzaadjuk a parameterkent kapott anyagot a found listahoz
      *
-     * @param Material r ezt adjuk hozza 
+     * @param f ezt adjuk hozza
      * 
      */
     public void addFound(Material f) {

@@ -60,9 +60,18 @@ public class Asteroid extends Field {
         return layer;
     }
     /**
+     * megadunk egy kívánt köpenyvastagságot
+     *
+     * @param _layer az új kívánt érték
+     *
+     */
+    public void setLayer(int _layer) {
+        layer = _layer;
+    }
+    /**
      * lekérdezzük az aszteroida napközeliségét
      * 
-     * @return	boolean inSunProximity visszatérünk a napközeliségével
+     * @return boolean inSunProximity visszatérünk a napközeliségével
      * 
      */
     public boolean getInSunProximity() {
@@ -74,7 +83,7 @@ public class Asteroid extends Field {
     /**
      * beállitjuk az aszteroida napközeliségét
      * 
-     * @param	boolean inSunProximity beállitjuk a napközeliségét ezen paraméterre
+     * @param inSunProximity beállitjuk a napközeliségét ezen paraméterre
      * 
      */
     public void setInSunProximity(boolean inSunProximity) {
@@ -112,7 +121,7 @@ public class Asteroid extends Field {
     /**
     * paraméterként kapott core-ra állitjuk a magot
     *
-    * @param  Material newCore beállitjuk erre a magot
+    * @param newCore beállitjuk erre a magot
     * 
     */
     public void acceptCore(Material newCore) {
@@ -176,8 +185,8 @@ public class Asteroid extends Field {
     * ha belerak egy hajo egy core-t hivodik meg ez a fv
     * 
     *
-    * @param  Ship ship ez a hajo aki belerakta a magot
-    * @param  Material m ez a mag amit beleraktak
+    * @param ship ez a hajo aki belerakta a magot
+    * @param m ez a mag amit beleraktak
     * 
     * @return boolean true ha nincs meg benne mag és 0 a layer, ekkor accepteli a core-t 
     * kivevodik az a hajobol
@@ -201,7 +210,7 @@ public class Asteroid extends Field {
     /**
     * banyaszas soran hivodik meg ez a fv
     *
-    * @param  FlyingObject f ez az a FlyingObject aki banyassza az aszteroidat
+    * @param f ez az a FlyingObject aki banyassza az aszteroidat
     * 
     * @return boolean true ha layer 0 és nem null a core,
     * ekkor ha a hajo kepes felvenni a materialt, eltavolitjuk a core-t az aszteroidabol

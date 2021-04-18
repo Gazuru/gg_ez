@@ -1,7 +1,5 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,8 +11,8 @@ public class Proto {
     private static String save_path = null;
     private static ArrayList<Testable> gameObjects = new ArrayList<>();
     private static ArrayList<Testable<Ship, Integer>> ships = new ArrayList<>();
-    private static ArrayList<Testable<Asteroid, Integer>> asteroids = new ArrayList<>();
-    private static ArrayList<Testable<Material, Integer>> materials = new ArrayList<>();
+    //private static ArrayList<Testable<Asteroid, Integer>> asteroids = new ArrayList<>();
+    //private static ArrayList<Testable<Material, Integer>> materials = new ArrayList<>();
     private static Testable<Ship, Integer> current = null;
     /*private static ArrayList<Ship> ships = new ArrayList<>();
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
@@ -38,7 +36,7 @@ public class Proto {
 
     public static Testable findObject(Object t) {
         for (int i = gameObjects.size() - 1; i >= 0; i--) {
-            if (((Object) gameObjects.get(i).obj).equals(t)) {
+            if ((gameObjects.get(i).obj).equals(t)) {
                 return gameObjects.get(i);
             }
         }
@@ -100,7 +98,6 @@ public class Proto {
 
     public static void checkGameObjects() {
         for (Testable s : ships) {
-            boolean in = false;
             for (Material m : ((Ship) s.obj).getMaterial()) {
                 if (findObject(m) == null) {
                     Integer idx = 0;
@@ -141,18 +138,18 @@ public class Proto {
     public static void runCommand(String cmd) {
         cmd = cmd.toLowerCase();
         String[] params = cmd.split(" ");
-        Testable ship = null;
+        Testable ship;
         Testable material = null;
-        Testable asteroid = null;
-        Testable gameobject = null;
-        Testable field = null;
+        Testable asteroid;
+        Testable gameobject;
+        Testable field;
 
         checkGameObjects();
 
         switch (params[0]) {
             case "create":
 
-                if (params.length != 3) {
+                if ((params.length != 3 && !params[1].equals("asteroid")) || ((params[1].equals("asteroid") && random && params.length != 3) || (params[1].equals("asteroid") && !random && params.length != 6))) {
                     insParam();
                     return;
                 }
@@ -163,24 +160,44 @@ public class Proto {
                 } else {
                     switch (params[1]) {
                         case "asteroid":
-                            asteroids.add(new Testable(new Asteroid(), Integer.parseInt(params[2])));
-                            gameObjects.add(asteroids.get(asteroids.size() - 1));
+                            Asteroid tmp = new Asteroid();
+                            if (!random) {
+                                switch (params[3]) {
+                                    case "none":
+                                        tmp.acceptCore(null);
+                                        break;
+                                    case "ice":
+                                        tmp.acceptCore(new Ice());
+                                        break;
+                                    case "iron":
+                                        tmp.acceptCore(new Iron());
+                                        break;
+                                    case "coal":
+                                        tmp.acceptCore(new Coal());
+                                        break;
+                                    case "uranium":
+                                        tmp.acceptCore(new Uranium());
+                                        break;
+                                    default:
+                                        log("Nincs ilyen nyersanyag!");
+                                        return;
+                                }
+                                tmp.setInSunProximity(Boolean.parseBoolean(params[4]));
+                                tmp.setLayer(Integer.parseInt(params[5]));
+                            }
+                            gameObjects.add(new Testable(tmp, Integer.parseInt(params[2])));
                             return;
                         case "ice":
-                            materials.add(new Testable(new Ice(), Integer.parseInt(params[2])));
-                            gameObjects.add(materials.get(materials.size() - 1));
+                            gameObjects.add(new Testable(new Ice(), Integer.parseInt(params[2])));
                             return;
                         case "coal":
-                            materials.add(new Testable(new Coal(), Integer.parseInt(params[2])));
-                            gameObjects.add(materials.get(materials.size() - 1));
+                            gameObjects.add(new Testable(new Coal(), Integer.parseInt(params[2])));
                             return;
                         case "iron":
-                            materials.add(new Testable(new Iron(), Integer.parseInt(params[2])));
-                            gameObjects.add(materials.get(materials.size() - 1));
+                            gameObjects.add(new Testable(new Iron(), Integer.parseInt(params[2])));
                             return;
                         case "uranium":
-                            materials.add(new Testable(new Uranium(), Integer.parseInt(params[2])));
-                            gameObjects.add(materials.get(materials.size() - 1));
+                            gameObjects.add(new Testable(new Uranium(), Integer.parseInt(params[2])));
                             return;
                         case "ship":
                             ships.add(new Testable(new Ship(), Integer.parseInt(params[2])));
@@ -188,6 +205,8 @@ public class Proto {
                                 current = ships.get(0);
                             gameObjects.add(ships.get(ships.size() - 1));
                             return;
+                        case "ufo":
+                            gameObjects.add(new Testable(new Ufo(), Integer.parseInt(params[2])));
                         default:
                             insParam();
                             return;
@@ -204,11 +223,11 @@ public class Proto {
                 material = findGameObject(Integer.parseInt(params[1]));
 
                 if (ship == null) {
-                    log("Nem letezik ilyen ID-ju telepes/field!");
+                    insParam();
                     return;
                 }
                 if (material == null) {
-                    log("Nem letezik ilyen ID-ju nyersanyag/field!");
+                    insParam();
                     return;
                 }
 
@@ -220,6 +239,10 @@ public class Proto {
                     }
                 } else if (isField(ship) && isField(material)) {
                     ((Field) ship.obj).addNeighbour((Field) material.obj);
+                } else if (isField(ship) && isFlyingObject(material)) {
+                    if (((FlyingObject) material.obj).getLocation() != null)
+                        ((FlyingObject) material.obj).getLocation().removeFlyingObject((FlyingObject) material.obj);
+                    ((Field) ship.obj).acceptFlyingObject((FlyingObject) material.obj);
                 }
                 return;
 
@@ -242,7 +265,7 @@ public class Proto {
                 }
 
                 for (Material m : ((Ship) ship.obj).getMaterials()) {
-                    if (m.equals((Material) material.obj)) {
+                    if (m.equals(material.obj)) {
                         ((Ship) ship.obj).removeMaterial((Material) material.obj);
                         log(material.num + " nyersanyag sikeresen eltavolitva a " + ship.num + " telepestol!");
                         return;
@@ -303,7 +326,6 @@ public class Proto {
                     return;
                 }
 
-                Class obj = gameobject.getObj();
                 if (isFlyingObject(gameobject)) {
                     ((FlyingObject) gameobject.obj).onSolarStormCase();
                 } else if (isField(gameobject)) {
@@ -354,7 +376,7 @@ public class Proto {
                     return;
                 }
 
-                obj = gameobject.getObj();
+                Object obj = gameobject.getObj();
 
                 log("Class: " + gameobject.getObj().toString().split(" ")[1]);
                 log("ID: " + gameobject.num);
@@ -416,8 +438,8 @@ public class Proto {
                             log("Not their turn");
                         }
                     }
-                } else if (gameobject.getObj().equals(Uranium.class)){
-                    log("ExposedN: " + ((Uranium)gameobject.obj).getExposedN());
+                } else if (gameobject.getObj().equals(Uranium.class)) {
+                    log("ExposedN: " + ((Uranium) gameobject.obj).getExposedN());
                 }
                 return;
 
@@ -449,17 +471,6 @@ public class Proto {
                             return;
                     }
 
-                    if (material != null) {
-                        if (((Ship) current.obj).getLocation().fillBy((Ship) current.obj, (Material) material.obj)) {
-                            log("Mag sikeresen berakva!");
-                            next();
-                        } else {
-                            log("A mag berakasa sikertelen!");
-                        }
-                        return;
-                    }
-                    log("Nincs a telepesnel az adott nyersanyagbol!");
-                    return;
                 } else {
                     int random = new Random().nextInt(4);
                     switch (random) {
@@ -477,18 +488,18 @@ public class Proto {
                             break;
                     }
 
-                    if (material != null) {
-                        if (((Ship) current.obj).getLocation().fillBy((Ship) current.obj, (Material) material.obj)) {
-                            log("Mag sikeresen berakva!");
-                            next();
-                        } else {
-                            log("A mag berakasa sikertelen!");
-                        }
-                        return;
+                }
+                if (material != null) {
+                    if (current.obj.getLocation().fillBy(current.obj, (Material) material.obj)) {
+                        log("Mag sikeresen berakva!");
+                        next();
+                    } else {
+                        log("A mag berakasa sikertelen!");
                     }
-                    log("Nincs a telepesnel az adott nyersanyagbol!");
                     return;
                 }
+                log("Nincs a telepesnel az adott nyersanyagbol!");
+                return;
 
             case "mine":
                 if (params.length != 1) {
@@ -499,7 +510,7 @@ public class Proto {
                     noCurr();
                     return;
                 }
-                if (((Ship) current.obj).mine()) {
+                if (current.obj.mine()) {
                     log("Sikeres banyaszat!");
                     next();
                 } else {
@@ -516,7 +527,7 @@ public class Proto {
                     noCurr();
                     return;
                 }
-                if (((Ship) current.obj).drill()) {
+                if (current.obj.drill()) {
                     log("Sikeres furas!");
                     next();
                     return;
@@ -542,31 +553,30 @@ public class Proto {
                         return;
                     }
 
-                    for (Field f : ((Ship) current.obj).getLocation().getNeighbours()) {
+                    for (Field f : current.obj.getLocation().getNeighbours()) {
                         gameobject = findObject(f);
                         if (gameobject != null && gameobject.equals(field)) {
                             log("Telepes atmozgatva " + findObject(current.obj.getLocation()).num + " Field-rol a " + gameobject.num + " Field-re!");
-                            ((Ship) current.obj).getLocation().removeFlyingObject((Ship) current.obj);
-                            ((Field) gameobject.obj).acceptFlyingObject((Ship) current.obj);
+                            current.obj.getLocation().removeFlyingObject(current.obj);
+                            ((Field) gameobject.obj).acceptFlyingObject(current.obj);
                             next();
                             return;
                         }
                     }
                     log("Nincs ilyen ID-ju szomszedja a helyszinnek!");
-                    return;
-                }else{
-                    if (!((Ship) current.obj).getLocation().getNeighbours().isEmpty()){
-                        int random = new Random().nextInt(((Ship) current.obj).getLocation().getNeighbours().size());
-                        gameobject = findObject(((Ship) current.obj).getLocation().getNeighbours().get(random));
+                } else {
+                    if (!current.obj.getLocation().getNeighbours().isEmpty()) {
+                        int random = new Random().nextInt(current.obj.getLocation().getNeighbours().size());
+                        gameobject = findObject(current.obj.getLocation().getNeighbours().get(random));
                         log("Telepes atmozgatva " + findObject(current.obj.getLocation()).num + " Field-rol a " + gameobject.num + " Field-re!");
-                        ((Ship) current.obj).getLocation().removeFlyingObject((Ship) current.obj);
-                        ((Field) gameobject.obj).acceptFlyingObject((Ship) current.obj);
+                        current.obj.getLocation().removeFlyingObject(current.obj);
+                        ((Field) gameobject.obj).acceptFlyingObject(current.obj);
                         next();
                         return;
                     }
                     log("Nincs szomszedja a fieldnek!");
-                    return;
                 }
+                return;
 
             case "craft":
                 if (params.length != 2) {
@@ -580,16 +590,16 @@ public class Proto {
 
                 switch (params[1]) {
                     case "base":
-                        if (((Ship) current.obj).buildBase()) {
+                        if (current.obj.buildBase()) {
                             log("Bazis sikeresen megepitve, GG!");
                         } else {
                             log("A bazis megepitese sikertelen!");
                         }
                         return;
                     case "robot":
-                        if (((Ship) current.obj).buildRobot()) {
+                        if (current.obj.buildRobot()) {
                             Robot r = new Robot();
-                            ((Ship) current.obj).getLocation().acceptFlyingObject(r);
+                            current.obj.getLocation().acceptFlyingObject(r);
                             Integer idx = 0;
                             for (Testable t : gameObjects) {
                                 if ((Integer) t.num > idx)
@@ -603,13 +613,13 @@ public class Proto {
                         }
                         return;
                     case "gate":
-                        if (((Ship) current.obj).craftGatePair()) {
+                        if (current.obj.craftGatePair()) {
                             Gate g1 = new Gate();
                             Gate g2 = new Gate();
                             g1.setPair(g2);
                             g2.setPair(g1);
-                            ((Ship) current.obj).addGate(g1);
-                            ((Ship) current.obj).addGate(g2);
+                            current.obj.addGate(g1);
+                            current.obj.addGate(g2);
                             log("Kapu-par sikeresen megepitve.");
                             next();
                         } else {
@@ -631,7 +641,7 @@ public class Proto {
                     return;
                 }
 
-                if (((Ship) current.obj).useGate()) {
+                if (current.obj.useGate()) {
                     log("Kapu sikeresen hasznalva!");
                     next();
                 } else {
@@ -648,7 +658,7 @@ public class Proto {
                     noCurr();
                     return;
                 }
-                if (((Ship) current.obj).pickUpGate()) {
+                if (current.obj.pickUpGate()) {
                     log("Kapu sikeresen felveve!");
                     next();
                     return;
@@ -656,22 +666,38 @@ public class Proto {
                 log("Kapu felvetele siekrtelen!");
                 return;
 
+            case "placegate":
+                if (params.length != 1) {
+                    insParam();
+                    return;
+                }
+                if (current == null) {
+                    noCurr();
+                    return;
+                }
+                if (current.obj.placeGate()) {
+                    int idx = 0;
+                    for (Testable g : gameObjects) {
+                        if ((Integer) g.num > idx) {
+                            idx = (Integer) g.num;
+                        }
+                    }
+                    gameObjects.add(new Testable(Game.getInstance().getFields().get(Game.getInstance().getFields().size() - 1), idx + 1));
+                    log("Kapu sikeresen lerakva!");
+                    next();
+                    return;
+                }
+                log("Kapu lerakasa sikertelen!");
+                return;
+
             case "load":
                 if (params.length != 2) {
                     insParam();
                     return;
                 }
-                try {
-                    BufferedReader br = new BufferedReader(new FileReader(params[1]));
-                    for (String line = br.readLine(); line != null; line = br.readLine()) {
-                        runCommand(line);
-                    }
-                    br.close();
-                    log(params[1] + " fajl valtoztatasai betoltve!");
-                    return;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                readFile(params[1]);
+                log(params[1] + " fajl valtoztatasai betoltve!");
+                return;
 
             case "save":
                 if (saving && params.length == 1) {
@@ -708,6 +734,7 @@ public class Proto {
                     log("Random bekapcsolva.");
                 }
                 return;
+
             case "help":
                 log("Parancsok:\n");
                 log("create <parameter1> <parameter1_id>\nLetrehoz az adott parameterekhez huen egy objektumot.\nPl.: create asteroid 103, create asteroid 104, create ice 12, create iron 14, ..., create ship 1\n");
@@ -724,6 +751,7 @@ public class Proto {
                 log("move <id>\natlep egy szomszedos mezore, ha van olyan.\nPl.: move 2, move 3\n");
                 log("craft <parameter>\nCraftol a jatekos a nala levo nyersanyagokbol egy adott jatekelemet.\nPl.: craft base, craft robot, craft gate\n");
                 log("usegate\nHa kapun all, akkor hasznalja a kapu, ami atteleportalja a parjahoz, ha az is  muködik.\nPl.: usegate\n");
+                log("placegate\nKapu lehelyezése.\nPl.: placegate\n");
                 log("pickupgate\nHa kapun all, felveszi a kaput, ha nincs nala meg 3 db.\nPl.: pickupgate\n");
                 log("load <fajlnev>\nA megadott fajlbol beolvassa a fentebb talalhato parancsok alapjan a jatek egy allasat.\nPl.: load test.txt\n");
                 log("save <fajlnev>\nA futas elejen szukseges bekapcsolni ezt az opciot, ez esetben minden ezutan futtatott parancsot kiír a megadott fajlba.\nPl.: save test.txt\n");
@@ -749,7 +777,7 @@ public class Proto {
         return null;
     }
 
-    public void readFile(String filepath) {
+    public static void readFile(String filepath) {
         try {
             File file = new File(filepath);
             Scanner scanner = new Scanner(file);

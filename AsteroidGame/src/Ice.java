@@ -3,7 +3,7 @@ public class Ice extends NonRadioactiveMaterial {
 	* fúrás közben hivodik meg a magon, ha napkozelbe van a parameterkent kapott aszteroida,
 	* eltavolitjuk a magot belole
 	*
-	* @param Asteroid a ezt adjuk at parameterkent
+	* @param a ezt adjuk at parameterkent
 	* 
 	*/
     public void onDrillSpecial(Asteroid a) {
@@ -17,7 +17,7 @@ public class Ice extends NonRadioactiveMaterial {
     * mag visszarakas közben hivodik meg a magon, ha napkozelbe van a parameterkent kapott aszteroida,
 	* eltavolitjuk a magot belole
     *
-    * @param Asteroid a ezt adjuk at parameterkent
+    * @param a ezt adjuk at parameterkent
 	* 
 	*/
     public void onFill(Asteroid a) {

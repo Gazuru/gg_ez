@@ -81,6 +81,7 @@ public class Ship extends FlyingObject {
             }
             gates.get(0).setWorking(true);
             gates.get(0).addNeighbour(location);
+            Game.getInstance().addField(gates.get(0));
             removeGate(gates.get(0));
             return true;
         }
@@ -158,7 +159,7 @@ public class Ship extends FlyingObject {
     * az anyag visszahelyezésért felelos fv, 
     * meghivja a location fillBy fv-ét this és Material m paraméterrel
     *
-    * @param Material m ezt adjuk át paraméterként
+    * @param m ezt adjuk át paraméterként
     * 
     * @return boolean to_return ezzel térünk vissza
     * 
@@ -182,7 +183,7 @@ public class Ship extends FlyingObject {
      * anyag eltavolitas eseten ezt hivjuk meg a Ship-en, 
      * a parameterkent kapott Material material objektumot eltavolitjuk a materials listabol
      * 
-     * @param Material material ezt adjuk át paraméterként
+     * @param material ezt adjuk át paraméterként
      * 
      */
     public void removeMaterial(Material material) {
@@ -194,7 +195,7 @@ public class Ship extends FlyingObject {
      * anyag hozzaadas eseten ezt hivjuk meg a Ship-en,
      * a parameterkent kapott Material material objektumot hozzaadjuk a materials listahoz
      * 
-     * @param Material material ezt adjuk át paraméterként
+     * @param material ezt adjuk át paraméterként
      * 
      * @return boolean true ha kevesebb mint 10 anyag van nalunk ezért elfer
      * 

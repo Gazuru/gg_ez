@@ -25,7 +25,7 @@ public abstract class Field{
     * eltavolitjuk a parameterkent kapott FlyingObject-et az onSurface listáról,
     * majd null-ra állitjuk annak location-jat
     * 
-    * @paramFlyingObject fo ezt adjuk át parameterkent
+    * @param fo ezt adjuk át parameterkent
     * 
     */
     public void removeFlyingObject(FlyingObject fo) {
@@ -38,7 +38,7 @@ public abstract class Field{
     * a paraméterként kapott FlyingObject-et hozzáadjuk az onSurface listánhoz,
     * majd beállitjuk annak location-jét erre a Field-re
     *
-    * @paramFlyingObject fo ezt adjuk át parameterkent
+    * @param fo ezt adjuk át parameterkent
     * 
     */
     public void acceptFlyingObject(FlyingObject fo) {
@@ -51,7 +51,7 @@ public abstract class Field{
     * a paraméterként kapott Field-et hozzáadjuk a neighbours listánhoz,
     * majd annak neighbourjeihez ezt a Field-et addoljuk
     * 
-    * @param Field n ezt adjuk át parameterkent
+    * @param n ezt adjuk át parameterkent
     * 
     */
     public void addNeighbour(Field n) {
@@ -64,7 +64,7 @@ public abstract class Field{
      * a paraméterként kapott Field-et kitoroljuk a neighbours listabol,
      * majd annak a neighbourjei kozul ezt a Field-et is kitoroljuk
      * 
-     * @param Field n ezt adjuk át parameterkent
+     * @param oldNeighbour ezt adjuk át parameterkent
      * 
      */
     public void removeNeighbour(Field oldNeighbour) {
@@ -88,7 +88,7 @@ public abstract class Field{
     * mine-olas eseten ezt hivjuk meg a Field-en, mivel a Field nem peldanyosithato, 
     * es ez a leszarmazottakban felul van definialva, ez itt mindig false-al ter vissza
     *
-    * @param FlyingObject f ezt adjuk at parameterkent
+    * @param f ezt adjuk at parameterkent
     * 
     * @return boolean false jelen esetben mindig false-al ter vissza
     * 
@@ -119,7 +119,7 @@ public abstract class Field{
      * teleport-olas eseten ezt hivjuk meg a Field-en, mivel a Field nem peldanyosithato, 
      * es ez a leszarmazottakban felul van definialva, ez itt mindig false-al ter vissza
      *
-     * @param FlyingObject f ezt adjuk at parameterkent
+     * @param f ezt adjuk at parameterkent
      * 
      * @return boolean false jelen esetben mindig false-al ter vissza
      * 
@@ -133,7 +133,7 @@ public abstract class Field{
      * felvevés eseten ezt hivjuk meg a Field-en, mivel a Field nem peldanyosithato, 
      * es ez a leszarmazottakban felul van definialva, ez itt mindig false-al ter vissza
      *
-     * @param Ship ship ezt adjuk at parameterkent
+     * @param ship ezt adjuk at parameterkent
      * 
      * @return boolean false jelen esetben mindig false-al ter vissza
      * 
@@ -147,8 +147,8 @@ public abstract class Field{
      * mag berakas eseten ezt hivjuk meg a Field-en, mivel a Field nem peldanyosithato, 
      * es ez a leszarmazottakban felul van definialva, ez itt mindig false-al ter vissza
      *
-     * @param Ship ship ezt adjuk at parameterkent
-     * @param Material m ezt adjuk at parameterkent
+     * @param ship ezt adjuk at parameterkent
+     * @param m ezt adjuk at parameterkent
      * 
      * @return boolean false jelen esetben mindig false-al ter vissza
      * 

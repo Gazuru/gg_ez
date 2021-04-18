@@ -3,7 +3,7 @@ public abstract class Material{
 	/**
 	* drill soran meghivodhat ez a fv, de ez felül van a megfelelo helyen definialva ahol szukseges valamilyen funkciot ellatnia
 	*
-	* @param Asteroid a ezt adjuk at parameterkent
+	* @param a ezt adjuk at parameterkent
 	* 
 	*/
     public void onDrillSpecial(Asteroid a) {
@@ -13,7 +13,7 @@ public abstract class Material{
     /**
     * ellenorzi hogy tipusban megegyezik-e a kapott Material-al ez a Material
     *
-    * @param Material other ezt adjuk parameterkent
+    * @param other ezt adjuk parameterkent
     * 
     * @return boolean true ha egyezik a tipus
     * @return boolean false ha nem egyezik a tipus
@@ -33,7 +33,7 @@ public abstract class Material{
     /**
 	* fill soran meghivodik ez a fv, de ez felül van a megfelelo helyen definialva ahol szukseges valamilyen funkciot ellatnia
 	*
-	* @param Asteroid a ezt adjuk at parameterkent
+	* @param a ezt adjuk at parameterkent
 	* 
 	*/
     public void onFill(Asteroid a) {

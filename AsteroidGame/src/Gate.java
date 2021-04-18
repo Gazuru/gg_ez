@@ -30,7 +30,7 @@ public class Gate extends Field implements Steppable{
     /**
      * átállitjuk a kapott paraméterre a wild tagvaltozot
      * 
-     * @param boolean w ezt adjuk át paraméterként
+     * @param w ezt adjuk át paraméterként
      * 
      */
     public void setWild(boolean w) {
@@ -53,7 +53,7 @@ public class Gate extends Field implements Steppable{
     * toroljuk a szomszedsagi viszonyokat, 
     * majd mozgatjuk a shipet és false-ra állitjuk a kapu working tagvaltozojat
     *
-    * @param Ship ship ezt adjuk at parameterkent
+    * @param ship ezt adjuk at parameterkent
     * 
     * @return boolean true ezzel térünk vissza mindig
     * 
@@ -74,7 +74,7 @@ public class Gate extends Field implements Steppable{
      * teleport-olas eseten ezt hivjuk meg a Gate-en,
      * ha mukodik a kapu, levesszuk rola a hajot és a parjara atrakjuk
      *
-     * @param FlyingObject f ezt adjuk at parameterkent
+     * @param f ezt adjuk at parameterkent
      * 
      * @return boolean true ha teljesul a feltetel ezzel terunk vissza
      * @return boolean false ha nem teljesul a feltetel
@@ -112,7 +112,7 @@ public class Gate extends Field implements Steppable{
     /**
     * a working tagvaltozot a paraméterben kapott ertekre allitjuk
     *
-    * @param boolean _working ezt adjuk at parameterkent
+    * @param _working ezt adjuk at parameterkent
     * 
     */
     public void setWorking(boolean _working) {
@@ -134,7 +134,7 @@ public class Gate extends Field implements Steppable{
     /**
      * a pair tagvaltozot a paraméterben kapott ertekre allitjuk
      *
-     * @param Gate pair ezt adjuk at parameterkent
+     * @param pair ezt adjuk at parameterkent
      * 
      */
     public void setPair(Gate pair) {
