@@ -273,7 +273,7 @@ public class Ship extends FlyingObject {
      * kapu hozzaadas eseten ezt hivjuk meg a Ship-en,
      * a parameterkent kapott Gate newGate objektumot hozzaadjuk a gates listahoz
      * 
-     * @param Gate newGate ezt adjuk át paraméterként
+     * @param newGate ezt adjuk át paraméterként
      * 
      */
     public void addGate(Gate newGate) {
@@ -285,7 +285,7 @@ public class Ship extends FlyingObject {
      * kapu eltavolitas eseten ezt hivjuk meg a Ship-en,
      * a parameterkent kapott Gate newGate objektumot kitoroljuk a gates listabol
      * 
-     * @param Gate newGate ezt adjuk át paraméterként
+     * @param gate ezt adjuk át paraméterként
      * 
      */
     public void removeGate(Gate gate) {

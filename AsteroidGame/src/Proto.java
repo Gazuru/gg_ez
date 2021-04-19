@@ -11,24 +11,31 @@ public class Proto {
     private static String save_path = null;
     private static ArrayList<Testable> gameObjects = new ArrayList<>();
     private static ArrayList<Testable<Ship, Integer>> ships = new ArrayList<>();
-    //private static ArrayList<Testable<Asteroid, Integer>> asteroids = new ArrayList<>();
-    //private static ArrayList<Testable<Material, Integer>> materials = new ArrayList<>();
     private static Testable<Ship, Integer> current = null;
     private static Testable<Robot, Integer> currentRobot = null;
     private static Testable<Ufo, Integer> currentUfo = null;
     private static Class currType;
-    /*private static ArrayList<Ship> ships = new ArrayList<>();
-    private static ArrayList<Asteroid> asteroids = new ArrayList<>();
-    private static ArrayList<Material> materials = new ArrayList<>();*/
 
+    /**
+     * System.out.println(s) kiírás leegyszerûsítése
+     * @param s
+     */
     public static void log(String s) {
         System.out.println(s);
     }
 
+    /**
+     * Nem megfelelõ paraméterezés esetén íródik ki, sok használat miatt kihozva ide
+     */
     public static void insParam() {
         log("Nem megfelelo parameterezes! Probalja ujra!");
     }
 
+    /**
+     * Bizonyos ID-jû elemek megkereséséhez van erre szükség
+     * @param ID-jû Testable objectet megkeresi a gameObjects listában
+     * @return gameObjects lista megfelelõ elemét
+     */
     public static Testable findGameObject(int ID) {
         for (int i = gameObjects.size() - 1; i >= 0; i--) {
             if (gameObjects.get(i).num.equals(ID))
@@ -37,6 +44,11 @@ public class Proto {
         return null;
     }
 
+    /**
+     * Bizonyos elemek meglétének vizsgálatához van erre szükség
+     * @param t objektumot megkeresi a gameObjects listában
+     * @return gameObjects lista megfelelõ elemét
+     */
     public static Testable findObject(Object t) {
         for (int i = gameObjects.size() - 1; i >= 0; i--) {
             if ((gameObjects.get(i).obj).equals(t)) {
@@ -46,6 +58,11 @@ public class Proto {
         return null;
     }
 
+    /**
+     * Megtalálunk egy bizonyos osztályú objektumot
+     * @param c osztályú objektumot keressük
+     * @return gameObjects lista megfelelõ elemét
+     */
     public static Testable findObjectByClass(Class c) {
         for (int i = gameObjects.size() - 1; i >= 0; i--) {
             if (c.equals(gameObjects.get(i).getObj())) {
@@ -55,50 +72,57 @@ public class Proto {
         return null;
     }
 
-    /*public static Testable findShip(int ID) {
-        for (int i = ships.size() - 1; i >= 0; i--) {
-            if (ships.get(i).num.equals(ID))
-                return ships.get(i);
-        }
-        return null;
-    }
-
-    public static Testable findAsteroid(int ID) {
-        for (int i = asteroids.size() - 1; i >= 0; i--) {
-            if (asteroids.get(i).num.equals(ID))
-                return asteroids.get(i);
-        }
-        return null;
-    }
-
-    public static Testable findMaterial(int ID) {
-        for (int i = materials.size() - 1; i >= 0; i--) {
-            if (materials.get(i).num.equals(ID))
-                return materials.get(i);
-        }
-        return null;
-    }*/
-
+    /**
+     * A kör elléptetése a következõ játékosra
+     */
     public static void next() {
         runCommand("skipturn");
     }
 
+    /**
+     * Nincsen aktuális kivalasztott FlyingObject, ezt pedig kilogolja a fv
+     */
     public static void noCurr() {
-        log("Nincsen aktualis telepes a jatekban!");
+        log("Nincsen aktualis FlyingObject kivalasztva!");
     }
 
+    /**
+     * Megadja, hogy a paraméterként adott Testable objektum egy Material-t tartalmaz-e
+     * @param t a paraméterként adott Testable
+     * @return true, amennyiben Material
+     * @return false, amennyiben nem az
+     */
     public static boolean isMaterial(Testable t) {
         return (t.getObj().equals(Ice.class) || t.getObj().equals(Iron.class) || t.getObj().equals(Coal.class) || t.getObj().equals(Uranium.class));
     }
 
+    /**
+     * Megadja, hogy a paraméterként adott Testable objektum egy Field-et tartalmaz-e
+     * @param t a paraméterként adott Testable
+     * @return true, amennyiben Field
+     * @return false, amennyiben nem az
+     */
     public static boolean isField(Testable t) {
         return (t.getObj().equals(Asteroid.class) || t.getObj().equals(Gate.class));
     }
 
+    /**
+     * Megadja, hogy a paraméterként adott Testable objektum egy FlyingObject-et tartalmaz-e
+     * @param t a paraméterként adott Testable
+     * @return true, amennyiben FlyingObject
+     * @return false, amennyiben nem az
+     */
     public static boolean isFlyingObject(Testable t) {
         return (t.getObj().equals(Robot.class) || t.getObj().equals(Ship.class) || t.getObj().equals(Ufo.class));
     }
 
+    /**
+     * Ez a függvény felel azért, hogyha egy telepes kibányászik valami, az inventoryjában lévõ elem bekerüljön
+     * a játékelemek közé is. Ugyanez az eset a Gate-kkel, melyeket hogyha a játékos craftol, bekerülnek a gameObjects
+     * listába.
+     * Valamint ha egy FlyingObject meghalna, vagy egy Aszteroida felrobbanna, abban az esetben ez a függvény távolítja
+     * el az adott elemeket a gameObjects tömbbõl.
+     */
     public static void checkGameObjects() {
         for (Testable s : ships) {
             for (Material m : ((Ship) s.obj).getMaterial()) {
@@ -125,19 +149,6 @@ public class Proto {
             }
         }
 
-        /*for (Field field : Game.getInstance().getFields()) {
-            if (findObject(field) == null) {
-                Integer idx = 0;
-                for (Testable g : gameObjects) {
-                    if ((Integer) g.num > idx) {
-                        idx = (Integer) g.num;
-                    }
-                }
-                gameObjects.add(new Testable(field, idx + 1));
-            }
-        }*/
-
-
         for (int i = gameObjects.size() - 1; i >= 0; i--) {
             boolean in = false;
             Testable t = gameObjects.get(i);
@@ -162,6 +173,10 @@ public class Proto {
         }
     }
 
+    /**
+     * Parancsok futtatása
+     * @param cmd a felhasználó által megadfott parancs
+     */
     public static void runCommand(String cmd) {
         cmd = cmd.toLowerCase();
         String[] params = cmd.split(" ");
@@ -174,6 +189,9 @@ public class Proto {
         checkGameObjects();
 
         switch (params[0]) {
+
+            //Az elem létrehozást megvalósító parancs implementációja
+
             case "create":
 
                 if ((params.length != 3 && !params[1].equals("asteroid")) || ((params[1].equals("asteroid") && random && params.length != 3) || (params[1].equals("asteroid") && !random && params.length != 6))) {
@@ -247,6 +265,9 @@ public class Proto {
                     }
                 }
 
+            // A material hozzáadása Telepeshez, Field szomszédság beállítása, FlyingObject hozzáadása Field-hez
+            // megvalósítása
+
             case "add":
                 if (params.length != 3) {
                     insParam();
@@ -280,6 +301,8 @@ public class Proto {
                 }
                 return;
 
+            // Nyersanyag eltávolításának megoldása a telepestõl
+
             case "remove":
                 if (params.length != 3) {
                     insParam();
@@ -308,6 +331,8 @@ public class Proto {
                 log("Nincs ilyen ID-ju nyersanyag a telepesnel!");
                 return;
 
+            // A megadott ID-jû FlyingObject kiválasztása
+
             case "selectplayer":
                 if (params.length != 2) {
                     insParam();
@@ -323,6 +348,8 @@ public class Proto {
 
                 return;
 
+            // A kör elléptetésének megvalósítása
+
             case "skipturn":
                 if (noCurrentSelected()) {
                     log("Nincs meg kivalasztott FlyingObject!");
@@ -335,21 +362,6 @@ public class Proto {
                             setCurrent(gameObjects.get(i));
                             return;
                         }
-
-                        /*if (t.num.equals(current.num)) {
-                            if (ships.indexOf(t) < ships.size() - 1) {
-                                current = ships.get(ships.indexOf(t) + 1);
-                            } else {
-                                for (Testable r : gameObjects) {
-                                    if (isFlyingObject(r) && !r.getObj().equals(Ship.class)) {
-                                        ((FlyingObject) r.obj).step();
-                                    }
-                                }
-                                current = ships.get(0);
-                            }
-                            log("A kovetkezo korben a telepes: " + current.num);
-                            return;
-                        }*/
                     }
                 } else {
                     for (int i = 0; i <= gameObjects.indexOf(findObject(current)); i++) {
@@ -361,6 +373,8 @@ public class Proto {
                     }
                 }
                 return;
+
+            // A napvihar megvalósítása egy adott Field-re
 
             case "solarstorm":
                 if (params.length != 2) {
@@ -384,6 +398,8 @@ public class Proto {
                 }
                 return;
 
+            // Egy adott aszteroida felrobbantása
+
             case "explode":
                 if (params.length != 2) {
                     insParam();
@@ -399,6 +415,8 @@ public class Proto {
                 log("A " + asteroid.num + " ID-ju aszteroida sikeresen felrobbantva!");
                 ((Asteroid) asteroid.obj).explode();
                 return;
+
+            // A játékelemek listázása, vagy ID paraméterezés esetén a megadott játékelem információinak listázása
 
             case "stat":
                 if (params.length == 1) {
@@ -496,6 +514,8 @@ public class Proto {
                 }
                 return;
 
+            // Material visszarakása aszteroida belsejébe
+
             case "putback":
                 if (noCurrentSelected()) {
                     noCurr();
@@ -558,6 +578,8 @@ public class Proto {
                 log("Nincs a telepesnel az adott nyersanyagbol!");
                 return;
 
+            // UFO/Ship esetében bányászat megoldása
+
             case "mine":
                 if (params.length != 1) {
                     insParam();
@@ -578,6 +600,8 @@ public class Proto {
                     log("Sikertelen banyaszat!");
                 }
                 return;
+
+            // Robot/Ship esetében a fúrás megoldása
 
             case "drill":
                 if (params.length != 1) {
@@ -600,6 +624,8 @@ public class Proto {
                 log("Sikertelen furas!");
                 return;
 
+            // FlyingObjectek számára a szomszédos Field-re történõ mozgás megoldása
+
             case "move":
                 if (noCurrentSelected()) {
                     noCurr();
@@ -620,13 +646,14 @@ public class Proto {
                     if (!moveCurrent(field)) {
                         log("Nincs ilyen ID-ju szomszedja a helyszinnek!");
                     }
-                    return;
                 } else {
                     if (!moveRandomly()) {
                         log("Nincs szomszedja a fieldnek!");
                     }
-                    return;
                 }
+                return;
+
+            // A craftolások megvalósítása robot, gate, base esetében
 
             case "craft":
                 if (params.length != 2) {
@@ -684,6 +711,8 @@ public class Proto {
                         return;
                 }
 
+            // Teleport-Kapu használatának megvalósítása Ship/UFO esetében
+
             case "usegate":
                 if (params.length != 1) {
                     insParam();
@@ -706,6 +735,8 @@ public class Proto {
                 }
                 return;
 
+            // Teleport-Kapu felvételének megoldása
+
             case "pickupgate":
                 if (params.length != 1) {
                     insParam();
@@ -726,6 +757,8 @@ public class Proto {
                 }
                 log("Kapu felvetele siekrtelen!");
                 return;
+
+            // Teleport-Kapu lerakása
 
             case "placegate":
                 if (params.length != 1) {
@@ -748,6 +781,8 @@ public class Proto {
                 log("Kapu lerakasa sikertelen!");
                 return;
 
+            // Napközelség ellentétesre állítása
+
             case "sun":
                 if (params.length != 2) {
                     insParam();
@@ -764,6 +799,7 @@ public class Proto {
                 log(field.num.toString() + " ID napkozelsegi erteke: " + ((Asteroid) field.obj).getInSunProximity());
                 return;
 
+            // Egy szöveges konfigurációs tesztfájl betöltésének megvalósítása
 
             case "load":
                 if (params.length != 2) {
@@ -771,8 +807,9 @@ public class Proto {
                     return;
                 }
                 readFile(params[1]);
-                //log(params[1] + " fajl valtoztatasai betoltve!");
                 return;
+
+            // Egy szöveges fájlba parancsok lementésének megvalósítása
 
             case "save":
                 if (saving && params.length == 1) {
@@ -800,6 +837,8 @@ public class Proto {
 
                 return;
 
+            // A random beállítása ellentétes értékûre
+
             case "random":
                 if (random) {
                     random = false;
@@ -809,6 +848,8 @@ public class Proto {
                     log("Random bekapcsolva.");
                 }
                 return;
+
+            // A beállítások nullázása, mintha újraindítottuk volna a programot
 
             case "purge":
                 random = false;
@@ -821,6 +862,8 @@ public class Proto {
                 currentUfo = null;
                 currType = null;
                 return;
+
+            // A parancsok listázása, leírásainak kiírása
 
             case "help":
                 log("Parancsok:\n");
@@ -845,9 +888,15 @@ public class Proto {
                 log("random\nA random mukodest ki/be tudjuk kapcsolni vele.\nPl.: random\n");
                 log("purge\nMinden beallitast visszaallit, mintha ujraindulna a program.\nPl.: purge\n");
                 return;
+
+            // Kilépés az alkalmazásból
+
             case "exit":
                 running = false;
                 return;
+
+            // Amennyiben nincs az inputban megadott parancs, ez fut le
+
             default:
                 log("Ez a parancs nem letezik! A parancsok listazasahoz irja be a \"help\" parancsot.");
                 break;
@@ -855,6 +904,12 @@ public class Proto {
 
     }
 
+    /**
+     * A jelenlegi objektum mozgásának megoldása a field paraméterre
+     * @param field ahova mozgatni szeretnénk a jelenlegi elemet
+     * @return true, amennyiben a mozgás sikerült
+     * @return false az ellenkezõ esetben
+     */
     private static boolean moveCurrent(Testable field) {
         Testable gameobject;
         if (currType.equals(Ship.class) && !current.obj.getLocation().getNeighbours().isEmpty()) {
@@ -900,6 +955,12 @@ public class Proto {
         return false;
     }
 
+    /**
+     * Amennyiben a random boolean be van állítva, ez fut le, és választ egy random helyet, ahova mozoghat a
+     * FlyingObject
+     * @return true, amennyiben sikerült mozogni
+     * @return false ellenkezõ esetben
+     */
     private static boolean moveRandomly() {
         int random;
         Testable gameobject;
@@ -931,6 +992,10 @@ public class Proto {
         return false;
     }
 
+    /**
+     * A jelenlegi objektum beállítása a t paraméter által tárolt elemre
+     * @param t a leendõ jelenlegi elem
+     */
     private static void setCurrent(Testable t) {
         if (Robot.class.equals(t.getObj())) {
             currType = Robot.class;
@@ -953,10 +1018,20 @@ public class Proto {
         }
     }
 
+    /**
+     * Visszatérési értékével jelzi, van-e jelenlegi FlyingObject
+     * @return true, amennyiben van
+     * @return false ellenkezõ esetben
+     */
     private static boolean noCurrentSelected() {
         return (currType.equals(Robot.class) && currentRobot == null) || (currType.equals(Ship.class) && current == null) || (currType.equals(Ufo.class) && currentUfo == null);
     }
 
+    /**
+     * Parancs bekérésének megvalósítása
+     * @return a beolvasott sort, vagy hiba esetén
+     * @return null-t
+     */
     public static String getCommand() {
         try {
             System.out.print("Kerlek irj be egy parancsot: ");
@@ -967,6 +1042,10 @@ public class Proto {
         return null;
     }
 
+    /**
+     * Fileból beolvasás implementációja a filepath útvonalon található fájlból
+     * @param filepath az elérési út
+     */
     public static void readFile(String filepath) {
         try {
             File file = new File(filepath);
@@ -979,6 +1058,11 @@ public class Proto {
         }
     }
 
+    /**
+     * A program belépési pontja, végtelen ciklusban fut a lekérdezés, amíg a running true. Az exit paranccsal ez
+     * false-ra állítható.
+     * @param args bemeneti paraméterek a program indításánál
+     */
     public static void main(String[] args) {
         Game.getInstance();
         log("A segitseghez irja be a \"help\" parancsot, vagy forduljon a dokumentaciohoz.\n");
