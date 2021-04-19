@@ -104,13 +104,7 @@ public class Ufo extends FlyingObject {
     * 
     */
     public boolean useGate() {
-        if (location.teleport(this)) {
-            Skeleton.printFuncRet("true");
-            return true;
-        } else {
-            Skeleton.printFuncRet("false");
-            return false;
-        }
+        return location.teleport(this);
     }
     /**
      * furast vegzunk, de ez itt mivel az Ufo nem tud furni mindig false-al ter vissza 

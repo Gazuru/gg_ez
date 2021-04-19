@@ -180,11 +180,20 @@ public class Ship extends FlyingObject {
         return materials;
     }
     /**
-     * anyag eltavolitas eseten ezt hivjuk meg a Ship-en, 
+     * kapuk lekérdezése esetén hívódik meg
+     * 
+     * @return ArrayList<Gate> a kapuk listájával tér vissza
+     * 
+     */
+    public ArrayList<Gate> getGates() {
+        return gates;
+    }
+    /**
+     * anyag eltavolitas eseten ezt hivjuk meg a Ship-en,
      * a parameterkent kapott Material material objektumot eltavolitjuk a materials listabol
-     * 
+     *
      * @param material ezt adjuk át paraméterként
-     * 
+     *
      */
     public void removeMaterial(Material material) {
         Skeleton.printFunc();
