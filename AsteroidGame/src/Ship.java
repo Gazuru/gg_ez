@@ -253,29 +253,54 @@ public class Ship extends FlyingObject {
         Game.getInstance().decreaseNumShips();
         Skeleton.printFuncRet("");
     }
-
+    /**
+    * felrobbanas eseten hivodik meg, meghivja a die fv-t
+    * 
+    */
     public void onExplode() {
         Skeleton.printFunc();
         die();
         Skeleton.printFuncRet("");
     }
-
+    /**
+     * solar storm eseten hivodik meg, meghivja a die fv-t
+     * 
+     */
     public void onSolarStormCase() {
         die();
     }
-
+    /**
+     * kapu hozzaadas eseten ezt hivjuk meg a Ship-en,
+     * a parameterkent kapott Gate newGate objektumot hozzaadjuk a gates listahoz
+     * 
+     * @param Gate newGate ezt adjuk át paraméterként
+     * 
+     */
     public void addGate(Gate newGate) {
         Skeleton.printFunc();
         gates.add(newGate);
         Skeleton.printFuncRet("");
     }
-
+    /**
+     * kapu eltavolitas eseten ezt hivjuk meg a Ship-en,
+     * a parameterkent kapott Gate newGate objektumot kitoroljuk a gates listabol
+     * 
+     * @param Gate newGate ezt adjuk át paraméterként
+     * 
+     */
     public void removeGate(Gate gate) {
         Skeleton.printFunc();
         gates.remove(gate);
         Skeleton.printFuncRet("");
     }
-
+    /**
+     * step fv ami minden körébe lefut
+     * done lokalis valtozo false alapbol,
+     * ha tud valamit csinalni akkor azt megcsinalja, és done true lesz, 
+     * ezeket switch casebol valaszthatjuk player inputtal ki
+     * ha nem tud érvénytelen és visszatér
+     * 
+     */
     public void step() {
         boolean done = false;
         while (!done) {
@@ -317,11 +342,25 @@ public class Ship extends FlyingObject {
         }
         System.out.println();
     }
-
+    /**
+     * hasznalja a kaput amin epp all
+     * meghivja a location teleport fv-jét this paraméterrel
+     *
+     * @return boolean true ha sikeresen vegbe megy a teleport
+     * 
+     * @return boolean false ha a feltetel nem teljesul
+     * 
+     */
     public boolean useGate() {
         return location.teleport(this);
     }
-
+    /**
+     * anyag lekerdezes eseten ezt hivjuk meg a Ship-en, 
+     * lekerdezzuk a materials lista elemeit
+     * 
+     * @return ArrayList<Material> materials ezzel terunk vissza
+     * 
+     */
     public ArrayList<Material> getMaterials() {
         return materials;
     }
