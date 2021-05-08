@@ -75,8 +75,12 @@ public class MenuView {
         if(input != null && input.length() > 0){
             try{
             Vars.NUM_OF_PLAYERS = Integer.parseInt(input);
-            System.out.println("A JATEKOSOK SZAMA: " + Vars.NUM_OF_PLAYERS);
-            
+            if(Vars.NUM_OF_PLAYERS != 0){
+                System.out.println("A JATEKOSOK SZAMA: " + Vars.NUM_OF_PLAYERS);
+                GameView.setSpaceGameView(new SpaceGameView(f));
+            }else{
+                System.out.println("NEM MEGFELELO SZAM!");
+            }
             }catch (Exception e){
                 System.out.println("NEM MEGFELELO SZAM!");
             }
