@@ -1063,7 +1063,7 @@ public class Proto {
      * false-ra állítható.
      * @param args bemeneti paraméterek a program indításánál
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Game.getInstance();
         log("A segitseghez irja be a \"help\" parancsot, vagy forduljon a dokumentaciohoz.\n");
         while (running) {
@@ -1081,6 +1081,6 @@ public class Proto {
                 }
             }
         }
-    }
+    }*/
 
 }

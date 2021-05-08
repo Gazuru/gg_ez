@@ -266,7 +266,7 @@ public class Skeleton {
     }
 
     private static void printInit() {
-        System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
+       // System.out.println("\n" + "Object initialization finished, test starts: " + "\n");
     }
 
     /*public static void main(String[] args) {
