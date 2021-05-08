@@ -10,61 +10,76 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
+import javax.swing.*;
 
 public class MenuView {
-	JFrame f;
-	public MenuView(JFrame f_) {
-		this.f=f_;
-	}
+    private JFrame f;
 
-	public void Display() {
-		JLayeredPane LPane =new JLayeredPane();
-        f.getContentPane() .add(LPane);
+    public MenuView(JFrame f_) {
+        this.f = f_;
+    }
 
-        JLabel background= new JLabel();
-        background.setIcon( new ImageIcon("resources/background.png") );
-        background.setBounds(0,0,500,500);
-        
-        
-        JButton startButton= new JButton();
-        startButton.setBounds(200,100,100,40);
-        try{
-            Image image = ImageIO.read(new File("resources/startButton.png")).getScaledInstance(100, 40, Image.SCALE_DEFAULT);
+
+    public void Display() {
+        JLayeredPane LPane = new JLayeredPane();
+        f.getContentPane().add(LPane);
+
+        JLabel background = new JLabel();
+        background.setIcon(new ImageIcon("resources/background.png"));
+        background.setBounds(0, 0, Vars.WINDOW_WIDTH, Vars.WINDOW_HEIGHT);
+
+
+        JButton startButton = new JButton();
+        startButton.setBounds((Vars.WINDOW_WIDTH - Vars.BUTTON_WIDTH) / 2, (Vars.WINDOW_HEIGHT - 2 * Vars.BUTTON_HEIGHT) / 4, Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT);
+        try {
+            Image image = ImageIO.read(new File("resources/startButton.png")).getScaledInstance(Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT, Image.SCALE_DEFAULT);
             startButton.setIcon(new ImageIcon(image));
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
         }
-        startButton.addActionListener(new ActionListener() { 
-        	  public void actionPerformed(ActionEvent e) { 
-        	    //selectionButtonPressed();
-        	  } 
-        	} );
+        startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                startButtonPressed();
+            }
+        });
 
-        JButton exitButton= new JButton();
-        exitButton.setBounds(200,200,100,40);
-        try{
-            Image image = ImageIO.read(new File("resources/exitButton.png")).getScaledInstance(100, 40, Image.SCALE_DEFAULT);
+        JButton exitButton = new JButton();
+        exitButton.setBounds((Vars.WINDOW_WIDTH - Vars.BUTTON_WIDTH) / 2, (Vars.WINDOW_HEIGHT - 2 * Vars.BUTTON_HEIGHT) * 3 / 4, Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT);
+        try {
+            Image image = ImageIO.read(new File("resources/exitButton.png")).getScaledInstance(Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT, Image.SCALE_DEFAULT);
             exitButton.setIcon(new ImageIcon(image));
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
         }
-        exitButton.addActionListener(new ActionListener() { 
-      	  public void actionPerformed(ActionEvent e) { 
-      		System.exit(0);
-      	  } 
-      	} );
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
         LPane.add(background, new Integer(1));
-        LPane.add(exitButton, new Integer(3));
         LPane.add(startButton, new Integer(2));
+        LPane.add(exitButton, new Integer(3));
+
         f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
-        f.setSize (500,500) ;
+        f.setSize(Vars.WINDOW_WIDTH, Vars.WINDOW_HEIGHT);
+        f.setResizable(false);
+        f.setLocationRelativeTo(null);
         f.setVisible(true);
-	}
+    }
+
+    private void startButtonPressed() {
+        JFrame inp = new JFrame();
+        inp.setName("Játékosok száma");
+
+        inp.pack();
+        String input = JOptionPane.showInputDialog(inp,"Adja meg a játékosok számát:");
+        if(input != null && input.length() > 0){
+            try{
+            Vars.NUM_OF_PLAYERS = Integer.parseInt(input);
+            System.out.println("A JATEKOSOK SZAMA: " + Vars.NUM_OF_PLAYERS);
+            
+            }catch (Exception e){
+                System.out.println("NEM MEGFELELO SZAM!");
+            }
+        }
+    }
 }

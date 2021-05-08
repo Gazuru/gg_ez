@@ -8,18 +8,11 @@ public class GameView {
 	public static JFrame f;
 	private static MenuView menuView;
 	public static void main(String[] args) {
-		f=new JFrame("Asteroid Game");
-		menuView=new MenuView(f);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f = new JFrame("Asteroid Game");
+		menuView = new MenuView(f);
 		Display();
 	}
 	public static void Display() {
-		
-		
-		
-		
-		
-		
 		menuView.Display();
 	}
 	
