@@ -1,3 +1,9 @@
+/**
+     * a globalis valtozokat tarolo osztaly, beszedes nevekkel
+     * legfokepp az ablakmegjelenites es a gombok meretezeset tarolja
+     *
+     * 
+     */
 public class Vars {
     public static final int WINDOW_WIDTH = 1024;
     public static final int WINDOW_HEIGHT = 768;

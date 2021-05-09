@@ -21,7 +21,13 @@ public class Ship extends FlyingObject {
         }
         // Game.getInstance().incrNumShips();
     }
-
+    /**
+     * parameterul megkapja az adott anyagot es summazza hany ilyen tipusu van az urhajonal
+     * majd visszater az ertekkel
+     * 
+     * @param Material m
+     * @return int
+     **/
     public int sumMaterial(Material m) {
         int sum = 0;
         for (int i = 0; i < this.materials.size(); i++) {
@@ -31,7 +37,13 @@ public class Ship extends FlyingObject {
         }
         return sum;
     }
-
+    /**
+     * summazza hany gate van az urhajonal
+     * majd visszater az ertekkel
+     * 
+     * @return int
+     * 
+     **/
     public int sumGates() {
         if (gates.size() > 0) {
             return gates.size();

@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 class Game implements Steppable, Runnable {
     /*
-    Létrehozunk egy arraylistet amiben game objectek, vannak, kezdetben a shipek számát
-    0-rá állítjuk, illetve ArrayListet a fielddel.
-    az end érték jelenti a játék végét amit kezdetben hamisra állítunk.
+    LÃ©trehozunk egy arraylistet amiben game objectek, vannak, kezdetben a shipek szÃ¡mÃ¡t
+    0-rÃ¡ Ã¡llÃ­tjuk, illetve ArrayListet a fielddel.
+    az end Ã©rtÃ©k jelenti a jÃ¡tÃ©k vÃ©gÃ©t amit kezdetben hamisra Ã¡llÃ­tunk.
      */
 
 
@@ -17,18 +17,37 @@ class Game implements Steppable, Runnable {
     private static boolean end = false;
     private static Game single_instance = null;
 
+    /**
+     * visszater az aktualisan soron levo shippel
+     *
+     * @return Ship
+     * 
+     */
     public static Ship getCurrent() {
         return current;
     }
-
+    /**
+     * visszater az aktualisan szamon levo shipekkell
+     *
+     * @return int
+     * 
+     */
     public int getNumShips() {
     	return numShips;
     }
-
+    /**
+     * seteljuk az aktualisan soron levo shippel
+     *
+     * @param Ship current
+     * 
+     */
     public static void setCurrent(Ship current) {
         Game.current = current;
     }
-
+    /**
+     * tarolja az aktualisan soron levo ship-et
+     * 
+     */
     private static Ship current;
 
     private Game() {
@@ -36,7 +55,7 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * a játékot singletonná tesszük, így mindig le tudjuk kérni az adott játékot
+     * a jÃ¡tÃ©kot singletonnÃ¡ tesszÃ¼k, Ã­gy mindig le tudjuk kÃ©rni az adott jÃ¡tÃ©kot
      *
      * @return static single_instance
      **/
@@ -49,7 +68,7 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * visszatér a gameObjects-el
+     * visszatÃ©r a gameObjects-el
      *
      * @return ArrayList<FlyingObjects> gameObjects
      **/
@@ -58,7 +77,7 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * az setEnd osztály setteli a játék végét, annak függvényében, hogy milyen bool értéket kap
+     * az setEnd osztÃ¡ly setteli a jÃ¡tÃ©k vÃ©gÃ©t, annak fÃ¼ggvÃ©nyÃ©ben, hogy milyen bool Ã©rtÃ©ket kap
      **/
 
     public void setEnd(boolean _end) {
@@ -68,7 +87,7 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * @param fo-t kitöröljük a gameObjects listájából.
+     * @param fo-t kitÃ¶rÃ¶ljÃ¼k a gameObjects listÃ¡jÃ¡bÃ³l.
      **/
     public void removeGameObject(FlyingObject fo) {
         Skeleton.printFunc();
@@ -77,7 +96,7 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * A metódus csökkenti a shipeknek a számát.
+     * A metÃ³dus csÃ¶kkenti a shipeknek a szÃ¡mÃ¡t.
      **/
     public void decreaseNumShips() {
         Skeleton.printFunc();
@@ -86,14 +105,14 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * A metódus növeli a shipeknek a számát.
+     * A metÃ³dus nÃ¶veli a shipeknek a szÃ¡mÃ¡t.
      **/
     public void incrNumShips() {
         numShips++;
     }
 
     /**
-     * @param f -t megkapja a metódus, amellyel a fields-ből törli azt.
+     * @param f -t megkapja a metÃ³dus, amellyel a fields-bÅ‘l tÃ¶rli azt.
      */
     public void removeField(Field f) {
         Skeleton.printFunc();
@@ -102,7 +121,7 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * A metódus segítségével megkapjuk a field listát.
+     * A metÃ³dus segÃ­tsÃ©gÃ©vel megkapjuk a field listÃ¡t.
      *
      * @return ArrayList<Field> fields
      */
@@ -111,8 +130,8 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * A step metódus fogja végrehajtani az egy kört reprezentáló step függvényt, ahol minden gameObjectsnek lehetőséget kínál a játék a cselekvésre.
-     * Továbbá a napvihart ez fogja véghezvinni, és meghívni a fieldekre.
+     * A step metÃ³dus fogja vÃ©grehajtani az egy kÃ¶rt reprezentÃ¡lÃ³ step fÃ¼ggvÃ©nyt, ahol minden gameObjectsnek lehetÅ‘sÃ©get kÃ­nÃ¡l a jÃ¡tÃ©k a cselekvÃ©sre.
+     * TovÃ¡bbÃ¡ a napvihart ez fogja vÃ©ghezvinni, Ã©s meghÃ­vni a fieldekre.
      */
     public void step() {
 
@@ -126,20 +145,25 @@ class Game implements Steppable, Runnable {
             fields.get(num).onSolarStorm();
             for(Field f: fields.get(num).getNeighbours())
                 f.onSolarStorm();
-            System.out.println("NAPVIHAR A " + num + " MEZŐN!");
+            System.out.println("NAPVIHAR A " + num + " MEZÅ�N!");
         }
         if (numShips == 0) {
             end = true;
         }
         System.out.println("kor vege");
     }
-
+    /**
+     * visszater a befejezettséget jelző attributum ertekevel
+     *
+     * @return boolean
+     * 
+     */
     public boolean getEnd() {
     	return end;
     }
     /**
      * @return boolean rand
-     * random érték alapján kiértékeli hogy legyen-e napvihar
+     * random Ã©rtÃ©k alapjÃ¡n kiÃ©rtÃ©keli hogy legyen-e napvihar
      */
     public boolean solarStorm() {
         Random random = new Random();
@@ -148,16 +172,16 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * elindítja a játékot, majd inicializálja, egészen addig míg az end érték @params end false
-     * addig mindenkire meghívja a steppet.
+     * elindÃ­tja a jÃ¡tÃ©kot, majd inicializÃ¡lja, egÃ©szen addig mÃ­g az end Ã©rtÃ©k @params end false
+     * addig mindenkire meghÃ­vja a steppet.
      */
     public void startGame() {
         initGame();
     }
 
     /**
-     * Inicializálja a játékot. Létrehozza az aszteroidákat, azokat hozzáadja a fieldhez. Fieldeknek majd beállítja a szomszédait.
-     * A megadott shipszám alapján, létrehoz új shipeket.
+     * InicializÃ¡lja a jÃ¡tÃ©kot. LÃ©trehozza az aszteroidÃ¡kat, azokat hozzÃ¡adja a fieldhez. Fieldeknek majd beÃ¡llÃ­tja a szomszÃ©dait.
+     * A megadott shipszÃ¡m alapjÃ¡n, lÃ©trehoz Ãºj shipeket.
      **/
     public void initGame() {
         for (int j = 0; j < 50; j++) {
@@ -167,7 +191,7 @@ class Game implements Steppable, Runnable {
             fields.get(k).addNeighbour(fields.get(k - 2));
             fields.get(k).addNeighbour(fields.get(k - 1));
         }
-        /*System.out.print("J�t�kosok sz�ma: ");
+        /*System.out.print("Jï¿½tï¿½kosok szï¿½ma: ");
         choose = s.nextInt();
         numShips = choose;*/
         numShips = Vars.NUM_OF_PLAYERS;
@@ -186,14 +210,14 @@ class Game implements Steppable, Runnable {
     }
 
     /**
-     * @param fo -t megkapja a metódus, amit hozzáad a gameObjects-es listához.
+     * @param fo -t megkapja a metÃ³dus, amit hozzÃ¡ad a gameObjects-es listÃ¡hoz.
      **/
     public void addGameObject(FlyingObject fo) {
         gameObjects.add(fo);
     }
 
     /**
-     * @param f -t hozzáadjuk a fields listájához.
+     * @param f -t hozzÃ¡adjuk a fields listÃ¡jÃ¡hoz.
      */
     public void addField(Field f) {
         fields.add(f);
@@ -201,8 +225,8 @@ class Game implements Steppable, Runnable {
 
     /**
      * @return ArrayList<Material> baseReq
-     * inicializálja a bázishoz szükséges nyersanyagokat
-     * Ehhez hozzáad egy szenet, vasat, uránt, és egy vízjeget.
+     * inicializÃ¡lja a bÃ¡zishoz szÃ¼ksÃ©ges nyersanyagokat
+     * Ehhez hozzÃ¡ad egy szenet, vasat, urÃ¡nt, Ã©s egy vÃ­zjeget.
      */
     public ArrayList<Material> craftBaseReq() {
         ArrayList<Material> baseReq = new ArrayList<Material>();
@@ -215,7 +239,12 @@ class Game implements Steppable, Runnable {
         return baseReq;
     }
 
-    @Override
+    /**
+     * a GUI száláért felelős run fv
+     * step-eket hiv meg
+     * 
+     * 
+     **/
     public void run() {
         //try {
         while (!end) // END
