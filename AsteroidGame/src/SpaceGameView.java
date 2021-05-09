@@ -235,6 +235,7 @@ public class SpaceGameView implements Runnable {
         f.getContentPane().removeAll();
         f.revalidate();
         f.repaint();
+        LPane.setDoubleBuffered(true);
         f.add(LPane);
         displayBG();
         displayButtons();
@@ -245,7 +246,7 @@ public class SpaceGameView implements Runnable {
             f.revalidate();
             f.repaint();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(40);
             } catch (Exception e) {
             }
         }
@@ -354,6 +355,7 @@ public class SpaceGameView implements Runnable {
                 LPane.remove(surface.get(i));
             }
             surface.clear();
+            shownFLO.clear();
         }
 
         for (float i = 0; i < n; i++) {
