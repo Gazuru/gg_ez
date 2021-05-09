@@ -55,9 +55,9 @@ public class MenuView {
             }
         });
 
-        LPane.add(background, new Integer(1));
-        LPane.add(startButton, new Integer(2));
-        LPane.add(exitButton, new Integer(3));
+        LPane.add(background, Integer.valueOf(1));
+        LPane.add(startButton, Integer.valueOf(2));
+        LPane.add(exitButton, Integer.valueOf(3));
 
         f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
         f.setSize(Vars.WINDOW_WIDTH, Vars.WINDOW_HEIGHT);
