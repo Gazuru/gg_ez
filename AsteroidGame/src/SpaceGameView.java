@@ -217,7 +217,7 @@ public class SpaceGameView implements Runnable {
             public void actionPerformed(ActionEvent e) {
                 if (Game.getCurrent().putMaterial(new Iron())) {
                     Vars.TURN_DONE = true;
-
+                    
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES VISSZARAKAS");
                 } else {
@@ -362,7 +362,30 @@ public class SpaceGameView implements Runnable {
         LPane.add(playerId, Integer.valueOf(2));
     }
 
-    public void displayEnding(String picName) {
+    public static void displayEnding() {
+    	Game.getInstance().setEnd(true);
+    	if(Game.getInstance().getEnd()==true) {
+    		JLabel label=new JLabel();
+    		if(Game.getInstance().getNumShips()==0) {
+    			
+    			try {
+    				label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+    	            System.out.println("L");
+    	        } catch (IOException e) {
+    	            e.printStackTrace();
+    	        }
+    		}else {
+    			f.removeAll();
+    			try {
+    				label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+    				System.out.println("W");
+    	        } catch (IOException e) {
+    	            e.printStackTrace();
+    	        }
+    		}
+    		//ezt hogy showolom xd
+    		
+    	}
     }
 
     public void display() {
@@ -587,10 +610,12 @@ public class SpaceGameView implements Runnable {
     }
 
     public static void refresh() {
+    	
         displayStats();
         displayObjects();
         f.revalidate();
         f.repaint();
+        displayEnding();
     }
 
     @Override

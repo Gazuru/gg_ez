@@ -20,6 +20,9 @@ class Game implements Steppable, Runnable {
     public static Ship getCurrent() {
         return current;
     }
+    public int getNumShips() {
+    	return numShips;
+    }
 
     public static void setCurrent(Ship current) {
         Game.current = current;
@@ -127,6 +130,9 @@ class Game implements Steppable, Runnable {
         }
     }
 
+    public boolean getEnd() {
+    	return end;
+    }
     /**
      * @return boolean rand
      * random érték alapján kiértékeli hogy legyen-e napvihar
