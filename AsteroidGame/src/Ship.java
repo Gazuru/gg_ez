@@ -340,7 +340,7 @@ public class Ship extends FlyingObject {
                     System.out.println("�rv�nytelen!");
                     break;
             }*/
-        	System.out.println("megy a while");
+        	
         	
         }
         System.out.println();
