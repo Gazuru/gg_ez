@@ -1,5 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +23,7 @@ public class SpaceGameView implements Runnable {
     private boolean craftVis = false;
     private boolean putVis = false;
     static ArrayList<Object> objects = new ArrayList<>();
+    private JLabel playerId=null;
 
     public SpaceGameView(JFrame frame) {
         f = frame;
@@ -167,6 +170,7 @@ public class SpaceGameView implements Runnable {
             putBackButtons.get(i).setVisible(false);
             LPane.add(putBackButtons.get(i), Integer.valueOf(2));
         }
+        
     }
 
     public void toggleCraft() {
@@ -208,7 +212,17 @@ public class SpaceGameView implements Runnable {
         LPane.add(BG, Integer.valueOf(1));
         LPane.add(inv, Integer.valueOf(2));
     }
-
+    public void displayStats(){
+    	if(playerId!=null)
+    		{LPane.remove(playerId);}
+    	playerId=new JLabel("Selected Player: "+Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+    	playerId.setFont(new Font(playerId.getFont().getName(), Font.BOLD, 24));
+    	playerId.setBounds((Vars.WINDOW_WIDTH-Vars.STATS_WIDTH-40),(Vars.WINDOW_HEIGHT - 2 * Vars.USE_BUTTON_DIM) - 10,Vars.STATS_WIDTH, Vars.USE_BUTTON_DIM);
+    	playerId.setBackground(new Color(255, 192, 0));
+    	playerId.setOpaque(true);
+    	playerId.setBorder(BorderFactory.createLineBorder( Color.WHITE ,4));
+    	LPane.add(playerId,Integer.valueOf(2));
+    }
     public void displayEnding(String picName) {
     }
 
@@ -219,7 +233,9 @@ public class SpaceGameView implements Runnable {
         f.add(LPane);
         displayBG();
         displayButtons();
+        
         while (true) {
+        	displayStats();
             displayObjects();
             f.revalidate();
             f.repaint();

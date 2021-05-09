@@ -7,4 +7,5 @@ public class Vars {
     public static int NUM_OF_PLAYERS = 0;
     public volatile static boolean TURN_DONE = false;
     public static int ASTEROID_SIZE = 150;
+    public static final int STATS_WIDTH = 4*60;
 }
