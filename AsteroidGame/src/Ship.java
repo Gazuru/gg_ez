@@ -305,8 +305,6 @@ public class Ship extends FlyingObject {
     public void step() {
     	Vars.TURN_DONE = false;
         while (!Vars.TURN_DONE) {
-             
-        	
         	
         }
         
