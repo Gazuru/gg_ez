@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class SpaceGameView {
@@ -16,6 +17,7 @@ public class SpaceGameView {
     private JLayeredPane LPane = new JLayeredPane();
     private boolean craftVis = false;
     private boolean putVis = false;
+    ArrayList<Object> objects;
 
     public SpaceGameView(JFrame frame) {
         f = frame;
@@ -207,7 +209,14 @@ public class SpaceGameView {
         f.revalidate();
         f.repaint();
     }
-
+    public void displayObjects() {
+		//addoljuk
+	}
+    public static void addObjects(ArrayList<Object> l) {
+    	objects.clear();
+    	objects=l;
+    }
+    
     public void refresh() {
     }
 }
