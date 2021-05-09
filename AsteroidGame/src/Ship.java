@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Ship extends FlyingObject {
     private ArrayList<Gate> gates = new ArrayList<Gate>();
     private ArrayList<Material> materials = new ArrayList<Material>();
+    boolean done;
 
     /**
      * konstruktor, 
@@ -20,7 +21,7 @@ public class Ship extends FlyingObject {
         } else {
             System.out.println("Nincs aszteroida a jatekban!");
         }
-        Game.getInstance().incrNumShips();
+        // Game.getInstance().incrNumShips();
     }
 
     /**
@@ -302,15 +303,15 @@ public class Ship extends FlyingObject {
      * 
      */
     public void step() {
-        boolean done = false;
+        done = false;
         while (!done) {
-            System.out.println("Mit szeretnï¿½l csinï¿½lni?");
+            /*System.out.println("Mit szeretnï¿½l csinï¿½lni?");
             System.out.println(
                     "1:Move 2:Drill 3:Mine 4:Teleport 5:BuildBase 6:BuildRobot 7:BuildGate 8:PickUpGate 9:PutMaterial");
             Scanner s = new Scanner(System.in);
-            int choose = s.nextInt();
+            int choose = s.nextInt();*/
             // case 9: done = putMaterial(); break;
-            switch (choose) {
+            /*switch (choose) {
                 case 1:
                     done = move();
                     break;
@@ -338,10 +339,15 @@ public class Ship extends FlyingObject {
                 default:
                     System.out.println("ï¿½rvï¿½nytelen!");
                     break;
-            }
+            }*/
         }
         System.out.println();
     }
+
+    public void setDone(boolean b){
+        done = b;
+    }
+
     /**
      * hasznalja a kaput amin epp all
      * meghivja a location teleport fv-jét this paraméterrel

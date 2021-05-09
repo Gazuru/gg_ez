@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-class Game implements Steppable {
+class Game implements Steppable, Runnable {
     /*
     Létrehozunk egy arraylistet amiben game objectek, vannak, kezdetben a shipek számát
     0-rá állítjuk, illetve ArrayListet a fielddel.
@@ -17,31 +17,44 @@ class Game implements Steppable {
     private static boolean end = false;
     private static Game single_instance = null;
 
+    public static Ship getCurrent() {
+        return current;
+    }
+
+    public static void setCurrent(Ship current) {
+        Game.current = current;
+    }
+
+    private static Ship current;
 
     private Game() {
 
     }
 
     /**
-     *   a játékot singletonná tesszük, így mindig le tudjuk kérni az adott játékot
-     *   @return static single_instance
+     * a játékot singletonná tesszük, így mindig le tudjuk kérni az adott játékot
+     *
+     * @return static single_instance
      **/
     public static Game getInstance() {
-        if (single_instance == null)
+        if (single_instance == null) {
             single_instance = new Game();
-
+            single_instance.startGame();
+        }
         return single_instance;
     }
 
     /**
-    *visszatér a gameObjects-el
-    *@return ArrayList<FlyingObjects> gameObjects
+     * visszatér a gameObjects-el
+     *
+     * @return ArrayList<FlyingObjects> gameObjects
      **/
     public ArrayList<FlyingObject> getGameObjects() {
         return gameObjects;
     }
+
     /**
-    az setEnd osztály setteli a játék végét, annak függvényében, hogy milyen bool értéket kap
+     * az setEnd osztály setteli a játék végét, annak függvényében, hogy milyen bool értéket kap
      **/
 
     public void setEnd(boolean _end) {
@@ -49,8 +62,9 @@ class Game implements Steppable {
         end = _end;
         Skeleton.printFuncRet("");
     }
+
     /**
-     @param fo-t kitöröljük a gameObjects listájából.
+     * @param fo-t kitöröljük a gameObjects listájából.
      **/
     public void removeGameObject(FlyingObject fo) {
         Skeleton.printFunc();
@@ -75,7 +89,6 @@ class Game implements Steppable {
     }
 
     /**
-     *
      * @param f -t megkapja a metódus, amellyel a fields-ből törli azt.
      */
     public void removeField(Field f) {
@@ -85,8 +98,8 @@ class Game implements Steppable {
     }
 
     /**
-     *
      * A metódus segítségével megkapjuk a field listát.
+     *
      * @return ArrayList<Field> fields
      */
     public ArrayList<Field> getFields() {
@@ -99,7 +112,7 @@ class Game implements Steppable {
      */
     public void step() {
         //System.out.println("A(z) " + round++ + ". k�r!");
-        System.out.println();
+        //System.out.println();
         for (int i = 0; i < gameObjects.size(); i++) {
             /*System.out.println("A(z) " + i + ". j�t�kos!");
 
@@ -124,6 +137,8 @@ class Game implements Steppable {
             }
             System.out.println("Ice: " + dbic + "Iron: " + dbir + "Coal: " + dbc + "Uranium: " + dbu);
 */
+            if (gameObjects.get(i).getClass().equals(Ship.class))
+                current = (Ship) gameObjects.get(i);
             gameObjects.get(i).step();
         }
         if (solarStorm()) {
@@ -139,7 +154,6 @@ class Game implements Steppable {
     }
 
     /**
-     *
      * @return boolean rand
      * random érték alapján kiértékeli hogy legyen-e napvihar
      */
@@ -154,52 +168,45 @@ class Game implements Steppable {
      * addig mindenkire meghívja a steppet.
      */
     public void startGame() {
-        System.out.println("Asteroid Game");
-        System.out.println();
+        System.out.println(this.getFields() + " " + this.getGameObjects());
         initGame();
-        System.out.println();
-        while (!end) // END
-        {
-            step();
-        }
+        System.out.println(this.getFields() + " " + this.getGameObjects());
     }
 
     /**
-     Inicializálja a játékot. Létrehozza az aszteroidákat, azokat hozzáadja a fieldhez. Fieldeknek majd beállítja a szomszédait.
-     A megadott shipszám alapján, létrehoz új shipeket.
-
+     * Inicializálja a játékot. Létrehozza az aszteroidákat, azokat hozzáadja a fieldhez. Fieldeknek majd beállítja a szomszédait.
+     * A megadott shipszám alapján, létrehoz új shipeket.
      **/
     public void initGame() {
-        System.out.println("Inicializ�l�s!");
+       /* System.out.println("Inicializ�l�s!");
         System.out.print("A p�lya m�rete: ");
         Scanner s = new Scanner(System.in);
-        int choose = s.nextInt();
-        for (int j = 0; j < choose; j++) {
+        int choose = s.nextInt();*/
+        for (int j = 0; j < 16; j++) {
             Asteroid newAsteroid = new Asteroid();
-            addField(newAsteroid);
         }
         for (int k = 2; k < fields.size(); k++) {
             fields.get(k).addNeighbour(fields.get(k - 2));
             fields.get(k).addNeighbour(fields.get(k - 1));
         }
-        System.out.print("J�t�kosok sz�ma: ");
+        /*System.out.print("J�t�kosok sz�ma: ");
         choose = s.nextInt();
-        numShips = choose;
+        numShips = choose;*/
+        numShips = Vars.NUM_OF_PLAYERS;
         while (gameObjects.size() != numShips) {
             Ship newShip = new Ship();
-            addGameObject(newShip);
         }
+        System.out.println("INIT ENDED");
     }
 
     /**
-    @param fo -t megkapja a metódus, amit hozzáad a gameObjects-es listához.
+     * @param fo -t megkapja a metódus, amit hozzáad a gameObjects-es listához.
      **/
     public void addGameObject(FlyingObject fo) {
         gameObjects.add(fo);
     }
 
     /**
-     *
      * @param f -t hozzáadjuk a fields listájához.
      */
     public void addField(Field f) {
@@ -207,7 +214,6 @@ class Game implements Steppable {
     }
 
     /**
-     *
      * @return ArrayList<Material> baseReq
      * inicializálja a bázishoz szükséges nyersanyagokat
      * Ehhez hozzáad egy szenet, vasat, uránt, és egy vízjeget.
@@ -221,5 +227,18 @@ class Game implements Steppable {
             baseReq.add(new Uranium());
         }
         return baseReq;
+    }
+
+    @Override
+    public void run() {
+        //try {
+            while (!end) // END
+            {
+                step();
+                //Thread.sleep(200);
+            }
+        /*} catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
     }
 }

@@ -1,11 +1,13 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class SpaceGameView {
+public class SpaceGameView{
     private JButton drill = new JButton(), mine = new JButton(), craft = new JButton(), putBackMaterial = new JButton(), pickUpGate = new JButton(), putDownGate = new JButton(), craftRobot = new JButton(), craftGate = new JButton(), craftBase = new JButton();
     private JFrame f;
     private LinkedList<JButton> buttons = new LinkedList<>();
@@ -13,6 +15,9 @@ public class SpaceGameView {
 
     public SpaceGameView(JFrame frame) {
         f = frame;
+        Game.getInstance();
+        Thread t = new Thread(Game.getInstance());
+        t.start();
         initButtons();
         addButtonsToList();
         display();
@@ -34,6 +39,21 @@ public class SpaceGameView {
             putDownGate.setIcon(new ImageIcon(putDownGateImage));
         } catch (IOException e) {
         }
+        buttonInitActionListeners();
+    }
+
+    public void buttonInitActionListeners(){
+        drill.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Game.getCurrent().drill()){
+                    Game.getCurrent().setDone(true);
+                    System.out.println("SIKERES DRILL");
+                }else{
+                    System.out.println("SIKERTELEN DRILL");
+                }
+            }
+        });
     }
 
     public void addButtonsToList() {
@@ -46,7 +66,6 @@ public class SpaceGameView {
     }
 
     public void displayButtons() {
-
         for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setBounds(((i + 1) * 10) + i * Vars.USE_BUTTON_DIM, (Vars.WINDOW_HEIGHT - 2 * Vars.USE_BUTTON_DIM) - 10, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
             LPane.add(buttons.get(i), Integer.valueOf(2));
@@ -76,5 +95,4 @@ public class SpaceGameView {
 
     public void refresh() {
     }
-
 }
