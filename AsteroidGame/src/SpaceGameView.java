@@ -17,7 +17,7 @@ public class SpaceGameView {
     private JLayeredPane LPane = new JLayeredPane();
     private boolean craftVis = false;
     private boolean putVis = false;
-    ArrayList<Object> objects;
+    static ArrayList<Object> objects;
 
     public SpaceGameView(JFrame frame) {
         f = frame;
@@ -203,14 +203,37 @@ public class SpaceGameView {
         f.getContentPane().removeAll();
         f.revalidate();
         f.repaint();
+        displayObjects();
         f.add(LPane);
         displayBG();
         displayButtons();
+        
         f.revalidate();
         f.repaint();
     }
     public void displayObjects() {
-		//addoljuk
+    	int ASTEROID_SIZE=150;
+
+    	JButton asteroid0 = new JButton();
+        asteroid0.setBounds(Vars.WINDOW_WIDTH/2-ASTEROID_SIZE/2, Vars.WINDOW_HEIGHT/2-ASTEROID_SIZE/2, ASTEROID_SIZE, ASTEROID_SIZE);
+        try {
+            Image image = ImageIO.read(new File("resources/fields/asteroid.png")).getScaledInstance(ASTEROID_SIZE, ASTEROID_SIZE, Image.SCALE_DEFAULT);
+            asteroid0.setIcon(new ImageIcon(image));
+        } catch (Exception e) {
+        }
+        LPane.add(asteroid0, Integer.valueOf(3));
+        //eddig ok xd
+        
+        for(int i=0;i<objects.size();i++) {
+        	JButton asteroidI = new JButton();
+        	asteroidI.setBounds(Vars.WINDOW_WIDTH/2+(i*20)-ASTEROID_SIZE/2, Vars.WINDOW_HEIGHT/2-ASTEROID_SIZE/2, ASTEROID_SIZE, ASTEROID_SIZE);
+            try {
+                Image image = ImageIO.read(new File("resources/fields/asteroid.png")).getScaledInstance(ASTEROID_SIZE, ASTEROID_SIZE, Image.SCALE_DEFAULT);
+                asteroidI.setIcon(new ImageIcon(image));
+            } catch (Exception e) {
+            }
+            LPane.add(new JButton(), Integer.valueOf(3));
+        }
 	}
     public static void addObjects(ArrayList<Object> l) {
     	objects.clear();

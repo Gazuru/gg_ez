@@ -304,15 +304,26 @@ public class Ship extends FlyingObject {
     public void step() {
 
     	Vars.TURN_DONE = false;
+    	
         while (!Vars.TURN_DONE) {
         	
         }
         
-      
+        updateView();
         System.out.println("kor vege");
     }
 
-    /**
+
+    public void updateView() {
+		ArrayList<Object> listToDisplay=new ArrayList();
+		listToDisplay.add(this.location);
+		for(int i=0;i<this.getLocation().neighbours.size();i++) {
+			listToDisplay.add(this.getLocation().neighbours.get(i));
+		}
+		SpaceGameView.addObjects(listToDisplay);
+	}
+
+	/**
      * hasznalja a kaput amin epp all
      * meghivja a location teleport fv-jét this paraméterrel
      *
