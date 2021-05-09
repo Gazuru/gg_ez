@@ -15,11 +15,17 @@ import javax.swing.*;
 public class MenuView {
     private JFrame f;
 
+    /**
+     * A menü megjelenítéséért felelõs osztály konstruktora
+     * @param f_ az a JFrame, amiben megjelenik a menü
+     */
     public MenuView(JFrame f_) {
         this.f = f_;
     }
 
-
+    /**
+     * A menü elemeinek megjelenítéséért felelõs metódus
+     */
     public void Display() {
         JLayeredPane LPane = new JLayeredPane();
         f.getContentPane().add(LPane);
@@ -73,6 +79,9 @@ public class MenuView {
         f.setVisible(true);
     }
 
+    /**
+     * A start gomb lenyomásakor történõ funkció megvalósítására hívatott függvény
+     */
     private void startButtonPressed() {
         JFrame inp = new JFrame();
         inp.setName("Játékosok száma");

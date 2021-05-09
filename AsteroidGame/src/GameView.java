@@ -8,36 +8,27 @@ public class GameView {
     public static JFrame f;
     private static MenuView menuView;
 
+    /**
+     * A játék belépési pontja
+     * @param args
+     */
     public static void main(String[] args) {
         f = new JFrame("Asteroid Game");
         menuView = new MenuView(f);
         Display();
     }
 
+    /**
+     * A menü megjelenítése
+     */
     public static void Display() {
         menuView.Display();
     }
 
-    public MenuView getMenuView() {
-        return menuView;
-    }
-
-    public void setMenuView(MenuView menuView) {
-        this.menuView = menuView;
-    }
-
-    public boolean isMenuViewShow() {
-        return menuViewShow;
-    }
-
-    public void setMenuViewShow(boolean menuViewShow) {
-        this.menuViewShow = menuViewShow;
-    }
-
-    public static SpaceGameView getSpaceGameView() {
-        return spaceGameView;
-    }
-
+    /**
+     * A GameView-hoz tartozó SpaceGameView beállítása.
+     * @param s a paraméterként átadott SpaceGameView
+     */
     public static void setSpaceGameView(SpaceGameView s) {
         spaceGameView = s;
     }
