@@ -54,7 +54,63 @@ public class SpaceGameView{
                 }
             }
         });
+        mine.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Game.getCurrent().mine()){
+                    Game.getCurrent().setDone(true);
+                    System.out.println("SIKERES MINE");
+                }else{
+                    System.out.println("SIKERTELEN MINE");
+                }
+            }
+        });
+        craft.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Game.getCurrent().drill()){
+                    Game.getCurrent().setDone(true);
+                    System.out.println("TODO craft");
+                }else{
+                    System.out.println("TODO craft");
+                }
+            }
+        });
+        putBackMaterial.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Game.getCurrent().drill()){
+                    Game.getCurrent().setDone(true);
+                    System.out.println("TODO putBackMaterial");
+                }else{
+                    System.out.println("TODO putBackMaterial");
+                }
+            }
+        });
+        pickUpGate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Game.getCurrent().pickUpGate()){
+                    Game.getCurrent().setDone(true);
+                    System.out.println("SIKERES pickUpGate");
+                }else{
+                    System.out.println("SIKERTELEN pickUpGate");
+                }
+            }
+        });
+        putDownGate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Game.getCurrent().pickUpGate()){
+                    Game.getCurrent().setDone(true);
+                    System.out.println("SIKERES putDownGate");
+                }else{
+                    System.out.println("SIKERTELEN putDownGate");
+                }
+            }
+        });
     }
+    
 
     public void addButtonsToList() {
         buttons.add(drill);
