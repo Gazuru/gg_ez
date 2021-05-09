@@ -38,7 +38,7 @@ class Game implements Steppable, Runnable {
     /**
      * seteljuk az aktualisan soron levo shippel
      *
-     * @param Ship current
+     * @param current
      * 
      */
     public static void setCurrent(Ship current) {
@@ -167,7 +167,7 @@ class Game implements Steppable, Runnable {
      */
     public boolean solarStorm() {
         Random random = new Random();
-        int rand = random.nextInt(200);
+        int rand = random.nextInt(4);
         return rand == 1;
     }
 

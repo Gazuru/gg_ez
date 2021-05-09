@@ -25,8 +25,8 @@ public class Ship extends FlyingObject {
      * parameterul megkapja az adott anyagot es summazza hany ilyen tipusu van az urhajonal
      * majd visszater az ertekkel
      * 
-     * @param Material m
-     * @return int
+     * @param m a nyersanyagtípus
+     * @return sum, az összeg
      **/
     public int sumMaterial(Material m) {
         int sum = 0;
@@ -195,10 +195,7 @@ public class Ship extends FlyingObject {
      * @return boolean to_return ezzel térünk vissza
      */
     public boolean putMaterial(Material m) {
-        Skeleton.printFunc();
-        boolean to_return = location.fillBy(this, m);
-        Skeleton.printFuncRet(Boolean.toString(to_return));
-        return to_return;
+        return location.fillBy(this, m);
     }
 
     /**

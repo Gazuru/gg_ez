@@ -32,7 +32,11 @@ public class SpaceGameView implements Runnable {
     private static HashMap<JLabel, ArrayList<FlyingObject>> shownFLO = new HashMap<>();
     private static ArrayList<JLabel> materialNums = new ArrayList<>();
 
-
+    /**
+     * A SpaceGameView osztály konstruktora
+     * Elindítja a játékot, valamint kirajzolja a szükséges elemeket
+     * @param frame a fõ ablak, amelyre rajzol
+     */
     public SpaceGameView(JFrame frame) {
         f = frame;
         Game.getInstance();
@@ -45,6 +49,9 @@ public class SpaceGameView implements Runnable {
         t1.start();
     }
 
+    /**
+     * A gombokhoz tartozó képek betöltését végzik.
+     */
     public void initButtons() {
         try {
             drill.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/drill.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
@@ -65,6 +72,9 @@ public class SpaceGameView implements Runnable {
         buttonInitActionListeners();
     }
 
+    /**
+     * A gombokhoz tartozó eseménykezelést inicializáló függvény.
+     */
     public void buttonInitActionListeners() {
         drill.addActionListener(new ActionListener() {
             @Override
@@ -242,6 +252,9 @@ public class SpaceGameView implements Runnable {
         });
     }
 
+    /**
+     * A gombok listához adása, hogy az egységbe foglalásuk egyszerûbben mûködjön.
+     */
     public void addButtonsToList() {
         buttons.add(drill);
         buttons.add(mine);
@@ -258,6 +271,9 @@ public class SpaceGameView implements Runnable {
         putBackButtons.add(putUranium);
     }
 
+    /**
+     * A gombok megjelenítéséért felelõs metódus.
+     */
     public void displayButtons() {
         for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).setBounds(((i + 1) * 10) + i * Vars.USE_BUTTON_DIM, (Vars.WINDOW_HEIGHT - 2 * Vars.USE_BUTTON_DIM) - 10, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
@@ -276,6 +292,9 @@ public class SpaceGameView implements Runnable {
 
     }
 
+    /**
+     * Az építésért felelõs gombok megjelenítése
+     */
     public void toggleCraft() {
 
         for (JButton button : craftButtons) {
@@ -288,6 +307,9 @@ public class SpaceGameView implements Runnable {
         craftVis = !craftVis;
     }
 
+    /**
+     * A magvisszarakásért felelõs gombok megjelenítése
+     */
     public void togglePut() {
         for (JButton button : putBackButtons) {
             if (putVis) {
@@ -299,7 +321,9 @@ public class SpaceGameView implements Runnable {
         putVis = !putVis;
     }
 
-
+    /**
+     * A háttér, illetve az inventory kijelzése
+     */
     public void displayBG() {
         JLabel BG = new JLabel();
         JLabel inv = new JLabel();
@@ -316,6 +340,9 @@ public class SpaceGameView implements Runnable {
         LPane.add(inv, Integer.valueOf(2));
     }
 
+    /**
+     * A statisztikák kijelzése
+     */
     public static void displayStats() {
         if (playerId != null) {
             LPane.remove(playerId);
@@ -362,6 +389,9 @@ public class SpaceGameView implements Runnable {
         LPane.add(playerId, Integer.valueOf(2));
     }
 
+    /**
+     * A végsõ képernyõ kijelzése
+     */
     public static void displayEnding() {
     	if(Game.getInstance().getEnd()) {
     		JLabel label=new JLabel();
@@ -387,6 +417,9 @@ public class SpaceGameView implements Runnable {
     	}
     }
 
+    /**
+     * Minden kijelzését megoldó metódus
+     */
     public void display() {
         f.getContentPane().removeAll();
         f.revalidate();
@@ -395,19 +428,13 @@ public class SpaceGameView implements Runnable {
         f.add(LPane);
         displayBG();
         displayButtons();
-        
-        /*while (true) {
-            displayStats();
-            displayObjects();
-            f.revalidate();
-            f.repaint();
-            try {
-                Thread.sleep(40);
-            } catch (Exception e) {
-            }
-        }*/
     }
 
+    /**
+     * A Field állapotától függõen megfelelõ kép hozzárendelése a paraméterként átadott JLabelhez.
+     * @param f a kirajzolandó Field
+     * @param label az ehhez tartozó JLabel
+     */
     public static void loadAsteroidImage(Field f, JLabel label) {
         if (f.getClass().equals(Asteroid.class)) {
             Asteroid a = (Asteroid) f;
@@ -480,6 +507,11 @@ public class SpaceGameView implements Runnable {
         }
     }
 
+    /**
+     * A FlyingObject mivoltjának megfelelõ kép hozzárendelése a paraméterként átadott JLabelhez.
+     * @param label az entitáshoz tartozó JLabel
+     * @param fl a kirajzolandó entitás
+     */
     public static void loadFlyingObjectImage(JLabel label, FlyingObject fl) {
         try {
             if (fl.getClass().equals(Ship.class)) {
@@ -493,6 +525,9 @@ public class SpaceGameView implements Runnable {
         }
     }
 
+    /**
+     * Az összes játékelem kirajzolásáért felelõs metódus.
+     */
     public static void displayObjects() {
         if (objects.isEmpty())
             return;
@@ -603,11 +638,18 @@ public class SpaceGameView implements Runnable {
 
     }
 
+    /**
+     * Minden kör elején a Ship osztályból meghívódó metódus, mely az éppen soron lévõ játékos kirajzolásához szükséges objektumokat adja át.
+     * @param l a kirajzolandó objektumok
+     */
     public static void addObjects(ArrayList<Field> l) {
         objects.clear();
         objects = l;
     }
 
+    /**
+     * A játékfelület frissítéséért felelõs metódus
+     */
     public static void refresh() {
         displayStats();
         displayObjects();
@@ -616,6 +658,9 @@ public class SpaceGameView implements Runnable {
         displayEnding();
     }
 
+    /**
+     * A többszálú futás megoldása érdekében bevezetett metódus
+     */
     @Override
     public void run() {
         refresh();
