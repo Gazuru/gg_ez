@@ -369,7 +369,7 @@ public class SpaceGameView implements Runnable {
     		if(Game.getInstance().getNumShips()==0) {
     			
     			try {
-    				label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+    				label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_sunprox.png")).getScaledInstance(Vars.WINDOW_WIDTH, Vars.WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
     	            System.out.println("L");
     	        } catch (IOException e) {
     	            e.printStackTrace();
@@ -377,7 +377,7 @@ public class SpaceGameView implements Runnable {
     		}else {
     			f.removeAll();
     			try {
-    				label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+    				label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_sunprox.png")).getScaledInstance(Vars.WINDOW_WIDTH, Vars.WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
     				System.out.println("W");
     	        } catch (IOException e) {
     	            e.printStackTrace();
