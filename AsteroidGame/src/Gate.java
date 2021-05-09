@@ -1,6 +1,4 @@
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Gate extends Field implements Steppable {
     private boolean working;

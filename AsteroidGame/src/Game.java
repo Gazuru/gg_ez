@@ -1,7 +1,5 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 class Game implements Steppable, Runnable {
     /*
@@ -11,9 +9,9 @@ class Game implements Steppable, Runnable {
      */
 
 
-    private static ArrayList<FlyingObject> gameObjects = new ArrayList<FlyingObject>();
+    private static ArrayList<FlyingObject> gameObjects = new ArrayList<>();
     private static int numShips = 0;
-    private static ArrayList<Field> fields = new ArrayList<Field>();
+    private static ArrayList<Field> fields = new ArrayList<>();
     private static boolean end = false;
     private static Game single_instance = null;
 
@@ -34,15 +32,6 @@ class Game implements Steppable, Runnable {
      */
     public int getNumShips() {
     	return numShips;
-    }
-    /**
-     * seteljuk az aktualisan soron levo shippel
-     *
-     * @param current
-     * 
-     */
-    public static void setCurrent(Ship current) {
-        Game.current = current;
     }
     /**
      * tarolja az aktualisan soron levo ship-et
@@ -102,13 +91,6 @@ class Game implements Steppable, Runnable {
         Skeleton.printFunc();
         numShips--;
         Skeleton.printFuncRet("");
-    }
-
-    /**
-     * A metÃ³dus nÃ¶veli a shipeknek a szÃ¡mÃ¡t.
-     **/
-    public void incrNumShips() {
-        numShips++;
     }
 
     /**
@@ -185,15 +167,13 @@ class Game implements Steppable, Runnable {
      **/
     public void initGame() {
         for (int j = 0; j < 50; j++) {
-            Asteroid newAsteroid = new Asteroid();
+            new Asteroid();
         }
         for (int k = 2; k < fields.size(); k++) {
             fields.get(k).addNeighbour(fields.get(k - 2));
             fields.get(k).addNeighbour(fields.get(k - 1));
         }
-        /*System.out.print("Jï¿½tï¿½kosok szï¿½ma: ");
-        choose = s.nextInt();
-        numShips = choose;*/
+
         numShips = Vars.NUM_OF_PLAYERS;
         while (gameObjects.size() != numShips) {
             Ship newShip = new Ship();
@@ -205,7 +185,7 @@ class Game implements Steppable, Runnable {
             }
         }
         for (int i = 0; i < Math.ceil(Vars.NUM_OF_PLAYERS); i++) {
-            Ufo ufo = new Ufo();
+            new Ufo();
         }
     }
 
@@ -229,7 +209,7 @@ class Game implements Steppable, Runnable {
      * Ehhez hozzÃ¡ad egy szenet, vasat, urÃ¡nt, Ã©s egy vÃ­zjeget.
      */
     public ArrayList<Material> craftBaseReq() {
-        ArrayList<Material> baseReq = new ArrayList<Material>();
+        ArrayList<Material> baseReq = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             baseReq.add(new Coal());
             baseReq.add(new Iron());

@@ -18,7 +18,7 @@ public class Robot extends FlyingObject {
     public void step() {
         Skeleton.printFunc();
         
-        boolean done = false;
+        boolean done;
         refreshView();
         
         done = drill();
@@ -94,7 +94,7 @@ public class Robot extends FlyingObject {
      */
     public static ArrayList<Material> craftRobotReq() {
         Skeleton.printFunc();
-        ArrayList<Material> robotReq = new ArrayList<Material>();
+        ArrayList<Material> robotReq = new ArrayList<>();
         robotReq.add(new Iron());
         robotReq.add(new Coal());
         robotReq.add(new Uranium());

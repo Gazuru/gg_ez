@@ -1,7 +1,5 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
-import static javax.swing.SwingUtilities.invokeLater;
 
 public class SpaceGameView implements Runnable {
     private JButton drill = new JButton(), mine = new JButton(), craft = new JButton(), putBackMaterial = new JButton(),
@@ -68,6 +64,7 @@ public class SpaceGameView implements Runnable {
             putIron.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/put_down_iron.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
             putUranium.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/put_down_uranium.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
         } catch (IOException e) {
+            e.printStackTrace();
         }
         buttonInitActionListeners();
     }
@@ -76,178 +73,139 @@ public class SpaceGameView implements Runnable {
      * A gombokhoz tartozó eseménykezelést inicializáló függvény.
      */
     public void buttonInitActionListeners() {
-        drill.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().drill()) {
-                    Vars.TURN_DONE = true;
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES DRILL");
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN DRILL");
-                }
+        drill.addActionListener(e -> {
+            if (Game.getCurrent().drill()) {
+                Vars.TURN_DONE = true;
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES DRILL");
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN DRILL");
             }
         });
-        mine.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().mine()) {
+        mine.addActionListener(e -> {
+            if (Game.getCurrent().mine()) {
 
-                    Vars.TURN_DONE = true;
+                Vars.TURN_DONE = true;
 
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES MINE");
-                } else {
-                    Vars.TURN_DONE = false;
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN MINE");
-                }
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES MINE");
+            } else {
+                Vars.TURN_DONE = false;
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN MINE");
             }
         });
-        craft.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (putVis) {
-                    togglePut();
-                }
-                toggleCraft();
-            }
-        });
-        putBackMaterial.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (craftVis) {
-                    toggleCraft();
-                }
+        craft.addActionListener(e -> {
+            if (putVis) {
                 togglePut();
             }
+            toggleCraft();
         });
-        pickUpGate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().pickUpGate()) {
+        putBackMaterial.addActionListener(e -> {
+            if (craftVis) {
+                toggleCraft();
+            }
+            togglePut();
+        });
+        pickUpGate.addActionListener(e -> {
+            if (Game.getCurrent().pickUpGate()) {
 
-                    Vars.TURN_DONE = true;
+                Vars.TURN_DONE = true;
 
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES pickUpGate");
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN pickUpGate");
-                }
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES pickUpGate");
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN pickUpGate");
             }
         });
-        putDownGate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().placeGate()) {
+        putDownGate.addActionListener(e -> {
+            if (Game.getCurrent().placeGate()) {
 
-                    Vars.TURN_DONE = true;
+                Vars.TURN_DONE = true;
 
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES putDownGate");
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN putDownGate");
-                }
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES putDownGate");
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN putDownGate");
             }
         });
-        craftRobot.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().buildRobot()) {
-                    Vars.TURN_DONE = true;
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES ROBOT ÉPÍTÉS");
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN ROBOT ÉPÍTÉS");
-                }
+        craftRobot.addActionListener(e -> {
+            if (Game.getCurrent().buildRobot()) {
+                Vars.TURN_DONE = true;
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES ROBOT ÉPÍTÉS");
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN ROBOT ÉPÍTÉS");
             }
         });
-        craftBase.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().buildBase()) {
-                    Vars.TURN_DONE = true;
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES BÁZISÉPÍTÉS");
-                    //TODO FINISH GAME
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN BÁZISÉPÍTÉS");
-                }
+        craftBase.addActionListener(e -> {
+            if (Game.getCurrent().buildBase()) {
+                Vars.TURN_DONE = true;
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES BÁZISÉPÍTÉS");
+                //TODO FINISH GAME
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN BÁZISÉPÍTÉS");
             }
         });
-        craftGate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().craftGatePair()) {
-                    Vars.TURN_DONE = true;
+        craftGate.addActionListener(e -> {
+            if (Game.getCurrent().craftGatePair()) {
+                Vars.TURN_DONE = true;
 
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES KAPUPÁRÉPÍTÉS");
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN KAPUPÁRÉPÍTÉS");
-                }
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES KAPUPÁRÉPÍTÉS");
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN KAPUPÁRÉPÍTÉS");
             }
         });
-        putCoal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().putMaterial(new Coal())) {
-                    Vars.TURN_DONE = true;
+        putCoal.addActionListener(e -> {
+            if (Game.getCurrent().putMaterial(new Coal())) {
+                Vars.TURN_DONE = true;
 
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES VISSZARAKAS");
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN VISSZARAKAS");
-                }
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES VISSZARAKAS");
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN VISSZARAKAS");
             }
         });
-        putIce.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().putMaterial(new Ice())) {
-                    Vars.TURN_DONE = true;
+        putIce.addActionListener(e -> {
+            if (Game.getCurrent().putMaterial(new Ice())) {
+                Vars.TURN_DONE = true;
 
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES VISSZARAKAS");
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN VISSZARAKAS");
-                }
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES VISSZARAKAS");
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN VISSZARAKAS");
             }
         });
-        putIron.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().putMaterial(new Iron())) {
-                    Vars.TURN_DONE = true;
-                    
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES VISSZARAKAS");
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN VISSZARAKAS");
-                }
-            }
-        });
-        putUranium.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().putMaterial(new Uranium())) {
-                    Vars.TURN_DONE = true;
+        putIron.addActionListener(e -> {
+            if (Game.getCurrent().putMaterial(new Iron())) {
+                Vars.TURN_DONE = true;
 
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERES VISSZARAKAS");
-                } else {
-                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-                    System.out.println("SIKERTELEN VISSZARAKAS");
-                }
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES VISSZARAKAS");
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN VISSZARAKAS");
+            }
+        });
+        putUranium.addActionListener(e -> {
+            if (Game.getCurrent().putMaterial(new Uranium())) {
+                Vars.TURN_DONE = true;
+
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERES VISSZARAKAS");
+            } else {
+                System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                System.out.println("SIKERTELEN VISSZARAKAS");
             }
         });
     }
@@ -298,11 +256,7 @@ public class SpaceGameView implements Runnable {
     public void toggleCraft() {
 
         for (JButton button : craftButtons) {
-            if (craftVis) {
-                button.setVisible(false);
-            } else {
-                button.setVisible(true);
-            }
+            button.setVisible(!craftVis);
         }
         craftVis = !craftVis;
     }
@@ -312,11 +266,7 @@ public class SpaceGameView implements Runnable {
      */
     public void togglePut() {
         for (JButton button : putBackButtons) {
-            if (putVis) {
-                button.setVisible(false);
-            } else {
-                button.setVisible(true);
-            }
+            button.setVisible(!putVis);
         }
         putVis = !putVis;
     }
@@ -334,6 +284,7 @@ public class SpaceGameView implements Runnable {
             inv.setIcon(new ImageIcon(img));
             inv.setIcon(new ImageIcon(img.getScaledInstance(inv.getPreferredSize().width / 2, inv.getPreferredSize().height / 2, Image.SCALE_DEFAULT)));
         } catch (Exception e) {
+            e.printStackTrace();
         }
         inv.setBounds(-20, -10, inv.getPreferredSize().width, inv.getPreferredSize().height);
         LPane.add(BG, Integer.valueOf(1));
@@ -449,7 +400,6 @@ public class SpaceGameView implements Runnable {
                     } else {
                         label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                     }
-                    return;
                 } else {
                     if (core == null) {
                         if (sunprox) {
@@ -458,21 +408,18 @@ public class SpaceGameView implements Runnable {
                         } else {
                             label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_empty.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                         }
-                        return;
                     } else if (Ice.class.equals(core.getClass())) {
                         if (sunprox) {
                             label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_ice_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                         } else {
                             label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_ice.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                         }
-                        return;
                     } else if (Iron.class.equals(core.getClass())) {
                         if (sunprox) {
                             label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_iron_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                         } else {
                             label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_iron.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                         }
-                        return;
                     } else if (Coal.class.equals(core.getClass())) {
                         if (sunprox) {
                             label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_coal_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
@@ -480,17 +427,16 @@ public class SpaceGameView implements Runnable {
                         } else {
                             label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_coal.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                         }
-                        return;
                     } else if (Uranium.class.equals(core.getClass())) {
                         if (sunprox) {
                             label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_uranium_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                         } else {
                             label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_uranium.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                         }
-                        return;
                     }
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         } else {
             Gate g = (Gate) f;
@@ -503,6 +449,7 @@ public class SpaceGameView implements Runnable {
                     label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/gate_inactive.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -522,6 +469,7 @@ public class SpaceGameView implements Runnable {
                 label.setIcon(new ImageIcon(ImageIO.read(new File("resources/entities/UFO.png")).getScaledInstance(Vars.ENTITY_SIZE, Vars.ENTITY_SIZE, Image.SCALE_DEFAULT)));
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

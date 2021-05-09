@@ -1,16 +1,8 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class MenuView {
     private JFrame f;
@@ -47,12 +39,9 @@ public class MenuView {
             startButton.setIcon(new ImageIcon(image));
             startButton.setBorderPainted(false);
         } catch (Exception e) {
+            e.printStackTrace();
         }
-        startButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                startButtonPressed();
-            }
-        });
+        startButton.addActionListener(e -> startButtonPressed());
 
         JButton exitButton = new JButton();
         exitButton.setBounds((Vars.WINDOW_WIDTH - Vars.BUTTON_WIDTH) / 2, 4*(Vars.WINDOW_HEIGHT - 2 * Vars.BUTTON_HEIGHT)  / 5, Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT);
@@ -61,12 +50,9 @@ public class MenuView {
             exitButton.setIcon(new ImageIcon(image));
             exitButton.setBorderPainted(false);
         } catch (Exception e) {
+            e.printStackTrace();
         }
-        exitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        exitButton.addActionListener(e -> System.exit(0));
 
         LPane.add(background, Integer.valueOf(1));
         LPane.add(startButton, Integer.valueOf(2));

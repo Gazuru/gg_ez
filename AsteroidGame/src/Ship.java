@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Ship extends FlyingObject {
-    private ArrayList<Gate> gates = new ArrayList<Gate>();
-    private ArrayList<Material> materials = new ArrayList<Material>();
+    private ArrayList<Gate> gates = new ArrayList<>();
+    private ArrayList<Material> materials = new ArrayList<>();
 
     /**
      * konstruktor,
@@ -45,11 +44,7 @@ public class Ship extends FlyingObject {
      * 
      **/
     public int sumGates() {
-        if (gates.size() > 0) {
-            return gates.size();
-        } else {
-            return 0;
-        }
+        return gates.size();
     }
 
     /**
@@ -337,11 +332,9 @@ public class Ship extends FlyingObject {
 
 
     public void updateView() {
-        ArrayList<Field> listToDisplay = new ArrayList();
+        ArrayList<Field> listToDisplay = new ArrayList<>();
         listToDisplay.add(this.location);
-        for (int i = 0; i < this.getLocation().neighbours.size(); i++) {
-            listToDisplay.add(this.getLocation().neighbours.get(i));
-        }
+        listToDisplay.addAll(this.getLocation().neighbours);
         SpaceGameView.addObjects(listToDisplay);
     }
 

@@ -22,7 +22,7 @@ public class Ufo extends FlyingObject {
      */
     public void step() {
         Skeleton.printFunc();
-        boolean done = false;
+        boolean done;
         refreshView();
         done = mine();
         if (!done) {
