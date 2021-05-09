@@ -170,6 +170,9 @@ class Game implements Steppable, Runnable {
         while (gameObjects.size() != numShips) {
             Ship newShip = new Ship();
         }
+        for(int i = 0; i < Math.ceil(Vars.NUM_OF_PLAYERS); i++){
+            Ufo ufo = new Ufo();
+        }
         System.out.println("INIT ENDED");
     }
 

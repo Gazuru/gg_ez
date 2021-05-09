@@ -30,17 +30,21 @@ public class Gate extends Field implements Steppable {
     }
 
     private void updateView() {
-		// TODO Auto-generated method stub
-		
-	}
+        // TODO Auto-generated method stub
 
-	/**
+    }
+
+    /**
      * átállitjuk a kapott paraméterre a wild tagvaltozot
      *
      * @param w ezt adjuk át paraméterként
      */
     public void setWild(boolean w) {
         this.wild = w;
+    }
+
+    public boolean getWild() {
+        return wild;
     }
 
     /**
@@ -77,7 +81,7 @@ public class Gate extends Field implements Steppable {
             setWorking(false);
             Skeleton.printFuncRet("true");
             return true;
-        }else{
+        } else {
             return false;
         }
     }

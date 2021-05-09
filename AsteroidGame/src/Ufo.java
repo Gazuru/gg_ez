@@ -4,6 +4,15 @@ import java.util.Random;
 public class Ufo extends FlyingObject {
     private ArrayList<Material> materials;
 
+    public Ufo(){
+        ArrayList<Field> locations = Game.getInstance().getFields();
+        if (!locations.isEmpty()) {
+            locations.get(new Random().nextInt(locations.size())).acceptFlyingObject(this);
+        } else {
+            System.out.println("Nincs aszteroida a jatekban!");
+        }
+    }
+
     /**
      * step fv ami minden körébe lefut
      * done lokalis valtozo false alapbol,

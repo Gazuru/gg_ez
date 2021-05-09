@@ -315,7 +315,7 @@ public class Ship extends FlyingObject {
 
 
     public void updateView() {
-		ArrayList<Object> listToDisplay=new ArrayList();
+		ArrayList<Field> listToDisplay=new ArrayList();
 		listToDisplay.add(this.location);
 		for(int i=0;i<this.getLocation().neighbours.size();i++) {
 			listToDisplay.add(this.getLocation().neighbours.get(i));
