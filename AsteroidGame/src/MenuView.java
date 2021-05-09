@@ -37,7 +37,7 @@ public class MenuView {
         JButton startButton = new JButton();
         startButton.setBounds((Vars.WINDOW_WIDTH - Vars.BUTTON_WIDTH) / 2, 2*(Vars.WINDOW_HEIGHT - 2 * Vars.BUTTON_HEIGHT) / 5, Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT);
         try {
-            Image image = ImageIO.read(new File("resources/startButton.png")).getScaledInstance(Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT, Image.SCALE_DEFAULT);
+            Image image = ImageIO.read(new File("resources/buttons/startButton.png")).getScaledInstance(Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT, Image.SCALE_DEFAULT);
             startButton.setIcon(new ImageIcon(image));
             startButton.setBorderPainted(false);
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class MenuView {
         JButton exitButton = new JButton();
         exitButton.setBounds((Vars.WINDOW_WIDTH - Vars.BUTTON_WIDTH) / 2, 4*(Vars.WINDOW_HEIGHT - 2 * Vars.BUTTON_HEIGHT)  / 5, Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT);
         try {
-            Image image = ImageIO.read(new File("resources/exitButton.png")).getScaledInstance(Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT, Image.SCALE_DEFAULT);
+            Image image = ImageIO.read(new File("resources/buttons/exitButton.png")).getScaledInstance(Vars.BUTTON_WIDTH, Vars.BUTTON_HEIGHT, Image.SCALE_DEFAULT);
             exitButton.setIcon(new ImageIcon(image));
             exitButton.setBorderPainted(false);
         } catch (Exception e) {
