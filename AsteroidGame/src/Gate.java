@@ -25,10 +25,16 @@ public class Gate extends Field implements Steppable {
         if (wild) {
             goingWild();
         }
+        updateView();
         Skeleton.printFuncRet("");
     }
 
-    /**
+    private void updateView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
      * átállitjuk a kapott paraméterre a wild tagvaltozot
      *
      * @param w ezt adjuk át paraméterként

@@ -17,7 +17,10 @@ public class Robot extends FlyingObject {
      */
     public void step() {
         Skeleton.printFunc();
+        
         boolean done = false;
+        refreshView();
+        
         done = drill();
         if (!done)
             move();
@@ -25,7 +28,12 @@ public class Robot extends FlyingObject {
         Skeleton.printFuncRet("");
     }
 
-    /**
+    private void refreshView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
      * mozgasert felelos fv,
      * random kivalaszt egy a location aktualis szoszedjat,
      * majd atallitja a locationjat arra, a megfelelo onSurface listakezelest pedig elvegzi

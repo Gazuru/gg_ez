@@ -304,6 +304,7 @@ public class Ship extends FlyingObject {
      */
     public void step() {
     	Vars.TURN_DONE = false;
+    	updateView();
         while (!Vars.TURN_DONE) {
              
         	
@@ -314,7 +315,12 @@ public class Ship extends FlyingObject {
         System.out.println("kor vege");
     }
 
-    public void setDone(boolean b){
+    private void updateView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setDone(boolean b){
         done = b;
     }
 
