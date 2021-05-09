@@ -47,10 +47,12 @@ public class SpaceGameView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().drill()){
-                    Game.getCurrent().setDone(true);
+                	Vars.TURN_DONE=true;
+                    
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES DRILL");
                 }else{
+                	Vars.TURN_DONE=false;
                 	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN DRILL");
                 }
@@ -60,7 +62,7 @@ public class SpaceGameView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().mine()){
-                    Game.getCurrent().setDone(true);
+                	Vars.TURN_DONE=true;
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES MINE");
                 }else{

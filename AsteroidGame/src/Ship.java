@@ -303,47 +303,15 @@ public class Ship extends FlyingObject {
      * 
      */
     public void step() {
-        done = false;
-        while (!done) {
-            /*System.out.println("Mit szeretn�l csin�lni?");
-            System.out.println(
-                    "1:Move 2:Drill 3:Mine 4:Teleport 5:BuildBase 6:BuildRobot 7:BuildGate 8:PickUpGate 9:PutMaterial");
-            Scanner s = new Scanner(System.in);
-            int choose = s.nextInt();*/
-            // case 9: done = putMaterial(); break;
-            /*switch (choose) {
-                case 1:
-                    done = move();
-                    break;
-                case 2:
-                    done = drill();
-                    break;
-                case 3:
-                    done = mine();
-                    break;
-                case 4:
-                    done = useGate();
-                    break;
-                case 5:
-                    done = buildBase();
-                    break;
-                case 6:
-                    done = buildRobot();
-                    break;
-                case 7:
-                    done = craftGatePair();
-                    break;
-                case 8:
-                    done = pickUpGate();
-                    break;
-                default:
-                    System.out.println("�rv�nytelen!");
-                    break;
-            }*/
+    	Vars.TURN_DONE = false;
+        while (!Vars.TURN_DONE) {
+             
         	
         	
         }
-        System.out.println();
+        
+      
+        System.out.println("kor vege");
     }
 
     public void setDone(boolean b){
