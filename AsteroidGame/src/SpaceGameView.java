@@ -48,8 +48,10 @@ public class SpaceGameView{
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().drill()){
                     Game.getCurrent().setDone(true);
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES DRILL");
                 }else{
+                	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN DRILL");
                 }
             }
@@ -59,8 +61,10 @@ public class SpaceGameView{
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().mine()){
                     Game.getCurrent().setDone(true);
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES MINE");
                 }else{
+                	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN MINE");
                 }
             }
@@ -92,8 +96,10 @@ public class SpaceGameView{
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().pickUpGate()){
                     Game.getCurrent().setDone(true);
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES pickUpGate");
                 }else{
+                	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN pickUpGate");
                 }
             }
@@ -103,8 +109,10 @@ public class SpaceGameView{
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().pickUpGate()){
                     Game.getCurrent().setDone(true);
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES putDownGate");
                 }else{
+                	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN putDownGate");
                 }
             }

@@ -23,7 +23,7 @@ public class Ship extends FlyingObject {
         }
         // Game.getInstance().incrNumShips();
     }
-
+    
     /**
      * banyaszatert felelos fv, 
      * meghivja a locationon az onMine fv-t this parameterrel
@@ -340,6 +340,8 @@ public class Ship extends FlyingObject {
                     System.out.println("�rv�nytelen!");
                     break;
             }*/
+        	System.out.println("megy a while");
+        	
         }
         System.out.println();
     }
