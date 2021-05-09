@@ -24,7 +24,7 @@ public class Ufo extends FlyingObject {
         Skeleton.printFunc();
         boolean done = false;
         refreshView();
-        done = drill();
+        done = mine();
         if (!done) {
             Random random = new Random();
             int randomI = random.nextInt(2);

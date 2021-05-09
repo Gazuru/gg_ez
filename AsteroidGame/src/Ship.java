@@ -141,8 +141,8 @@ public class Ship extends FlyingObject {
                 for (Material m2 : newBOM.getFound()) {
                     removeMaterial(m2);
                 }
-                /*Robot r = new Robot();
-                location.acceptFlyingObject(r);*/
+                Robot r = new Robot();
+                location.acceptFlyingObject(r);
                 Skeleton.printFuncRet("true");
                 return true;
             }
@@ -324,7 +324,6 @@ public class Ship extends FlyingObject {
 
         }
         updateView();
-        System.out.println("kor vege");
     }
 
 

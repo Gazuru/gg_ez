@@ -167,6 +167,7 @@ public class Asteroid extends Field {
 
         Skeleton.printFuncRet("");
     }
+
     /**
     * napvihar esetén hivodik meg ez a fv, 
     * ha nem tud elbujni a felszinen levo FlyingObject meghivja az onSolarStormCase-ét az objektumnak

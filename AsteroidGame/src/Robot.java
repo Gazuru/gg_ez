@@ -6,7 +6,7 @@ public class Robot extends FlyingObject {
      * konstruktor, hozzáaddolja magát a singleton Game gameObjects listajahoz
      */
     public Robot() {
-        Game.getInstance().addGameObject(this);
+
     }
 
     /**

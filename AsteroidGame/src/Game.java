@@ -20,6 +20,7 @@ class Game implements Steppable, Runnable {
     public static Ship getCurrent() {
         return current;
     }
+    
     public int getNumShips() {
     	return numShips;
     }
@@ -115,19 +116,22 @@ class Game implements Steppable, Runnable {
      */
     public void step() {
 
-        for (FlyingObject gameObject : gameObjects) {
-            if (gameObject.getClass().equals(Ship.class))
-                current = (Ship) gameObject;
-            gameObject.step();
+        for (int i = 0; i < gameObjects.size(); i++) {
+            if (gameObjects.get(i).getClass().equals(Ship.class))
+                current = (Ship) gameObjects.get(i);
+            gameObjects.get(i).step();
         }
         if (solarStorm()) {
-            for (Field field : fields)
-                field.onSolarStorm();
-
+            int num = new Random().nextInt(fields.size());
+            fields.get(num).onSolarStorm();
+            for(Field f: fields.get(num).getNeighbours())
+                f.onSolarStorm();
+            System.out.println("NAPVIHAR A " + num + " MEZŐN!");
         }
         if (numShips == 0) {
             end = true;
         }
+        System.out.println("kor vege");
     }
 
     public boolean getEnd() {
@@ -148,9 +152,7 @@ class Game implements Steppable, Runnable {
      * addig mindenkire meghívja a steppet.
      */
     public void startGame() {
-        System.out.println(this.getFields() + " " + this.getGameObjects());
         initGame();
-        System.out.println(this.getFields() + " " + this.getGameObjects());
     }
 
     /**
@@ -171,17 +173,16 @@ class Game implements Steppable, Runnable {
         numShips = Vars.NUM_OF_PLAYERS;
         while (gameObjects.size() != numShips) {
             Ship newShip = new Ship();
-            for(int i = 0; i < 4; i++){
+            for (int i = 0; i < 4; i++) {
                 newShip.addMaterial(new Coal());
                 newShip.addMaterial(new Ice());
                 newShip.addMaterial(new Iron());
                 newShip.addMaterial(new Uranium());
             }
         }
-        for(int i = 0; i < Math.ceil(Vars.NUM_OF_PLAYERS); i++){
+        for (int i = 0; i < Math.ceil(Vars.NUM_OF_PLAYERS); i++) {
             Ufo ufo = new Ufo();
         }
-        System.out.println("INIT ENDED");
     }
 
     /**
@@ -217,11 +218,11 @@ class Game implements Steppable, Runnable {
     @Override
     public void run() {
         //try {
-            while (!end) // END
-            {
-                step();
-                //Thread.sleep(200);
-            }
+        while (!end) // END
+        {
+            step();
+            //Thread.sleep(200);
+        }
         /*} catch (InterruptedException e) {
             e.printStackTrace();
         }*/
