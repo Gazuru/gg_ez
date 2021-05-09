@@ -7,11 +7,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class SpaceGameView{
-    private JButton drill = new JButton(), mine = new JButton(), craft = new JButton(), putBackMaterial = new JButton(), pickUpGate = new JButton(), putDownGate = new JButton(), craftRobot = new JButton(), craftGate = new JButton(), craftBase = new JButton();
+public class SpaceGameView {
+    private JButton drill = new JButton(), mine = new JButton(), craft = new JButton(), putBackMaterial = new JButton(),
+            pickUpGate = new JButton(), putDownGate = new JButton(), craftRobot = new JButton(), craftGate = new JButton(),
+            craftBase = new JButton(), putCoal = new JButton(), putIce = new JButton(), putIron = new JButton(), putUranium = new JButton();
     private JFrame f;
-    private LinkedList<JButton> buttons = new LinkedList<>();
+    private LinkedList<JButton> buttons = new LinkedList<>(), craftButtons = new LinkedList<>(), putBackButtons = new LinkedList<>();
     private JLayeredPane LPane = new JLayeredPane();
+    private boolean craftVis = false;
+    private boolean putVis = false;
 
     public SpaceGameView(JFrame frame) {
         f = frame;
@@ -25,34 +29,35 @@ public class SpaceGameView{
 
     public void initButtons() {
         try {
-            Image drillImage = ImageIO.read(new File("resources/buttons/drill.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT);
-            Image mineImage = ImageIO.read(new File("resources/buttons/mine.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT);
-            Image craftImage = ImageIO.read(new File("resources/buttons/craft.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT);
-            Image putBackMaterialImage = ImageIO.read(new File("resources/buttons/putdown_material.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT);
-            Image pickUpGateImage = ImageIO.read(new File("resources/buttons/pickupgate.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT);
-            Image putDownGateImage = ImageIO.read(new File("resources/buttons/putdowngate.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT);
-            drill.setIcon(new ImageIcon(drillImage));
-            mine.setIcon(new ImageIcon(mineImage));
-            craft.setIcon(new ImageIcon(craftImage));
-            putBackMaterial.setIcon(new ImageIcon(putBackMaterialImage));
-            pickUpGate.setIcon(new ImageIcon(pickUpGateImage));
-            putDownGate.setIcon(new ImageIcon(putDownGateImage));
+            drill.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/drill.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            mine.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/mine.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            craft.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/craft.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            putBackMaterial.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/putdown_material.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            pickUpGate.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/pickupgate.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            putDownGate.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/putdowngate.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            craftRobot.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/craft_robot.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            craftGate.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/craft_gate.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            craftBase.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/craft_base.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            putCoal.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/put_down_coal.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            putIce.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/put_down_ice.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            putIron.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/put_down_iron.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
+            putUranium.setIcon(new ImageIcon(ImageIO.read(new File("resources/buttons/put_down_uranium.png")).getScaledInstance(Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM, Image.SCALE_DEFAULT)));
         } catch (IOException e) {
         }
         buttonInitActionListeners();
     }
 
-    public void buttonInitActionListeners(){
+    public void buttonInitActionListeners() {
         drill.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Game.getCurrent().drill()){
+                if (Game.getCurrent().drill()) {
                     Vars.TURN_DONE = true;
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES DRILL");
-                }else{
-                	Vars.TURN_DONE=false;
-                	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                } else {
+                    Vars.TURN_DONE = false;
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN DRILL");
                 }
             }
@@ -60,15 +65,15 @@ public class SpaceGameView{
         mine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Game.getCurrent().mine()){
+                if (Game.getCurrent().mine()) {
 
                     Vars.TURN_DONE = true;
 
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES MINE");
-                }else{
-                	Vars.TURN_DONE=false;
-                	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                } else {
+                    Vars.TURN_DONE = false;
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN MINE");
                 }
             }
@@ -76,43 +81,33 @@ public class SpaceGameView{
         craft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Game.getCurrent().drill()){
-
-                    Vars.TURN_DONE = true;
-
-                    System.out.println("TODO craft");
-                }else{
-                	Vars.TURN_DONE=false;
-                    System.out.println("TODO craft");
+                if(putVis){
+                    togglePut();
                 }
+                toggleCraft();
             }
         });
         putBackMaterial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Game.getCurrent().drill()){
-
-                    Vars.TURN_DONE = true;
-
-                    System.out.println("TODO putBackMaterial");
-                }else{
-                	Vars.TURN_DONE=false;
-                    System.out.println("TODO putBackMaterial");
-                }
+               if(craftVis){
+                   toggleCraft();
+               }
+               togglePut();
             }
         });
         pickUpGate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Game.getCurrent().pickUpGate()){
+                if (Game.getCurrent().pickUpGate()) {
 
                     Vars.TURN_DONE = true;
 
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES pickUpGate");
-                }else{
-                	Vars.TURN_DONE=false;
-                	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                } else {
+                    Vars.TURN_DONE = false;
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN pickUpGate");
                 }
             }
@@ -120,21 +115,20 @@ public class SpaceGameView{
         putDownGate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Game.getCurrent().pickUpGate()){
+                if (Game.getCurrent().pickUpGate()) {
 
                     Vars.TURN_DONE = true;
 
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES putDownGate");
-                }else{
-                	Vars.TURN_DONE=false;
-                	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                } else {
+                    Vars.TURN_DONE = false;
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN putDownGate");
                 }
             }
         });
     }
-    
 
     public void addButtonsToList() {
         buttons.add(drill);
@@ -143,6 +137,13 @@ public class SpaceGameView{
         buttons.add(putBackMaterial);
         buttons.add(pickUpGate);
         buttons.add(putDownGate);
+        craftButtons.add(craftRobot);
+        craftButtons.add(craftGate);
+        craftButtons.add(craftBase);
+        putBackButtons.add(putCoal);
+        putBackButtons.add(putIce);
+        putBackButtons.add(putIron);
+        putBackButtons.add(putUranium);
     }
 
     public void displayButtons() {
@@ -150,7 +151,41 @@ public class SpaceGameView{
             buttons.get(i).setBounds(((i + 1) * 10) + i * Vars.USE_BUTTON_DIM, (Vars.WINDOW_HEIGHT - 2 * Vars.USE_BUTTON_DIM) - 10, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
             LPane.add(buttons.get(i), Integer.valueOf(2));
         }
+        for (int i = 0; i < craftButtons.size(); i++) {
+            craftButtons.get(i).setBounds((craft.getBounds().x + (i - 1) * (Vars.USE_BUTTON_DIM + 10)), craft.getBounds().y - Vars.USE_BUTTON_DIM - 10, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
+            craftButtons.get(i).setVisible(false);
+            LPane.add(craftButtons.get(i), Integer.valueOf(2));
+        }
+        for(int i = 0;i < putBackButtons.size(); i++){
+            putBackButtons.get(i).setBounds((int) ((putBackMaterial.getBounds().x - 1.5*(Vars.USE_BUTTON_DIM+10)) + i * (Vars.USE_BUTTON_DIM + 10)), putBackMaterial.getBounds().y - Vars.USE_BUTTON_DIM - 10, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
+            putBackButtons.get(i).setVisible(false);
+            LPane.add(putBackButtons.get(i), Integer.valueOf(2));
+        }
     }
+
+    public void toggleCraft() {
+
+        for (JButton button : craftButtons) {
+            if (craftVis) {
+                button.setVisible(false);
+            } else {
+                button.setVisible(true);
+            }
+        }
+        craftVis = !craftVis;
+    }
+
+    public void togglePut() {
+        for (JButton button : putBackButtons) {
+            if (putVis) {
+                button.setVisible(false);
+            } else {
+                button.setVisible(true);
+            }
+        }
+        putVis = !putVis;
+    }
+
 
     public void displayBG() {
         JLabel BG = new JLabel();
