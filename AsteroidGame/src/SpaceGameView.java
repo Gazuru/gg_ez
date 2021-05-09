@@ -5,6 +5,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,17 +20,18 @@ public class SpaceGameView implements Runnable {
     private JButton drill = new JButton(), mine = new JButton(), craft = new JButton(), putBackMaterial = new JButton(),
             pickUpGate = new JButton(), putDownGate = new JButton(), craftRobot = new JButton(), craftGate = new JButton(),
             craftBase = new JButton(), putCoal = new JButton(), putIce = new JButton(), putIron = new JButton(), putUranium = new JButton();
-    private JFrame f;
+    private static JFrame f;
     private LinkedList<JButton> buttons = new LinkedList<>(), craftButtons = new LinkedList<>(), putBackButtons = new LinkedList<>();
-    private JLayeredPane LPane = new JLayeredPane();
-    private LinkedList<JLabel> field = new LinkedList<>();
+    private static JLayeredPane LPane = new JLayeredPane();
+    private static LinkedList<JLabel> field = new LinkedList<>();
     private boolean craftVis = false;
     private boolean putVis = false;
-    private JLabel playerId=null;
+    private static JLabel playerId=null;
     private static ArrayList<Field> objects = new ArrayList<>();
-    private ArrayList<JLabel> surface = new ArrayList<>();
-    private HashMap<JLabel, ArrayList<FlyingObject>> shownFLO = new HashMap<>();
-    private ArrayList<JLabel> materialNums = new ArrayList<>();
+    private static ArrayList<JLabel> surface = new ArrayList<>();
+    private static HashMap<JLabel, ArrayList<FlyingObject>> shownFLO = new HashMap<>();
+    private static ArrayList<JLabel> materialNums = new ArrayList<>();
+
 
 
     public SpaceGameView(JFrame frame) {
@@ -38,6 +41,7 @@ public class SpaceGameView implements Runnable {
         t.start();
         initButtons();
         addButtonsToList();
+        display();
         Thread t1 = new Thread(this);
         t1.start();
     }
@@ -71,7 +75,6 @@ public class SpaceGameView implements Runnable {
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES DRILL");
                 } else {
-                    Vars.TURN_DONE = false;
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN DRILL");
                 }
@@ -121,7 +124,6 @@ public class SpaceGameView implements Runnable {
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES pickUpGate");
                 } else {
-                    Vars.TURN_DONE = false;
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN pickUpGate");
                 }
@@ -137,7 +139,6 @@ public class SpaceGameView implements Runnable {
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES putDownGate");
                 } else {
-                    Vars.TURN_DONE = false;
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN putDownGate");
                 }
@@ -218,7 +219,8 @@ public class SpaceGameView implements Runnable {
         LPane.add(BG, Integer.valueOf(1));
         LPane.add(inv, Integer.valueOf(2));
     }
-    public void displayStats(){
+
+    public static void displayStats(){
     	if(playerId!=null){
     		LPane.remove(playerId);
     		for(int i = 0; i < materialNums.size(); i++) {
@@ -226,6 +228,7 @@ public class SpaceGameView implements Runnable {
     		}
     		materialNums.clear();
     	}
+
     	playerId=new JLabel("Selected Player: "+Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
     	playerId.setFont(new Font(playerId.getFont().getName(), Font.BOLD, 24));
     	playerId.setBounds((Vars.WINDOW_WIDTH-Vars.STATS_WIDTH-40),(Vars.WINDOW_HEIGHT - 2 * Vars.USE_BUTTON_DIM) - 10,Vars.STATS_WIDTH, Vars.USE_BUTTON_DIM);
@@ -274,8 +277,8 @@ public class SpaceGameView implements Runnable {
         displayBG();
         displayButtons();
         
-        while (true) {
-        	displayStats();
+        /*while (true) {
+            displayStats();
             displayObjects();
             f.revalidate();
             f.repaint();
@@ -283,10 +286,10 @@ public class SpaceGameView implements Runnable {
                 Thread.sleep(40);
             } catch (Exception e) {
             }
-        }
+        }*/
     }
 
-    public void loadAsteroidImage(Field f, JLabel label) {
+    public static void loadAsteroidImage(Field f, JLabel label) {
         if (f.getClass().equals(Asteroid.class)) {
             Asteroid a = (Asteroid) f;
             int layer = a.getLayer();
@@ -358,7 +361,7 @@ public class SpaceGameView implements Runnable {
         }
     }
 
-    public void loadFlyingObjectImage(JLabel label, FlyingObject fl) {
+    public static void loadFlyingObjectImage(JLabel label, FlyingObject fl) {
         try {
             if (fl.getClass().equals(Ship.class)) {
                 label.setIcon(new ImageIcon(ImageIO.read(new File("resources/entities/space_man.png")).getScaledInstance(Vars.ENTITY_SIZE, Vars.ENTITY_SIZE, Image.SCALE_DEFAULT)));
@@ -371,7 +374,7 @@ public class SpaceGameView implements Runnable {
         }
     }
 
-    public void displayObjects() {
+    public static void displayObjects() {
         if (objects.isEmpty())
             return;
 
@@ -396,6 +399,28 @@ public class SpaceGameView implements Runnable {
             JLabel asteroid = new JLabel();
             if (i != 0) {
                 asteroid.setBounds((int) ((Vars.WINDOW_WIDTH / 2 - Vars.ASTEROID_SIZE / 2) + 250 * Math.cos(((i - 1) * 2 * Math.PI) / (n - 1.0f))), (int) ((Vars.WINDOW_HEIGHT / 2 - Vars.ASTEROID_SIZE / 2) + 200 * Math.sin(((i - 1) * 2 * Math.PI) / (n - 1.0f))), Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE);
+                float finalI = i;
+                asteroid.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        Vars.DESTINATION = objects.get((int) finalI);
+                        Game.getCurrent().move();
+                        System.out.println("SIKERES MOVE");
+                        Vars.TURN_DONE = true;
+                    }
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                    }
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                    }
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                    }
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                    }
+                });
             } else {
                 asteroid.setBounds((Vars.WINDOW_WIDTH - Vars.ASTEROID_SIZE) / 2, Vars.WINDOW_HEIGHT / 2 - Vars.ASTEROID_SIZE / 2, Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE);
             }
@@ -426,8 +451,11 @@ public class SpaceGameView implements Runnable {
         objects = l;
     }
 
-    public void refresh() {
-        display();
+    public static void refresh() {
+        displayStats();
+        displayObjects();
+        f.revalidate();
+        f.repaint();
     }
 
     @Override

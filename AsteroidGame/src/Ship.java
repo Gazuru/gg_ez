@@ -248,9 +248,8 @@ public class Ship extends FlyingObject {
      */
     public boolean move() {
         Skeleton.printFunc();
-        Field neighbour_asteroid = location.getNeighbours().get(0);
         location.removeFlyingObject(this);
-        neighbour_asteroid.acceptFlyingObject(this);
+        Vars.DESTINATION.acceptFlyingObject(this);
         return true;
 
     }
@@ -317,13 +316,13 @@ public class Ship extends FlyingObject {
      */
     public void step() {
         updateView();
+        SpaceGameView.refresh();
     	Vars.TURN_DONE = false;
     	
         while (!Vars.TURN_DONE) {
         	
         }
         updateView();
-
         System.out.println("kor vege");
     }
 

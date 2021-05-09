@@ -9,4 +9,5 @@ public class Vars {
     public static int ASTEROID_SIZE = 150;
     public static final int STATS_WIDTH = 4*60;
     public static int ENTITY_SIZE = 50;
+    public static Field DESTINATION = null;
 }
