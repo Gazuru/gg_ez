@@ -26,12 +26,11 @@ public class SpaceGameView implements Runnable {
     private static LinkedList<JLabel> field = new LinkedList<>();
     private boolean craftVis = false;
     private boolean putVis = false;
-    private static JLabel playerId=null;
+    private static JLabel playerId = null;
     private static ArrayList<Field> objects = new ArrayList<>();
     private static ArrayList<JLabel> surface = new ArrayList<>();
     private static HashMap<JLabel, ArrayList<FlyingObject>> shownFLO = new HashMap<>();
     private static ArrayList<JLabel> materialNums = new ArrayList<>();
-
 
 
     public SpaceGameView(JFrame frame) {
@@ -132,7 +131,7 @@ public class SpaceGameView implements Runnable {
         putDownGate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Game.getCurrent().pickUpGate()) {
+                if (Game.getCurrent().placeGate()) {
 
                     Vars.TURN_DONE = true;
 
@@ -141,6 +140,103 @@ public class SpaceGameView implements Runnable {
                 } else {
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN putDownGate");
+                }
+            }
+        });
+        craftRobot.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Game.getCurrent().buildRobot()) {
+                    Vars.TURN_DONE = true;
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERES ROBOT ÉPÍTÉS");
+                } else {
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERTELEN ROBOT ÉPÍTÉS");
+                }
+            }
+        });
+        craftBase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Game.getCurrent().buildBase()) {
+                    Vars.TURN_DONE = true;
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERES BÁZISÉPÍTÉS");
+                    //TODO FINISH GAME
+                } else {
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERTELEN BÁZISÉPÍTÉS");
+                }
+            }
+        });
+        craftGate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Game.getCurrent().craftGatePair()) {
+                    Vars.TURN_DONE = true;
+
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERES KAPUPÁRÉPÍTÉS");
+                } else {
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERTELEN KAPUPÁRÉPÍTÉS");
+                }
+            }
+        });
+        putCoal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Game.getCurrent().putMaterial(new Coal())) {
+                    Vars.TURN_DONE = true;
+
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERES VISSZARAKAS");
+                } else {
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERTELEN VISSZARAKAS");
+                }
+            }
+        });
+        putIce.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Game.getCurrent().putMaterial(new Ice())) {
+                    Vars.TURN_DONE = true;
+
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERES VISSZARAKAS");
+                } else {
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERTELEN VISSZARAKAS");
+                }
+            }
+        });
+        putIron.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Game.getCurrent().putMaterial(new Iron())) {
+                    Vars.TURN_DONE = true;
+
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERES VISSZARAKAS");
+                } else {
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERTELEN VISSZARAKAS");
+                }
+            }
+        });
+        putUranium.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Game.getCurrent().putMaterial(new Uranium())) {
+                    Vars.TURN_DONE = true;
+
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERES VISSZARAKAS");
+                } else {
+                    System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+                    System.out.println("SIKERTELEN VISSZARAKAS");
                 }
             }
         });
@@ -177,7 +273,7 @@ public class SpaceGameView implements Runnable {
             putBackButtons.get(i).setVisible(false);
             LPane.add(putBackButtons.get(i), Integer.valueOf(2));
         }
-        
+
     }
 
     public void toggleCraft() {
@@ -220,51 +316,52 @@ public class SpaceGameView implements Runnable {
         LPane.add(inv, Integer.valueOf(2));
     }
 
-    public static void displayStats(){
-    	if(playerId!=null){
-    		LPane.remove(playerId);
-    		for(int i = 0; i < materialNums.size(); i++) {
-    			LPane.remove(materialNums.get(i));
-    		}
-    		materialNums.clear();
-    	}
+    public static void displayStats() {
+        if (playerId != null) {
+            LPane.remove(playerId);
+            for (int i = 0; i < materialNums.size(); i++) {
+                LPane.remove(materialNums.get(i));
+            }
+            materialNums.clear();
+        }
 
-    	playerId=new JLabel("Selected Player: "+Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
-    	playerId.setFont(new Font(playerId.getFont().getName(), Font.BOLD, 24));
-    	playerId.setBounds((Vars.WINDOW_WIDTH-Vars.STATS_WIDTH-40),(Vars.WINDOW_HEIGHT - 2 * Vars.USE_BUTTON_DIM) - 10,Vars.STATS_WIDTH, Vars.USE_BUTTON_DIM);
-    	playerId.setBackground(new Color(255, 192, 0));
-    	playerId.setOpaque(true);
-    	playerId.setBorder(BorderFactory.createLineBorder( Color.WHITE ,4));
-    	
-    	String gateN=Integer.toString(Game.getCurrent().sumGates());
-    	String iceN=Integer.toString(Game.getCurrent().sumMaterial(new Ice()));
-    	String ironN=Integer.toString(Game.getCurrent().sumMaterial(new Iron()));
-    	String uraniumN=Integer.toString(Game.getCurrent().sumMaterial(new Uranium()));
-    	String coalN=Integer.toString(Game.getCurrent().sumMaterial(new Coal()));
-    	JLabel numIce=new JLabel();
-    	JLabel numIron=new JLabel();
-    	JLabel numUranium=new JLabel();
-    	JLabel numCoal=new JLabel();
-    	JLabel numGate=new JLabel();
-    	numIce.setText(iceN);
-    	numIron.setText(ironN);
-    	numUranium.setText(uraniumN);
-    	numCoal.setText(coalN);
-    	numGate.setText(gateN);
-    	materialNums.add(numIce);
-    	materialNums.add(numIron);
-    	materialNums.add(numUranium);
-    	materialNums.add(numCoal);
-    	materialNums.add(numGate);
-    	
-    	for(int i = 0; i < materialNums.size(); i++) {
-    		materialNums.get(i).setBounds(40, Vars.USE_BUTTON_DIM-20+i*Vars.USE_BUTTON_DIM+20, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
-    		materialNums.get(i).setFont(new Font(materialNums.get(i).getFont().getName(), Font.BOLD, 24));
-    		materialNums.get(i).setForeground(Color.BLACK);
-			LPane.add(materialNums.get(i),Integer.valueOf(3));
-		}
-    	LPane.add(playerId,Integer.valueOf(2));
+        playerId = new JLabel("Selected Player: " + Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
+        playerId.setFont(new Font(playerId.getFont().getName(), Font.BOLD, 24));
+        playerId.setBounds((Vars.WINDOW_WIDTH - Vars.STATS_WIDTH - 40), (Vars.WINDOW_HEIGHT - 2 * Vars.USE_BUTTON_DIM) - 10, Vars.STATS_WIDTH, Vars.USE_BUTTON_DIM);
+        playerId.setBackground(new Color(255, 192, 0));
+        playerId.setOpaque(true);
+        playerId.setBorder(BorderFactory.createLineBorder(Color.WHITE, 4));
+
+        String gateN = Integer.toString(Game.getCurrent().sumGates());
+        String iceN = Integer.toString(Game.getCurrent().sumMaterial(new Ice()));
+        String ironN = Integer.toString(Game.getCurrent().sumMaterial(new Iron()));
+        String uraniumN = Integer.toString(Game.getCurrent().sumMaterial(new Uranium()));
+        String coalN = Integer.toString(Game.getCurrent().sumMaterial(new Coal()));
+        JLabel numIce = new JLabel();
+        JLabel numIron = new JLabel();
+        JLabel numUranium = new JLabel();
+        JLabel numCoal = new JLabel();
+        JLabel numGate = new JLabel();
+        numIce.setText(iceN);
+        numIron.setText(ironN);
+        numUranium.setText(uraniumN);
+        numCoal.setText(coalN);
+        numGate.setText(gateN);
+        materialNums.add(numIce);
+        materialNums.add(numIron);
+        materialNums.add(numUranium);
+        materialNums.add(numCoal);
+        materialNums.add(numGate);
+
+        for (int i = 0; i < materialNums.size(); i++) {
+            materialNums.get(i).setBounds(40, Vars.USE_BUTTON_DIM - 20 + i * Vars.USE_BUTTON_DIM + 20, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
+            materialNums.get(i).setFont(new Font(materialNums.get(i).getFont().getName(), Font.BOLD, 24));
+            materialNums.get(i).setForeground(Color.BLACK);
+            LPane.add(materialNums.get(i), Integer.valueOf(3));
+        }
+        LPane.add(playerId, Integer.valueOf(2));
     }
+
     public void displayEnding(String picName) {
     }
 
@@ -387,8 +484,8 @@ public class SpaceGameView implements Runnable {
             field.clear();
         }
 
-        if(!surface.isEmpty()){
-            for(int i = 0; i < surface.size(); i++){
+        if (!surface.isEmpty()) {
+            for (int i = 0; i < surface.size(); i++) {
                 LPane.remove(surface.get(i));
             }
             surface.clear();
@@ -396,6 +493,8 @@ public class SpaceGameView implements Runnable {
         }
 
         for (float i = 0; i < n; i++) {
+            JLabel number = new JLabel();
+            int index = Game.getInstance().getFields().indexOf(objects.get((int) i));
             JLabel asteroid = new JLabel();
             if (i != 0) {
                 asteroid.setBounds((int) ((Vars.WINDOW_WIDTH / 2 - Vars.ASTEROID_SIZE / 2) + 250 * Math.cos(((i - 1) * 2 * Math.PI) / (n - 1.0f))), (int) ((Vars.WINDOW_HEIGHT / 2 - Vars.ASTEROID_SIZE / 2) + 200 * Math.sin(((i - 1) * 2 * Math.PI) / (n - 1.0f))), Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE);
@@ -408,23 +507,59 @@ public class SpaceGameView implements Runnable {
                         System.out.println("SIKERES MOVE");
                         Vars.TURN_DONE = true;
                     }
+
                     @Override
                     public void mousePressed(MouseEvent e) {
                     }
+
                     @Override
                     public void mouseReleased(MouseEvent e) {
                     }
+
                     @Override
                     public void mouseEntered(MouseEvent e) {
                     }
+
                     @Override
                     public void mouseExited(MouseEvent e) {
                     }
                 });
             } else {
                 asteroid.setBounds((Vars.WINDOW_WIDTH - Vars.ASTEROID_SIZE) / 2, Vars.WINDOW_HEIGHT / 2 - Vars.ASTEROID_SIZE / 2, Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE);
+                if(objects.get((int) i).getClass().equals(Gate.class)){
+                    asteroid.addMouseListener(new MouseListener() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if(Game.getCurrent().useGate()){
+                                System.out.println("SIKERES TP");
+                                Vars.TURN_DONE = true;
+                            }else{
+                                System.out.println("SIKERTELEN TP");
+                            }
+                        }
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                        }
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                        }
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                        }
+                    });
+                }
             }
-            loadAsteroidImage((Asteroid) objects.get((int) i), asteroid);
+            loadAsteroidImage(objects.get((int) i), asteroid);
+            number.setFont(new Font(number.getFont().getName(), Font.BOLD, 16));
+            number.setBounds(asteroid.getBounds().x + 20, asteroid.getBounds().y + 20, 80, 40);
+            number.setOpaque(false);
+            number.setText(String.valueOf(index));
+            number.setForeground(new Color(255, 255, 255, 255));
+            field.add(number);
+            LPane.add(number, Integer.valueOf(3));
             LPane.add(asteroid, Integer.valueOf(2));
             field.add(asteroid);
             shownFLO.put(asteroid, objects.get((int) i).onSurface);
@@ -436,7 +571,7 @@ public class SpaceGameView implements Runnable {
             if (!flo.isEmpty()) {
                 for (float i = 0; i < flo.size(); i++) {
                     JLabel flyingobject = new JLabel();
-                    flyingobject.setBounds((int) ((asteroid.getBounds().x + Vars.ENTITY_SIZE) + 40 * Math.cos((2.0f * Math.PI * i )/ (float)flo.size())), (int) ((asteroid.getBounds().y + Vars.ENTITY_SIZE) + 40* Math.sin(2.0f * i * Math.PI / (float)flo.size())), Vars.ENTITY_SIZE, Vars.ENTITY_SIZE);
+                    flyingobject.setBounds((int) ((asteroid.getBounds().x + Vars.ENTITY_SIZE) + 40 * Math.cos((2.0f * Math.PI * i) / (float) flo.size())), (int) ((asteroid.getBounds().y + Vars.ENTITY_SIZE) + 40 * Math.sin(2.0f * i * Math.PI / (float) flo.size())), Vars.ENTITY_SIZE, Vars.ENTITY_SIZE);
                     loadFlyingObjectImage(flyingobject, flo.get((int) i));
                     LPane.add(flyingobject, Integer.valueOf(3));
                     surface.add(flyingobject);

@@ -152,11 +152,7 @@ class Game implements Steppable, Runnable {
      * A megadott shipszám alapján, létrehoz új shipeket.
      **/
     public void initGame() {
-       /* System.out.println("Inicializ�l�s!");
-        System.out.print("A p�lya m�rete: ");
-        Scanner s = new Scanner(System.in);
-        int choose = s.nextInt();*/
-        for (int j = 0; j < 16; j++) {
+        for (int j = 0; j < 50; j++) {
             Asteroid newAsteroid = new Asteroid();
         }
         for (int k = 2; k < fields.size(); k++) {
@@ -169,6 +165,12 @@ class Game implements Steppable, Runnable {
         numShips = Vars.NUM_OF_PLAYERS;
         while (gameObjects.size() != numShips) {
             Ship newShip = new Ship();
+            for(int i = 0; i < 4; i++){
+                newShip.addMaterial(new Coal());
+                newShip.addMaterial(new Ice());
+                newShip.addMaterial(new Iron());
+                newShip.addMaterial(new Uranium());
+            }
         }
         for(int i = 0; i < Math.ceil(Vars.NUM_OF_PLAYERS); i++){
             Ufo ufo = new Ufo();

@@ -73,12 +73,17 @@ public class Gate extends Field implements Steppable {
         Skeleton.printFunc();
         if (ship.getGates().size() < 3) {
             ship.addGate(this);
+            if(!neighbours.get(0).getClass().equals(Gate.class))
+                Vars.DESTINATION = neighbours.get(0);
+            else
+                Vars.DESTINATION = neighbours.get(1);
             ship.move();
             for (int i = neighbours.size() - 1; i >= 0; i--) {
                 neighbours.get(i).removeNeighbour(this);
             }
             Game.getInstance().removeField(this);
             setWorking(false);
+            getPair().setWorking(false);
             Skeleton.printFuncRet("true");
             return true;
         } else {
