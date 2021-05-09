@@ -20,7 +20,7 @@ class Game implements Steppable, Runnable {
     public static Ship getCurrent() {
         return current;
     }
-    
+
     public int getNumShips() {
     	return numShips;
     }
@@ -143,8 +143,8 @@ class Game implements Steppable, Runnable {
      */
     public boolean solarStorm() {
         Random random = new Random();
-        int rand = random.nextInt(200000);
-        return rand == 10;
+        int rand = random.nextInt(200);
+        return rand == 1;
     }
 
     /**
@@ -223,6 +223,7 @@ class Game implements Steppable, Runnable {
             step();
             //Thread.sleep(200);
         }
+        SpaceGameView.refresh();
         /*} catch (InterruptedException e) {
             e.printStackTrace();
         }*/

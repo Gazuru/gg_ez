@@ -363,28 +363,27 @@ public class SpaceGameView implements Runnable {
     }
 
     public static void displayEnding() {
-    	Game.getInstance().setEnd(true);
-    	if(Game.getInstance().getEnd()==true) {
+    	if(Game.getInstance().getEnd()) {
     		JLabel label=new JLabel();
-    		if(Game.getInstance().getNumShips()==0) {
-    			
+    		if(Game.getInstance().getNumShips() == 0) {
     			try {
     				label.setIcon(new ImageIcon(ImageIO.read(new File("resources/lose.png")).getScaledInstance(Vars.WINDOW_WIDTH, Vars.WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
-    	            System.out.println("L");
     	        } catch (IOException e) {
     	            e.printStackTrace();
     	        }
-    		}else {
-    			f.removeAll();
+    		}else if(Game.getInstance().getNumShips() > 0){
     			try {
     				label.setIcon(new ImageIcon(ImageIO.read(new File("resources/victory.png")).getScaledInstance(Vars.WINDOW_WIDTH, Vars.WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
-    				System.out.println("W");
     	        } catch (IOException e) {
     	            e.printStackTrace();
     	        }
     		}
-    		//ezt hogy showolom xd
-    		
+            f.getContentPane().removeAll();
+    		f.revalidate();
+    		f.repaint();
+    		f.add(label);
+    		f.revalidate();
+    		f.repaint();
     	}
     }
 
@@ -610,7 +609,6 @@ public class SpaceGameView implements Runnable {
     }
 
     public static void refresh() {
-    	
         displayStats();
         displayObjects();
         f.revalidate();
