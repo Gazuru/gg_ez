@@ -57,7 +57,7 @@ public class MenuView {
 
         LPane.add(background, Integer.valueOf(1));
         LPane.add(startButton, Integer.valueOf(2));
-        LPane.add(exitButton, Integer.valueOf(3));
+        LPane.add(exitButton, Integer.valueOf(2));
 
         f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
         f.setSize(Vars.WINDOW_WIDTH, Vars.WINDOW_HEIGHT);
