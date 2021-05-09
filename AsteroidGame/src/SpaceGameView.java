@@ -48,7 +48,6 @@ public class SpaceGameView{
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().drill()){
                 	Vars.TURN_DONE=true;
-                    
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES DRILL");
                 }else{
@@ -66,6 +65,7 @@ public class SpaceGameView{
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES MINE");
                 }else{
+                	Vars.TURN_DONE=false;
                 	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN MINE");
                 }
@@ -75,9 +75,10 @@ public class SpaceGameView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().drill()){
-                    Game.getCurrent().setDone(true);
+                	Vars.TURN_DONE=true;
                     System.out.println("TODO craft");
                 }else{
+                	Vars.TURN_DONE=false;
                     System.out.println("TODO craft");
                 }
             }
@@ -86,9 +87,10 @@ public class SpaceGameView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().drill()){
-                    Game.getCurrent().setDone(true);
+                	Vars.TURN_DONE=true;
                     System.out.println("TODO putBackMaterial");
                 }else{
+                	Vars.TURN_DONE=false;
                     System.out.println("TODO putBackMaterial");
                 }
             }
@@ -97,10 +99,11 @@ public class SpaceGameView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().pickUpGate()){
-                    Game.getCurrent().setDone(true);
+                	Vars.TURN_DONE=true;
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES pickUpGate");
                 }else{
+                	Vars.TURN_DONE=false;
                 	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN pickUpGate");
                 }
@@ -110,10 +113,11 @@ public class SpaceGameView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(Game.getCurrent().pickUpGate()){
-                    Game.getCurrent().setDone(true);
+                	Vars.TURN_DONE=true;
                     System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERES putDownGate");
                 }else{
+                	Vars.TURN_DONE=false;
                 	System.out.println(Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
                     System.out.println("SIKERTELEN putDownGate");
                 }
