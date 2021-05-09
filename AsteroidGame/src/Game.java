@@ -111,35 +111,11 @@ class Game implements Steppable, Runnable {
      * Továbbá a napvihart ez fogja véghezvinni, és meghívni a fieldekre.
      */
     public void step() {
-        //System.out.println("A(z) " + round++ + ". k�r!");
-        //System.out.println();
-        for (int i = 0; i < gameObjects.size(); i++) {
-            /*System.out.println("A(z) " + i + ". j�t�kos!");
 
-            // csak saj�t teszthez
-            int dbic = 0;
-            int dbir = 0;
-            int dbu = 0;
-            int dbc = 0;
-            Ice ice = new Ice();
-            Iron iron = new Iron();
-            Uranium uranium = new Uranium();
-            Coal coal = new Coal();
-            for (int l = 0; l < gameObjects.get(i).getMaterials().size(); l++) {
-                if (gameObjects.get(i).getMaterials().get(l).getClass() == ice.getClass())
-                    dbic++;
-                if (gameObjects.get(i).getMaterials().get(l).getClass() == iron.getClass())
-                    dbir++;
-                if (gameObjects.get(i).getMaterials().get(l).getClass() == uranium.getClass())
-                    dbu++;
-                if (gameObjects.get(i).getMaterials().get(l).getClass() == coal.getClass())
-                    dbc++;
-            }
-            System.out.println("Ice: " + dbic + "Iron: " + dbir + "Coal: " + dbc + "Uranium: " + dbu);
-*/
-            if (gameObjects.get(i).getClass().equals(Ship.class))
-                current = (Ship) gameObjects.get(i);
-            gameObjects.get(i).step();
+        for (FlyingObject gameObject : gameObjects) {
+            if (gameObject.getClass().equals(Ship.class))
+                current = (Ship) gameObject;
+            gameObject.step();
         }
         if (solarStorm()) {
             for (Field field : fields)
@@ -147,10 +123,8 @@ class Game implements Steppable, Runnable {
 
         }
         if (numShips == 0) {
-            //System.out.println("A j�t�k v�get �rt, mert minden telepes halott!");
             end = true;
         }
-        //System.out.println();
     }
 
     /**

@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Ship extends FlyingObject {
     private ArrayList<Gate> gates = new ArrayList<Gate>();
     private ArrayList<Material> materials = new ArrayList<Material>();
-    boolean done;
 
     /**
      * konstruktor, 
@@ -303,25 +302,14 @@ public class Ship extends FlyingObject {
      * 
      */
     public void step() {
+
     	Vars.TURN_DONE = false;
-    	updateView();
         while (!Vars.TURN_DONE) {
-             
-        	
         	
         }
         
       
         System.out.println("kor vege");
-    }
-
-    private void updateView() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setDone(boolean b){
-        done = b;
     }
 
     /**
