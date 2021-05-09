@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class SpaceGameView {
+import static javax.swing.SwingUtilities.invokeLater;
+
+public class SpaceGameView implements Runnable {
     private JButton drill = new JButton(), mine = new JButton(), craft = new JButton(), putBackMaterial = new JButton(),
             pickUpGate = new JButton(), putDownGate = new JButton(), craftRobot = new JButton(), craftGate = new JButton(),
             craftBase = new JButton(), putCoal = new JButton(), putIce = new JButton(), putIron = new JButton(), putUranium = new JButton();
@@ -17,7 +19,7 @@ public class SpaceGameView {
     private JLayeredPane LPane = new JLayeredPane();
     private boolean craftVis = false;
     private boolean putVis = false;
-    static ArrayList<Object> objects;
+    static ArrayList<Object> objects = new ArrayList<>();
 
     public SpaceGameView(JFrame frame) {
         f = frame;
@@ -26,7 +28,8 @@ public class SpaceGameView {
         t.start();
         initButtons();
         addButtonsToList();
-        display();
+        Thread t1 = new Thread(this);
+        t1.start();
     }
 
     public void initButtons() {
@@ -212,43 +215,106 @@ public class SpaceGameView {
         f.getContentPane().removeAll();
         f.revalidate();
         f.repaint();
-        displayObjects();
         f.add(LPane);
         displayBG();
         displayButtons();
-        
-        f.revalidate();
-        f.repaint();
-    }
-    public void displayObjects() {
-    	int ASTEROID_SIZE=150;
-
-    	JButton asteroid0 = new JButton();
-        asteroid0.setBounds(Vars.WINDOW_WIDTH/2-ASTEROID_SIZE/2, Vars.WINDOW_HEIGHT/2-ASTEROID_SIZE/2, ASTEROID_SIZE, ASTEROID_SIZE);
-        try {
-            Image image = ImageIO.read(new File("resources/fields/asteroid.png")).getScaledInstance(ASTEROID_SIZE, ASTEROID_SIZE, Image.SCALE_DEFAULT);
-            asteroid0.setIcon(new ImageIcon(image));
-        } catch (Exception e) {
-        }
-        LPane.add(asteroid0, Integer.valueOf(3));
-        //eddig ok xd
-        
-        for(int i=0;i<objects.size();i++) {
-        	JButton asteroidI = new JButton();
-        	asteroidI.setBounds(Vars.WINDOW_WIDTH/2+(i*20)-ASTEROID_SIZE/2, Vars.WINDOW_HEIGHT/2-ASTEROID_SIZE/2, ASTEROID_SIZE, ASTEROID_SIZE);
+        while (true) {
+            displayObjects();
+            f.revalidate();
+            f.repaint();
             try {
-                Image image = ImageIO.read(new File("resources/fields/asteroid.png")).getScaledInstance(ASTEROID_SIZE, ASTEROID_SIZE, Image.SCALE_DEFAULT);
-                asteroidI.setIcon(new ImageIcon(image));
+                Thread.sleep(40);
             } catch (Exception e) {
             }
-            LPane.add(new JButton(), Integer.valueOf(3));
         }
-	}
-    public static void addObjects(ArrayList<Object> l) {
-    	objects.clear();
-    	objects=l;
     }
-    
+
+    public void loadAsteroidImage(Asteroid a, JLabel label) {
+        int layer = a.getLayer();
+        boolean sunprox = a.getInSunProximity();
+        Material core = a.getCore();
+
+        try {
+            if (layer != 0) {
+                if (sunprox) {
+                    label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                } else {
+                    label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                }
+                return;
+            } else {
+                if (core == null) {
+                    if (sunprox) {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_empty_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+
+                    } else {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_empty.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                    }
+                    return;
+                } else if (Ice.class.equals(core.getClass())) {
+                    if (sunprox) {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_ice_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                    } else {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_ice.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                    }
+                    return;
+                } else if (Iron.class.equals(core.getClass())) {
+                    if (sunprox) {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_iron_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                    } else {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_iron.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                    }
+                    return;
+                } else if (Coal.class.equals(core.getClass())) {
+                    if (sunprox) {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_coal_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+
+                    } else {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_coal.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                    }
+                    return;
+                } else if (Uranium.class.equals(core.getClass())) {
+                    if (sunprox) {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_uranium_sunprox.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                    } else {
+                        label.setIcon(new ImageIcon(ImageIO.read(new File("resources/fields/asteroid_uranium.png")).getScaledInstance(Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE, Image.SCALE_DEFAULT)));
+                    }
+                    return;
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public void displayObjects() {
+        if (objects.isEmpty())
+            return;
+
+        float n = (float) objects.size();
+
+        for (float i = 0; i < n; i++) {
+            JLabel asteroid = new JLabel();
+            if (i != 0) {
+                asteroid.setBounds((int) ((Vars.WINDOW_WIDTH / 2 - Vars.ASTEROID_SIZE / 2) + 250 * Math.cos(((i - 1) * 2 * Math.PI) / (n - 1.0f))), (int) ((Vars.WINDOW_HEIGHT / 2 - Vars.ASTEROID_SIZE / 2) + 200 * Math.sin(((i - 1) * 2 * Math.PI) / (n - 1.0f))), Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE);
+            } else {
+                asteroid.setBounds((Vars.WINDOW_WIDTH - Vars.ASTEROID_SIZE) / 2, Vars.WINDOW_HEIGHT / 2 - Vars.ASTEROID_SIZE / 2, Vars.ASTEROID_SIZE, Vars.ASTEROID_SIZE);
+            }
+            loadAsteroidImage((Asteroid) objects.get((int) i), asteroid);
+            LPane.add(asteroid, Integer.valueOf(2));
+        }
+    }
+
+    public static void addObjects(ArrayList<Object> l) {
+        objects.clear();
+        objects = l;
+    }
+
     public void refresh() {
+        display();
+    }
+
+    @Override
+    public void run() {
+        refresh();
     }
 }

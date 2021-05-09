@@ -302,14 +302,14 @@ public class Ship extends FlyingObject {
      * 
      */
     public void step() {
-
+        updateView();
     	Vars.TURN_DONE = false;
     	
         while (!Vars.TURN_DONE) {
         	
         }
-        
         updateView();
+
         System.out.println("kor vege");
     }
 

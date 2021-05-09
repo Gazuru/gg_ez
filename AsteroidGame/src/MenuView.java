@@ -89,6 +89,7 @@ public class MenuView {
                 System.out.println("NEM MEGFELELO SZAM!");
             }
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("NEM MEGFELELO SZAM!");
             }
         }
