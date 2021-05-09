@@ -23,6 +23,20 @@ public class Ship extends FlyingObject {
         // Game.getInstance().incrNumShips();
     }
     
+    public int sumMaterial(Material m) {
+    	int sum=0;
+    	for(int i = 0; i < this.materials.size(); i++) {
+			if(m.getClass().equals(materials.get(i).getClass())) {
+				sum++;
+			}
+		}
+    	return sum;
+    }
+    public int sumGates() {
+    	if(gates.size()>0) {
+    	return gates.size();}else {return 0;}
+    }
+    
     /**
      * banyaszatert felelos fv, 
      * meghivja a locationon az onMine fv-t this parameterrel

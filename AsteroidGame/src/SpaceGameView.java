@@ -28,6 +28,7 @@ public class SpaceGameView implements Runnable {
     private static ArrayList<Field> objects = new ArrayList<>();
     private ArrayList<JLabel> surface = new ArrayList<>();
     private HashMap<JLabel, ArrayList<FlyingObject>> shownFLO = new HashMap<>();
+    private ArrayList<JLabel> materialNums = new ArrayList<>();
 
 
     public SpaceGameView(JFrame frame) {
@@ -218,14 +219,47 @@ public class SpaceGameView implements Runnable {
         LPane.add(inv, Integer.valueOf(2));
     }
     public void displayStats(){
-    	if(playerId!=null)
-    		{LPane.remove(playerId);}
+    	if(playerId!=null){
+    		LPane.remove(playerId);
+    		for(int i = 0; i < materialNums.size(); i++) {
+    			LPane.remove(materialNums.get(i));
+    		}
+    		materialNums.clear();
+    	}
     	playerId=new JLabel("Selected Player: "+Game.getInstance().getGameObjects().indexOf(Game.getCurrent()));
     	playerId.setFont(new Font(playerId.getFont().getName(), Font.BOLD, 24));
     	playerId.setBounds((Vars.WINDOW_WIDTH-Vars.STATS_WIDTH-40),(Vars.WINDOW_HEIGHT - 2 * Vars.USE_BUTTON_DIM) - 10,Vars.STATS_WIDTH, Vars.USE_BUTTON_DIM);
     	playerId.setBackground(new Color(255, 192, 0));
     	playerId.setOpaque(true);
     	playerId.setBorder(BorderFactory.createLineBorder( Color.WHITE ,4));
+    	
+    	String gateN=Integer.toString(Game.getCurrent().sumGates());
+    	String iceN=Integer.toString(Game.getCurrent().sumMaterial(new Ice()));
+    	String ironN=Integer.toString(Game.getCurrent().sumMaterial(new Iron()));
+    	String uraniumN=Integer.toString(Game.getCurrent().sumMaterial(new Uranium()));
+    	String coalN=Integer.toString(Game.getCurrent().sumMaterial(new Coal()));
+    	JLabel numIce=new JLabel();
+    	JLabel numIron=new JLabel();
+    	JLabel numUranium=new JLabel();
+    	JLabel numCoal=new JLabel();
+    	JLabel numGate=new JLabel();
+    	numIce.setText(iceN);
+    	numIron.setText(ironN);
+    	numUranium.setText(uraniumN);
+    	numCoal.setText(coalN);
+    	numGate.setText(gateN);
+    	materialNums.add(numIce);
+    	materialNums.add(numIron);
+    	materialNums.add(numUranium);
+    	materialNums.add(numCoal);
+    	materialNums.add(numGate);
+    	
+    	for(int i = 0; i < materialNums.size(); i++) {
+    		materialNums.get(i).setBounds(40, Vars.USE_BUTTON_DIM-20+i*Vars.USE_BUTTON_DIM+20, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
+    		materialNums.get(i).setFont(new Font(materialNums.get(i).getFont().getName(), Font.BOLD, 24));
+    		materialNums.get(i).setForeground(Color.BLACK);
+			LPane.add(materialNums.get(i),Integer.valueOf(3));
+		}
     	LPane.add(playerId,Integer.valueOf(2));
     }
     public void displayEnding(String picName) {
