@@ -17,6 +17,7 @@ public class SpaceGameView implements Runnable {
     private JFrame f;
     private LinkedList<JButton> buttons = new LinkedList<>(), craftButtons = new LinkedList<>(), putBackButtons = new LinkedList<>();
     private JLayeredPane LPane = new JLayeredPane();
+    private LinkedList<JLabel> field = new LinkedList<>();
     private boolean craftVis = false;
     private boolean putVis = false;
     static ArrayList<Object> objects = new ArrayList<>();
@@ -292,6 +293,13 @@ public class SpaceGameView implements Runnable {
 
         float n = (float) objects.size();
 
+        if(!field.isEmpty()){
+            for(int i = 0 ; i < field.size(); i++){
+                LPane.remove(field.get(i));
+            }
+            field.clear();
+        }
+
         for (float i = 0; i < n; i++) {
             JLabel asteroid = new JLabel();
             if (i != 0) {
@@ -301,6 +309,7 @@ public class SpaceGameView implements Runnable {
             }
             loadAsteroidImage((Asteroid) objects.get((int) i), asteroid);
             LPane.add(asteroid, Integer.valueOf(2));
+            field.add(asteroid);
         }
     }
 
