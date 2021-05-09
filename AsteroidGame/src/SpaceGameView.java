@@ -83,7 +83,7 @@ public class SpaceGameView {
         craft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(putVis){
+                if (putVis) {
                     togglePut();
                 }
                 toggleCraft();
@@ -92,10 +92,10 @@ public class SpaceGameView {
         putBackMaterial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               if(craftVis){
-                   toggleCraft();
-               }
-               togglePut();
+                if (craftVis) {
+                    toggleCraft();
+                }
+                togglePut();
             }
         });
         pickUpGate.addActionListener(new ActionListener() {
@@ -158,8 +158,8 @@ public class SpaceGameView {
             craftButtons.get(i).setVisible(false);
             LPane.add(craftButtons.get(i), Integer.valueOf(2));
         }
-        for(int i = 0;i < putBackButtons.size(); i++){
-            putBackButtons.get(i).setBounds((int) ((putBackMaterial.getBounds().x - 1.5*(Vars.USE_BUTTON_DIM+10)) + i * (Vars.USE_BUTTON_DIM + 10)), putBackMaterial.getBounds().y - Vars.USE_BUTTON_DIM - 10, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
+        for (int i = 0; i < putBackButtons.size(); i++) {
+            putBackButtons.get(i).setBounds((int) ((putBackMaterial.getBounds().x - 1.5 * (Vars.USE_BUTTON_DIM + 10)) + i * (Vars.USE_BUTTON_DIM + 10)), putBackMaterial.getBounds().y - Vars.USE_BUTTON_DIM - 10, Vars.USE_BUTTON_DIM, Vars.USE_BUTTON_DIM);
             putBackButtons.get(i).setVisible(false);
             LPane.add(putBackButtons.get(i), Integer.valueOf(2));
         }
@@ -191,9 +191,18 @@ public class SpaceGameView {
 
     public void displayBG() {
         JLabel BG = new JLabel();
+        JLabel inv = new JLabel();
         BG.setIcon(new ImageIcon("resources/background.png"));
         BG.setBounds(0, 0, Vars.WINDOW_WIDTH, Vars.WINDOW_HEIGHT);
+        try {
+            Image img = ImageIO.read(new File("resources/inventory.png"));
+            inv.setIcon(new ImageIcon(img));
+            inv.setIcon(new ImageIcon(img.getScaledInstance(inv.getPreferredSize().width / 2, inv.getPreferredSize().height / 2, Image.SCALE_DEFAULT)));
+        } catch (Exception e) {
+        }
+        inv.setBounds(-20, -10, inv.getPreferredSize().width, inv.getPreferredSize().height);
         LPane.add(BG, Integer.valueOf(1));
+        LPane.add(inv, Integer.valueOf(2));
     }
 
     public void displayEnding(String picName) {
